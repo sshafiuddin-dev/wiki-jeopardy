@@ -25,7 +25,7 @@
       <h2>Game setup</h2>
       <p class="muted">Enter one topic or multiple topics separated by commas. The board will use at least 5 categories.</p>
       <div class="field"><label>Topics</label><textarea id="topic">Cricket, Bollywood, History, Geography, Movies</textarea><div class="hint">Example: Cricket, Bollywood, Geography, Technology, Movies</div></div>
-      <div class="field"><label>Number of players</label><input id="players" type="number" min="2" max="8" value="2" /></div>
+      <div class="field"><label id="playerCountLabel">Number of players</label><input id="players" type="number" min="2" max="8" value="2" /><div class="hint" id="playerCountHint">Use this as the total number of players.</div></div>
       <div class="field"><label>Difficulty</label><select id="difficulty"><option value="easy">Easy</option><option value="mixed" selected>Mixed</option><option value="hard">Hard</option></select></div>
       <div class="field" style="display:flex;align-items:center;justify-content:space-between"><label>Team mode</label><label class="switch"><input type="checkbox" id="teamMode"><span class="slider"></span></label></div>
       <div class="row" style="margin-top:4px">
@@ -84,18 +84,16 @@
 </div>
 
 <script>
-// ── Config ──────────────────────────────────────────────────────────────────
 const VALUES = [100, 200, 300, 400, 500];
 const WORKER_ENDPOINT = 'https://groq-proxy.sshafiuddin-dev.workers.dev';
 const LLM_MODEL = 'llama-3.3-70b-versatile';
 
-// ── Wikipedia pipeline (kept for reference, not used) ───────────────────────
+// Wikipedia pipeline kept for reference, not used
 // const WIKI = 'https://en.wikipedia.org/w/api.php?origin=*';
 // async function wikiSearch(term, limit=30) { ... }
 // async function wikiExtracts(titles) { ... }
 // async function gatherPagesForTopic(topic, needed) { ... }
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
 const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
 const points = v => String(v);
@@ -103,38 +101,34 @@ const state = { players:['Player 1','Player 2'], turn:0, score:[], board:[], ans
 let timerInterval=null, timeLeft=0, audioEnabled=true;
 const BASE_TIME=90000, PASS_TIME=30000;
 
-// ── Audio ────────────────────────────────────────────────────────────────────
 function playTone(freq,dur,type='sine'){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(0.3,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);o.start();o.stop(ctx.currentTime+dur);}catch(e){}}
 const SFX={correct:()=>{if(!audioEnabled)return;playTone(523,.1);setTimeout(()=>playTone(659,.1),100);setTimeout(()=>playTone(784,.2),200);},wrong:()=>{if(!audioEnabled)return;playTone(200,.3,'sawtooth');},pass:()=>{if(!audioEnabled)return;playTone(400,.15);setTimeout(()=>playTone(300,.15),150);},roundEnd:()=>{if(!audioEnabled)return;[523,659,784,1047].forEach((f,i)=>setTimeout(()=>playTone(f,.2),i*120));}};
 
-// ── Theme / Mute ─────────────────────────────────────────────────────────────
 function setTheme(t){state.theme=t;document.documentElement.setAttribute('data-theme',t);$('themeBtn').textContent=t==='dark'?'Light':'Dark';}
 function toggleMute(){audioEnabled=!audioEnabled;$('muteBtn').textContent=audioEnabled?'🔊':'🔇';}
-
-// ── Player / Score rendering ─────────────────────────────────────────────────
 function currentLabel(){return state.players[state.turn]||'—';}
 function playerLabel(i,team=false){return team?`Team ${i+1}`:`Player ${i+1}`;}
+function updateCountLabel(){
+  const teamMode = $('teamMode').checked;
+  $('playerCountLabel').textContent = teamMode ? 'Number of teams' : 'Number of players';
+  $('playerCountHint').textContent = teamMode ? 'Use this as the total number of teams.' : 'Use this as the total number of players.';
+}
 function renderPlayers(){$('playersList').innerHTML='';state.players.forEach((p,i)=>{const d=document.createElement('div');d.className='player'+(i===state.turn?' active':'');d.innerHTML=`<strong>${p}</strong><span>${points(state.score[i]||0)}</span>`;$('playersList').appendChild(d);});}
 function renderLeaderboard(){$('leaderboard').innerHTML='';[...state.players.map((n,i)=>({n,s:state.score[i]||0,i}))].sort((a,b)=>b.s-a.s).forEach((p,r)=>{const row=document.createElement('div');row.className='lead';row.innerHTML=`<span>${r+1}. ${p.n}${p.i===state.turn?' ● turn':''}</span><b>${points(p.s)}</b>`;$('leaderboard').appendChild(row);});}
 function renderScoreboard(){$('turn').textContent=currentLabel();const li=state.score.length?state.score.indexOf(Math.max(...state.score)):-1;$('leader').textContent=li>-1?`${state.players[li]} (${points(state.score[li])})`:'—';$('answered').textContent=`${state.answered}/${state.total}`;$('topicLabel').textContent=state.topics.join(', ');$('statusPill').textContent=state.answered>=state.total?'Complete':'In play';$('stateMsg').textContent=state.total-state.answered>0?`${state.total-state.answered} clues left`:'All clues answered';renderLeaderboard();}
 function nextTurn(){state.turn=(state.turn+1)%state.players.length;renderPlayers();renderScoreboard();}
 
-// ── Timer ────────────────────────────────────────────────────────────────────
 function stopTimer(){clearInterval(timerInterval);$('timerRing').classList.remove('running');}
 function startTimer(ms){stopTimer();timeLeft=ms;$('timerRing').classList.add('running');$('timerDisplay').classList.remove('expired');updateTimerDisplay();timerInterval=setInterval(()=>{timeLeft-=1000;if(timeLeft<=0){stopTimer();$('timerDisplay').classList.add('expired');handlePass();}else updateTimerDisplay();},1000);}
 function updateTimerDisplay(){const m=Math.floor(timeLeft/60000),s=Math.floor((timeLeft%60000)/1000);$('timeLeft').textContent=`${m}:${s.toString().padStart(2,'0')}`;}
 
-// ── LLM: generate a full category of 5 questions in one call ─────────────────
 async function generateCategoryQuestions(topic, difficulty) {
-  const diffHint = difficulty === 'easy' ? 'simple, well-known facts suitable for beginners'
-    : difficulty === 'hard' ? 'challenging, specific facts for enthusiasts'
-    : 'a mix of easy and harder facts';
-
+  const diffHint = difficulty === 'easy' ? 'simple, well-known facts suitable for beginners' : difficulty === 'hard' ? 'challenging, specific facts for enthusiasts' : 'a mix of easy and harder facts';
   const prompt = `Generate exactly 5 multiple-choice trivia questions about the topic: "${topic}".
 Difficulty: ${diffHint}.
 
 Rules:
-- Each question must be a natural, engaging pub-trivia style question (e.g. "Which Bollywood film starred Aamir Khan as a wrestler?").
+- Each question must be a natural, engaging pub-trivia style question.
 - Do NOT include the answer inside the question text.
 - Each question has exactly 4 options. One is correct, three are plausible wrong answers from the same topic.
 - Wrong options must be real, recognizable names/titles/facts from the topic — not made up.
@@ -168,7 +162,6 @@ Rules:
 
   const data = await res.json();
   console.log(`[LLM] Raw response for "${topic}":`, data);
-
   const content = data?.choices?.[0]?.message?.content || '{}';
   let parsed;
   try { parsed = JSON.parse(content); } catch(e) {
@@ -181,49 +174,28 @@ Rules:
   return qs;
 }
 
-// ── Board builder (LLM-primary) ───────────────────────────────────────────────
 async function buildBoard(topicNames, difficulty) {
-  const valuePlan = difficulty==='easy' ? [100,100,100,100,100]
-    : difficulty==='hard' ? [500,500,500,500,500] : VALUES;
+  const valuePlan = difficulty==='easy' ? [100,100,100,100,100] : difficulty==='hard' ? [500,500,500,500,500] : VALUES;
   const categories = [];
-
   for (const topic of topicNames.slice(0,5)) {
     let qs;
-    try {
-      qs = await generateCategoryQuestions(topic, difficulty);
-    } catch(e) {
-      console.warn(`[Board] LLM failed for "${topic}", using placeholder:`, e.message);
-      qs = [];
-    }
-
-    // Ensure exactly 5 questions; pad with simple placeholders if LLM gave fewer
+    try { qs = await generateCategoryQuestions(topic, difficulty); }
+    catch(e) { console.warn(`[Board] LLM failed for "${topic}", using placeholder:`, e.message); qs = []; }
     while (qs.length < 5) {
       const n = qs.length + 1;
       qs.push({ q: `Question ${n} about ${topic}?`, options: [`Answer ${n}A`, `Answer ${n}B`, `Answer ${n}C`, `Answer ${n}D`], answer: `Answer ${n}A` });
     }
-
     const clues = qs.slice(0,5).map((item, r) => {
       const answer = (item.answer || '').trim();
       const opts = Array.isArray(item.options) ? item.options.map(x => String(x).trim()).filter(Boolean) : [];
-      // Ensure correct answer is in options
       const fullOpts = opts.includes(answer) ? opts : [answer, ...opts].slice(0,4);
-      return {
-        id: `${topic}-${r}`,
-        value: valuePlan[r] || valuePlan[0],
-        _origValue: valuePlan[r] || valuePlan[0],
-        answer,
-        clue: (item.q || '').trim(),
-        options: shuffle(fullOpts).slice(0,4),
-        used: false
-      };
+      return { id: `${topic}-${r}`, value: valuePlan[r] || valuePlan[0], _origValue: valuePlan[r] || valuePlan[0], answer, clue: (item.q || '').trim(), options: shuffle(fullOpts).slice(0,4), used: false };
     });
-
     categories.push({ name: topic, clues });
   }
   return categories;
 }
 
-// ── Board render ──────────────────────────────────────────────────────────────
 function renderBoard(){
   const rows=state.board[0]?state.board[0].clues.length:5;
   $('board').innerHTML='';
@@ -235,14 +207,12 @@ function renderBoard(){
   });
 }
 
-// ── Question panel ────────────────────────────────────────────────────────────
 function renderOptions(clue){
   $('answers').innerHTML='';
   clue.options.forEach(opt=>{
     const b=document.createElement('button');b.className='answer';b.textContent=opt;
     b.onclick=()=>submitAnswer(opt);$('answers').appendChild(b);
   });
-  // Pass button
   const pb=document.createElement('button');pb.className='answer';pb.style.gridColumn='1 / -1';
   pb.innerHTML='❌ Pass to next player/team';pb.onclick=handlePass;$('answers').appendChild(pb);
 }
@@ -275,32 +245,26 @@ function submitAnswer(selected){
   const{clue,tile,attemptedBy}=state.active;
   stopTimer();
   attemptedBy.push(state.turn);
-
   if(selected===clue.answer){
     clue.used=true;tile.disabled=true;state.answered++;state.correct++;
     state.score[state.turn]=(state.score[state.turn]||0)+clue.value;
     markOptions(selected,clue.answer);SFX.correct();
     $('feedback').textContent=`✅ Correct! ${currentLabel()} earns ${points(clue.value)}.`;
     renderPlayers();renderScoreboard();
-    if(state.answered>=state.total){SFX.roundEnd();showResults();}
-    else nextTurn();
+    if(state.answered>=state.total){SFX.roundEnd();showResults();} else nextTurn();
     setTimeout(()=>$('questionBox').classList.remove('open'),1800);
     return;
   }
-
   markOptions(selected,clue.answer);SFX.wrong();
   clue.value=Math.max(5,Math.floor(clue.value/2));
-
   if(attemptedBy.length>=state.players.length){
     clue.used=true;tile.disabled=true;state.answered++;
     $('feedback').textContent=`No one got it. Correct answer: ${clue.answer}.`;
     renderPlayers();renderScoreboard();
-    if(state.answered>=state.total){SFX.roundEnd();showResults();}
-    else nextTurn();
+    if(state.answered>=state.total){SFX.roundEnd();showResults();} else nextTurn();
     setTimeout(()=>$('questionBox').classList.remove('open'),1800);
     return;
   }
-
   nextTurn();
   $('money').textContent=points(clue.value);
   $('activePlayer').textContent=`${currentLabel()}'s turn`;
@@ -315,17 +279,14 @@ function handlePass(){
   stopTimer();SFX.pass();
   attemptedBy.push(state.turn);
   clue.value=Math.max(5,Math.floor(clue.value/2));
-
   if(attemptedBy.length>=state.players.length){
     clue.used=true;tile.disabled=true;state.answered++;
     $('feedback').textContent=`All passed. Correct answer: ${clue.answer}.`;
     renderPlayers();renderScoreboard();
-    if(state.answered>=state.total){SFX.roundEnd();showResults();}
-    else nextTurn();
+    if(state.answered>=state.total){SFX.roundEnd();showResults();} else nextTurn();
     setTimeout(()=>$('questionBox').classList.remove('open'),1800);
     return;
   }
-
   nextTurn();
   $('money').textContent=points(clue.value);
   $('activePlayer').textContent=`${currentLabel()}'s turn`;
@@ -334,20 +295,18 @@ function handlePass(){
   startTimer(PASS_TIME);
 }
 
-// ── Start game ────────────────────────────────────────────────────────────────
 function parseTopics(raw){const parts=(raw||'').split(',').map(x=>x.trim()).filter(Boolean);const uniq=[];for(const p of parts)if(!uniq.includes(p))uniq.push(p);if(uniq.length===0)return['Cricket','Bollywood','History','Geography','Movies'];while(uniq.length<5)uniq.push(`General ${uniq.length+1}`);return uniq.slice(0,10);}
 
 async function start(){
   const topics=parseTopics($('topic').value);
   const n=Math.max(2,Math.min(8,Number($('players').value||2)));
   const teamMode=$('teamMode').checked;
-  state.players=[...Array(teamMode?Math.ceil(n/2):n)].map((_,i)=>playerLabel(i,teamMode));
+  state.players=[...Array(n)].map((_,i)=>playerLabel(i,teamMode));
   const difficulty=$('difficulty').value;
   state.topics=topics;
   state.score=state.players.map(()=>0);state.turn=0;state.answered=0;state.correct=0;state.total=25;state.board=[];state.active=null;
   $('questionBox').classList.remove('open');$('board').innerHTML='';$('feedback').textContent='';
   renderPlayers();renderScoreboard();
-
   try{
     $('startBtn').disabled=true;$('startBtn').textContent='Generating...';$('statusPill').textContent='AI generating questions…';
     const selectedTopics=topics.slice(0,5);
@@ -366,13 +325,12 @@ async function start(){
   }
 }
 
-// ── Results / Reset ───────────────────────────────────────────────────────────
 function showResults(){const ranked=state.players.map((name,i)=>({name,score:state.score[i]||0})).sort((a,b)=>b.score-a.score);$('finalResults').innerHTML='';ranked.forEach((p,i)=>{const row=document.createElement('div');row.className='result-row';row.innerHTML=`<span>${['🥇','🥈','🥉'][i]||`${i+1}.`} ${p.name}</span><span>${points(p.score)}</span>`;$('finalResults').appendChild(row);});$('resultsModal').classList.add('show');}
-function reset(){state.score=state.players.map(()=>0);state.turn=0;state.answered=0;state.correct=0;state.board=[];state.active=null;stopTimer();$('questionBox').classList.remove('open');$('board').innerHTML='';$('feedback').textContent='';renderPlayers();renderScoreboard();$('statusPill').textContent='Waiting';$('stateMsg').textContent='Create a board to begin.';}
+function reset(){state.score=state.players.map(()=>0);state.turn=0;state.answered=0;state.correct=0;state.board=[];state.active=null;stopTimer();$('questionBox').classList.remove('open');$('board').innerHTML='';$('feedback').textContent='';renderPlayers();renderScoreboard();$('statusPill').textContent='Waiting';$('stateMsg').textContent='Create a board to begin.';updateCountLabel();}
 
-// ── Event wiring ──────────────────────────────────────────────────────────────
 $('themeBtn').onclick=()=>setTheme(state.theme==='dark'?'light':'dark');
 $('muteBtn').onclick=toggleMute;
+$('teamMode').onchange=updateCountLabel;
 $('demoBtn').onclick=()=>{$('topic').value='Cricket, Bollywood, History, Geography, Movies';start();};
 $('resetBtn').onclick=reset;
 $('startBtn').onclick=start;
