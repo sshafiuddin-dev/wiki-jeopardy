@@ -99,28 +99,28 @@ const BASE_TIME = 90000, PASS_TIME = 30000;
 
 function setTheme(t) { state.theme = t; document.documentElement.setAttribute('data-theme', t); $('themeBtn').textContent = t === 'dark' ? 'Light' : 'Dark'; }
 function toggleMute() { audioEnabled = !audioEnabled; $('muteBtn').textContent = audioEnabled ? '🔊' : '🔇'; }
-function playTone(freq, dur, type = 'sine') { 
-  try { 
-    const ctx = new (window.AudioContext || window.webkitAudioContext)(); 
-    const o = ctx.createOscillator(); 
-    const g = ctx.createGain(); 
-    o.connect(g); 
-    g.connect(ctx.destination); 
-    o.type = type; 
-    o.frequency.value = freq; 
-    g.gain.setValueAtTime(0.3, ctx.currentTime); 
-    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur); 
-    o.start(); 
-    o.stop(ctx.currentTime + dur); 
-  } catch (e) {} 
+function playTone(freq, dur, type = 'sine') {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g);
+    g.connect(ctx.destination);
+    o.type = type;
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(0.3, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+    o.start();
+    o.stop(ctx.currentTime + dur);
+  } catch (e) {}
 }
-function sounds() { 
-  return { 
-    correct: () => { if (!audioEnabled) return; playTone(523, 0.1); setTimeout(() => playTone(659, 0.1), 100); setTimeout(() => playTone(784, 0.2), 200); }, 
-    wrong: () => { if (!audioEnabled) return; playTone(200, 0.3, 'sawtooth'); }, 
-    pass: () => { if (!audioEnabled) return; playTone(400, 0.15); setTimeout(() => playTone(300, 0.15), 150); }, 
-    roundEnd: () => { if (!audioEnabled) return; [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => playTone(f, 0.2), i * 120)); } 
-  }; 
+function sounds() {
+  return {
+    correct: () => { if (!audioEnabled) return; playTone(523, 0.1); setTimeout(() => playTone(659, 0.1), 100); setTimeout(() => playTone(784, 0.2), 200); },
+    wrong: () => { if (!audioEnabled) return; playTone(200, 0.3, 'sawtooth'); },
+    pass: () => { if (!audioEnabled) return; playTone(400, 0.15); setTimeout(() => playTone(300, 0.15), 150); },
+    roundEnd: () => { if (!audioEnabled) return; [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => playTone(f, 0.2), i * 120)); }
+  };
 }
 const SFX = sounds();
 
@@ -133,286 +133,352 @@ function parseTopics(raw) {
   return uniq.slice(0, 10);
 }
 
-function renderPlayers() { 
-  $('playersList').innerHTML = ''; 
-  state.players.forEach((p, i) => { 
-    const d = document.createElement('div'); 
-    d.className = 'player' + (i === state.turn ? ' active' : ''); 
-    d.innerHTML = `<strong>${p}</strong><span>$${state.score[i] || 0}</span>`; 
-    $('playersList').appendChild(d); 
-  }); 
-}
-
-function renderLeaderboard() { 
-  $('leaderboard').innerHTML = ''; 
-  [...state.players.map((n, i) => ({ n, s: state.score[i] || 0, i }))].sort((a, b) => b.s - a.s).forEach((p, r) => { 
-    const row = document.createElement('div'); 
-    row.className = 'lead'; 
-    row.innerHTML = `<span>${r + 1}. ${p.n}${p.i === state.turn ? ' ● turn' : ''}</span><b>$${p.s}</b>`; 
-    $('leaderboard').appendChild(row); 
-  }); 
-}
-
-function renderScoreboard() { 
-  $('turn').textContent = state.players[state.turn] || '—'; 
-  const li = state.score.length ? state.score.indexOf(Math.max(...state.score)) : -1; 
-  $('leader').textContent = li > -1 ? `${state.players[li]} ($${state.score[li]})` : '—'; 
-  $('answered').textContent = `${state.answered}/${state.total}`; 
-  $('topicLabel').textContent = state.topics.join(', '); 
-  $('statusPill').textContent = state.answered >= state.total ? 'Complete' : 'In play'; 
-  $('stateMsg').textContent = state.total - state.answered > 0 ? `${state.total - state.answered} clues left` : 'All clues answered'; 
-  renderLeaderboard(); 
-}
-
-function nextTurn() { 
-  state.turn = (state.turn + 1) % state.players.length; 
-  renderPlayers(); 
-  renderScoreboard(); 
-}
-
-function stopTimer() { 
-  clearInterval(timerInterval); 
-  isTiming = false; 
-  $('timerRing').classList.remove('running'); 
-}
-
-function startTimer(ms) { 
-  stopTimer(); 
-  timeLeft = ms; 
-  isTiming = true; 
-  $('timerRing').classList.add('running'); 
-  $('timerDisplay').classList.remove('expired'); 
-  updateTimerDisplay(); 
-  timerInterval = setInterval(() => { 
-    timeLeft -= 1000; 
-    if (timeLeft <= 0) { stopTimer(); $('timerDisplay').classList.add('expired'); handlePass(); } 
-    else { updateTimerDisplay(); } 
-  }, 1000); 
-}
-
-function updateTimerDisplay() { 
-  const m = Math.floor(timeLeft / 60000), s = Math.floor((timeLeft % 60000) / 1000); 
-  $('timeLeft').textContent = `${m}:${s.toString().padStart(2, '0')}`; 
-}
-
-function handlePass() { 
-  if (!state.active) return; 
-  stopTimer(); 
-  passCount++; 
-  const orig = state.active.clue._origValue || state.active.clue.value; 
-  state.active.clue._origValue = orig; 
-  const nv = Math.max(5, Math.floor(orig / Math.pow(2, passCount))); 
-  state.active.clue.value = nv; 
-  $('money').textContent = `$${nv}`; 
-  if (passCount >= state.players.length) { 
-    state.active.clue.used = true; 
-    state.active.tile.disabled = true; 
-    state.answered++; 
-    $('feedback').textContent = 'All teams passed. Clue expired.'; 
-    nextTurn(); 
-    renderScoreboard(); 
-    setTimeout(() => $('questionBox').classList.remove('open'), 2000); 
-    return; 
-  } 
-  state.turn = (state.turn + 1) % state.players.length; 
-  renderPlayers(); 
-  renderScoreboard(); 
-  $('activePlayer').textContent = `${state.players[state.turn]}'s turn`; 
-  $('feedback').textContent = `Passed! ${state.players[state.turn]} can answer for $${nv} (pass ${passCount})`; 
-  startTimer(PASS_TIME); 
-}
-
-function openQ(cat, clue, tile) { 
-  if (clue.used) return; 
-  state.active = { cat, clue, tile }; 
-  passCount = 0; 
-  stopTimer(); 
-  $('timerDisplay').classList.remove('expired'); 
-  $('questionBox').classList.add('open'); 
-  $('catName').textContent = cat; 
-  $('money').textContent = `$${clue.value}`; 
-  $('activePlayer').textContent = `${state.players[state.turn]}'s turn`; 
-  $('clue').textContent = clue.clue; 
-  $('timerBtns').style.display = 'flex'; 
-  $('feedback').textContent = ''; 
-  $('answers').innerHTML = ''; 
-  clue.options.forEach(opt => { 
-    const b = document.createElement('button'); 
-    b.className = 'answer'; 
-    b.textContent = opt; 
-    b.onclick = () => submitAnswer(b, opt); 
-    $('answers').appendChild(b); 
-  }); 
-  const pb = document.createElement('button'); 
-  pb.className = 'answer'; 
-  pb.style.gridColumn = '1 / -1'; 
-  pb.innerHTML = '❌ Pass to next team'; 
-  pb.onclick = handlePass; 
-  $('answers').appendChild(pb); 
-}
-
-function submitAnswer(btn, opt) { 
-  if (!state.active) return; 
-  const { clue, tile } = state.active; 
-  stopTimer(); 
-  const correct = opt === clue.answer; 
-  [...$('answers').children].forEach(x => { 
-    x.disabled = true; 
-    if (x.textContent === clue.answer) x.classList.add('correct'); 
-    if (x === btn && !correct) x.classList.add('wrong'); 
-  }); 
-  clue.used = true; 
-  tile.disabled = true; 
-  state.answered++; 
-  if (correct) { 
-    state.correct++; 
-    state.score[state.turn] = (state.score[state.turn] || 0) + clue.value; 
-    SFX.correct(); 
-    $('feedback').textContent = `✅ Correct! ${state.players[state.turn]} earns $${clue.value}.`; 
-  } else { 
-    state.score[state.turn] = (state.score[state.turn] || 0) - Math.floor(clue.value / 2); 
-    SFX.wrong(); 
-    $('feedback').textContent = `❌ Wrong. Answer: ${clue.answer}. -$${Math.floor(clue.value / 2)}.`; 
-  } 
-  renderPlayers(); 
-  renderScoreboard(); 
-  if (state.answered >= state.total) { SFX.roundEnd(); showResults(); } 
-  nextTurn(); 
-}
-
-function showResults() { 
-  const ranked = state.players.map((name, i) => ({ name, score: state.score[i] || 0 })).sort((a, b) => b.score - a.score); 
-  $('finalResults').innerHTML = ''; 
-  ranked.forEach((p, i) => { 
-    const row = document.createElement('div'); 
-    row.className = 'result-row'; 
-    row.innerHTML = `<span>${['🥇', '🥈', '🥉'][i] || `${i + 1}.`} ${p.name}</span><span>$${p.score}</span>`; 
-    $('finalResults').appendChild(row); 
-  }); 
-  $('resultsModal').classList.add('show'); 
-}
-
-function shuffle(a) { 
-  a = [...a]; 
-  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } 
-  return a; 
-}
-
-function uniqueByTitle(items) { 
-  const seen = new Set(); 
-  return items.filter(x => { const k = (x.title || '').toLowerCase(); if (!k || seen.has(k)) return false; seen.add(k); return true; }); 
-}
-
-/* Updated formatting helpers */
-function formatJeopardyAnswer(title) {
-  let cleanTitle = title.replace(/\s*\(.*?\)\s*/g, '').trim();
-  return `What is ${cleanTitle}?`;
-}
-
-function clean(text, ans) {
-  let t = (text || 'No description available.').replace(/\([^)]*\)/g, '').replace(/\s+/g, ' ').trim();
-  
-  t = t.replace(new RegExp(`^${ans}\\s+(is|was)\\s+(a|an|the)\\s+`, 'i'), 'This $1 $2 ');
-  
-  const words = ans.split(/\s+/).filter(w => w.length > 3);
-  words.forEach(w => {
-    t = t.replace(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'ig'), '________');
+function renderPlayers() {
+  $('playersList').innerHTML = '';
+  state.players.forEach((p, i) => {
+    const d = document.createElement('div');
+    d.className = 'player' + (i === state.turn ? ' active' : '');
+    d.innerHTML = `<strong>${p}</strong><span>$${state.score[i] || 0}</span>`;
+    $('playersList').appendChild(d);
   });
-  
-  t = t.replace(new RegExp(ans.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'ig'), '________');
-  return t.length > 220 ? t.slice(0, 217) + '...' : t;
 }
 
-async function wikiSearch(term, limit = 30) { 
-  const d = await fetch(`${WIKI}&action=opensearch&search=${encodeURIComponent(term)}&limit=${limit}&namespace=0&format=json`).then(r => r.json()); 
-  return (d[1] || []).map((title, i) => ({ title, extract: d[2][i] })); 
+function renderLeaderboard() {
+  $('leaderboard').innerHTML = '';
+  [...state.players.map((n, i) => ({ n, s: state.score[i] || 0, i }))].sort((a, b) => b.s - a.s).forEach((p, r) => {
+    const row = document.createElement('div');
+    row.className = 'lead';
+    row.innerHTML = `<span>${r + 1}. ${p.n}${p.i === state.turn ? ' ● turn' : ''}</span><b>$${p.s}</b>`;
+    $('leaderboard').appendChild(row);
+  });
 }
 
-async function wikiExtracts(titles) { 
-  const pages = []; 
-  for (let i = 0; i < titles.length; i += 20) { 
-    const chunk = titles.slice(i, i + 20); 
-    const data = await fetch(`${WIKI}&action=query&prop=extracts&exintro=1&explaintext=1&format=json&redirects=1&titles=${encodeURIComponent(chunk.join('|'))}`).then(r => r.json()); 
-    for (const k of Object.keys(data?.query?.pages || {})) { 
-      const p = data.query.pages[k]; 
-      if (p.title && p.extract && p.extract.length > 40) pages.push({ title: p.title, extract: p.extract }); 
-    } 
-  } 
-  return pages; 
+function renderScoreboard() {
+  $('turn').textContent = state.players[state.turn] || '—';
+  const li = state.score.length ? state.score.indexOf(Math.max(...state.score)) : -1;
+  $('leader').textContent = li > -1 ? `${state.players[li]} ($${state.score[li]})` : '—';
+  $('answered').textContent = `${state.answered}/${state.total}`;
+  $('topicLabel').textContent = state.topics.join(', ');
+  $('statusPill').textContent = state.answered >= state.total ? 'Complete' : 'In play';
+  $('stateMsg').textContent = state.total - state.answered > 0 ? `${state.total - state.answered} clues left` : 'All clues answered';
+  renderLeaderboard();
+}
+
+function nextTurn() {
+  state.turn = (state.turn + 1) % state.players.length;
+  renderPlayers();
+  renderScoreboard();
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+  isTiming = false;
+  $('timerRing').classList.remove('running');
+}
+
+function startTimer(ms) {
+  stopTimer();
+  timeLeft = ms;
+  isTiming = true;
+  $('timerRing').classList.add('running');
+  $('timerDisplay').classList.remove('expired');
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timeLeft -= 1000;
+    if (timeLeft <= 0) { stopTimer(); $('timerDisplay').classList.add('expired'); handlePass(); }
+    else { updateTimerDisplay(); }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timeLeft / 60000), s = Math.floor((timeLeft % 60000) / 1000);
+  $('timeLeft').textContent = `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+function handlePass() {
+  if (!state.active) return;
+  stopTimer();
+  passCount++;
+  const orig = state.active.clue._origValue || state.active.clue.value;
+  state.active.clue._origValue = orig;
+  const nv = Math.max(5, Math.floor(orig / Math.pow(2, passCount)));
+  state.active.clue.value = nv;
+  $('money').textContent = `$${nv}`;
+  if (passCount >= state.players.length) {
+    state.active.clue.used = true;
+    state.active.tile.disabled = true;
+    state.answered++;
+    $('feedback').textContent = 'All teams passed. Clue expired.';
+    nextTurn();
+    renderScoreboard();
+    setTimeout(() => $('questionBox').classList.remove('open'), 2000);
+    return;
+  }
+  state.turn = (state.turn + 1) % state.players.length;
+  renderPlayers();
+  renderScoreboard();
+  $('activePlayer').textContent = `${state.players[state.turn]}'s turn`;
+  $('feedback').textContent = `Passed! ${state.players[state.turn]} can answer for $${nv} (pass ${passCount})`;
+  startTimer(PASS_TIME);
+}
+
+function openQ(cat, clue, tile) {
+  if (clue.used) return;
+  state.active = { cat, clue, tile };
+  passCount = 0;
+  stopTimer();
+  $('timerDisplay').classList.remove('expired');
+  $('questionBox').classList.add('open');
+  $('catName').textContent = cat;
+  $('money').textContent = `$${clue.value}`;
+  $('activePlayer').textContent = `${state.players[state.turn]}'s turn`;
+  $('clue').textContent = clue.clue;
+  $('timerBtns').style.display = 'flex';
+  $('feedback').textContent = '';
+  $('answers').innerHTML = '';
+  clue.options.forEach(opt => {
+    const b = document.createElement('button');
+    b.className = 'answer';
+    b.textContent = opt;
+    b.onclick = () => submitAnswer(b, opt);
+    $('answers').appendChild(b);
+  });
+  const pb = document.createElement('button');
+  pb.className = 'answer';
+  pb.style.gridColumn = '1 / -1';
+  pb.innerHTML = '❌ Pass to next team';
+  pb.onclick = handlePass;
+  $('answers').appendChild(pb);
+}
+
+function submitAnswer(btn, opt) {
+  if (!state.active) return;
+  const { clue, tile } = state.active;
+  stopTimer();
+  const correct = opt === clue.answer;
+  [...$('answers').children].forEach(x => {
+    x.disabled = true;
+    if (x.textContent === clue.answer) x.classList.add('correct');
+    if (x === btn && !correct) x.classList.add('wrong');
+  });
+  clue.used = true;
+  tile.disabled = true;
+  state.answered++;
+  if (correct) {
+    state.correct++;
+    state.score[state.turn] = (state.score[state.turn] || 0) + clue.value;
+    SFX.correct();
+    $('feedback').textContent = `✅ Correct! ${state.players[state.turn]} earns $${clue.value}.`;
+  } else {
+    state.score[state.turn] = (state.score[state.turn] || 0) - Math.floor(clue.value / 2);
+    SFX.wrong();
+    $('feedback').textContent = `❌ Wrong. Answer: ${clue.answer}. -$${Math.floor(clue.value / 2)}.`;
+  }
+  renderPlayers();
+  renderScoreboard();
+  if (state.answered >= state.total) { SFX.roundEnd(); showResults(); }
+  nextTurn();
+}
+
+function showResults() {
+  const ranked = state.players.map((name, i) => ({ name, score: state.score[i] || 0 })).sort((a, b) => b.score - a.score);
+  $('finalResults').innerHTML = '';
+  ranked.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'result-row';
+    row.innerHTML = `<span>${['🥇', '🥈', '🥉'][i] || `${i + 1}.`} ${p.name}</span><span>$${p.score}</span>`;
+    $('finalResults').appendChild(row);
+  });
+  $('resultsModal').classList.add('show');
+}
+
+function shuffle(a) {
+  a = [...a];
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
+function uniqueByTitle(items) {
+  const seen = new Set();
+  return items.filter(x => { const k = (x.title || '').toLowerCase(); if (!k || seen.has(k)) return false; seen.add(k); return true; });
+}
+
+function stripParens(title) {
+  return (title || '').replace(/\s*\(.*?\)\s*/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function formatJeopardyAnswer(title) {
+  return `What is ${stripParens(title)}?`;
+}
+
+function escapeRegExp(str) {
+  return (str || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function buildAnswerPatterns(answer) {
+  const base = stripParens(answer);
+  const patterns = new Set();
+  if (base) patterns.add(base);
+  (base.match(/[A-Za-z0-9]+/g) || []).forEach(word => {
+    if (word.length >= 4) patterns.add(word);
+  });
+  return [...patterns].sort((a, b) => b.length - a.length);
+}
+
+function toJeopardyClue(text, ans) {
+  let t = (text || 'No description available.').replace(/\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
+  const patterns = buildAnswerPatterns(ans);
+  patterns.forEach(p => {
+    t = t.replace(new RegExp(`\\b${escapeRegExp(p)}\\b`, 'ig'), '_____');
+  });
+
+  t = t.replace(/^\s*_____\s+(is|was|are|were)\s+/i, 'This $1 ');
+  t = t.replace(/^\s*(This\s+(?:is|was|are|were)\s+)/i, '');
+  t = t.replace(/^\s*(A|An|The)\s+/i, match => `This ${match.toLowerCase()}`);
+
+  if (!/[.?!]$/.test(t)) t += '.';
+  if (!/^This\b/i.test(t) && !/^[Ww]hich\b|^[Ww]ho\b|^[Ww]hat\b|^[Ww]here\b|^[Ww]hen\b/i.test(t)) {
+    t = `This ${t.charAt(0).toLowerCase()}${t.slice(1)}`;
+  }
+
+  t = t.replace(/\s+/g, ' ').trim();
+  return t.length > 220 ? t.slice(0, 217).replace(/[\s,;:]+$/, '') + '...' : t;
+}
+
+function normalizeTitle(title) {
+  return stripParens(title).toLowerCase();
+}
+
+function tokenSet(title) {
+  return new Set(normalizeTitle(title).split(/[^a-z0-9]+/).filter(w => w.length > 2));
+}
+
+function titleSimilarity(a, b) {
+  const sa = tokenSet(a), sb = tokenSet(b);
+  let overlap = 0;
+  for (const t of sa) if (sb.has(t)) overlap++;
+  const prefix = normalizeTitle(a).slice(0, 8) === normalizeTitle(b).slice(0, 8) ? 1 : 0;
+  return overlap * 3 + prefix;
+}
+
+function pickDistractors(answer, pool, count = 3) {
+  const ranked = pool
+    .filter(item => normalizeTitle(item) !== normalizeTitle(answer))
+    .map(item => ({ title: item, score: titleSimilarity(answer, item) }))
+    .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
+
+  const strong = ranked.filter(x => x.score > 0).map(x => x.title);
+  const fallback = ranked.map(x => x.title);
+  return [...new Set([...strong, ...fallback])].slice(0, count);
+}
+
+async function wikiSearch(term, limit = 30) {
+  const d = await fetch(`${WIKI}&action=opensearch&search=${encodeURIComponent(term)}&limit=${limit}&namespace=0&format=json`).then(r => r.json());
+  return (d[1] || []).map((title, i) => ({ title, extract: d[2][i] }));
+}
+
+async function wikiExtracts(titles) {
+  const pages = [];
+  for (let i = 0; i < titles.length; i += 20) {
+    const chunk = titles.slice(i, i + 20);
+    const data = await fetch(`${WIKI}&action=query&prop=extracts&exintro=1&explaintext=1&format=json&redirects=1&titles=${encodeURIComponent(chunk.join('|'))}`).then(r => r.json());
+    for (const k of Object.keys(data?.query?.pages || {})) {
+      const p = data.query.pages[k];
+      if (p.title && p.extract && p.extract.length > 40) pages.push({ title: p.title, extract: p.extract });
+    }
+  }
+  return pages;
 }
 
 async function gatherPagesForTopic(topic, needed) {
   const queries = [topic, `${topic} history`, `${topic} overview`, `${topic} basics`, `${topic} facts`];
   let titles = [];
   for (const q of queries) {
-    try { const found = await wikiSearch(q, 24); titles = titles.concat(found.map(x => x.title)); if (titles.length >= needed * 3) break; } catch (e) {}
+    try {
+      const found = await wikiSearch(q, 24);
+      titles = titles.concat(found.map(x => x.title));
+      if (titles.length >= needed * 5) break;
+    } catch (e) {}
   }
-  titles = [...new Set(titles)].slice(0, Math.max(needed * 4, 20));
+  titles = [...new Set(titles)].slice(0, Math.max(needed * 6, 30));
   if (!titles.length) return [];
   const pages = await wikiExtracts(titles);
-  return uniqueByTitle(pages).slice(0, needed);
+  return uniqueByTitle(pages).slice(0, Math.max(needed, 12));
 }
 
 function buildBoard(topicNames, topicPages, rows) {
   const categories = topicNames.slice(0, 5).map((topic, i) => {
-    const pages = shuffle(topicPages[topic] || []).slice(0, rows);
-    const fallback = (topicPages[topic] || []).map(p => p.title);
-    const clues = pages.map((p, r) => ({ id: `${i}-${r}`, value: VALUES[r] || VALUES[0], _origValue: VALUES[r] || VALUES[0], answer: p.title, clue: clean(p.extract, p.title), options: [], used: false }));
+    const allPages = uniqueByTitle(topicPages[topic] || []);
+    const pages = shuffle(allPages).slice(0, rows);
+    const clues = pages.map((p, r) => ({
+      id: `${i}-${r}`,
+      value: VALUES[r] || VALUES[0],
+      _origValue: VALUES[r] || VALUES[0],
+      rawAnswer: p.title,
+      answer: formatJeopardyAnswer(p.title),
+      clue: toJeopardyClue(p.extract, p.title),
+      options: [],
+      used: false
+    }));
+
     while (clues.length < rows) {
       const r = clues.length;
-      const title = fallback[r % Math.max(1, fallback.length)] || `${topic} answer ${r + 1}`;
-      clues.push({ id: `${i}-${r}`, value: VALUES[r] || VALUES[0], _origValue: VALUES[r] || VALUES[0], answer: title, clue: `This clue is about ${topic}. Identify this subject related to ${topic}.`, options: [], used: false });
+      const title = allPages[r % Math.max(1, allPages.length)]?.title || `${topic} answer ${r + 1}`;
+      clues.push({
+        id: `${i}-${r}`,
+        value: VALUES[r] || VALUES[0],
+        _origValue: VALUES[r] || VALUES[0],
+        rawAnswer: title,
+        answer: formatJeopardyAnswer(title),
+        clue: `This subject is related to _____ in the category ${topic}.`,
+        options: [],
+        used: false
+      });
     }
-    return { name: topic, clues };
-  });
 
-  // NEW: Category-specific distractors logic
-  categories.forEach(cat => {
-    const categoryAnswers = uniqueByTitle(topicPages[cat.name] || []).map(p => p.title);
-    cat.clues.forEach(q => {
-      const pool = categoryAnswers.filter(a => a !== q.answer);
-      const distractors = shuffle(pool).slice(0, 3);
-      const rawOptions = shuffle([q.answer, ...distractors]);
-      
-      // Format to "What is..."
+    const titlePool = allPages.map(p => p.title);
+    clues.forEach(q => {
+      const distractors = pickDistractors(q.rawAnswer, titlePool, 3);
+      const rawOptions = shuffle([q.rawAnswer, ...distractors]);
       q.options = rawOptions.map(opt => formatJeopardyAnswer(opt));
-      q.answer = formatJeopardyAnswer(q.answer);
     });
+
+    return { name: topic, clues };
   });
 
   return categories;
 }
 
-function renderBoard() { 
-  const rows = state.board[0] ? state.board[0].clues.length : 5; 
-  $('board').innerHTML = ''; 
-  state.board.forEach(c => { const h = document.createElement('div'); h.className = 'cat'; h.textContent = c.name; $('board').appendChild(h); }); 
-  for (let r = 0; r < rows; r++) state.board.forEach(cat => { 
-    const clue = cat.clues[r]; 
-    if (!clue) return; 
-    const b = document.createElement('button'); 
-    b.className = 'tile'; 
-    b.textContent = `$${clue.value}`; 
-    b.disabled = clue.used; 
-    b.onclick = () => openQ(cat.name, clue, b); 
-    $('board').appendChild(b); 
-  }); 
+function renderBoard() {
+  const rows = state.board[0] ? state.board[0].clues.length : 5;
+  $('board').innerHTML = '';
+  state.board.forEach(c => { const h = document.createElement('div'); h.className = 'cat'; h.textContent = c.name; $('board').appendChild(h); });
+  for (let r = 0; r < rows; r++) state.board.forEach(cat => {
+    const clue = cat.clues[r];
+    if (!clue) return;
+    const b = document.createElement('button');
+    b.className = 'tile';
+    b.textContent = `$${clue.value}`;
+    b.disabled = clue.used;
+    b.onclick = () => openQ(cat.name, clue, b);
+    $('board').appendChild(b);
+  });
 }
 
 async function start() {
   const topics = parseTopics($('topic').value);
   const n = Math.max(2, Math.min(8, Number($('players').value || 2)));
   const teamMode = $('teamMode').checked;
-  if (teamMode) { const tc = Math.ceil(n / 2); state.players = [...Array(tc)].map((_, i) => $('name' + i)?.value.trim() || `Team ${i + 1}`); } 
+  if (teamMode) { const tc = Math.ceil(n / 2); state.players = [...Array(tc)].map((_, i) => $('name' + i)?.value.trim() || `Team ${i + 1}`); }
   else { state.players = [...Array(n)].map((_, i) => $('name' + i)?.value.trim() || `Player ${i + 1}`); }
-  
+
   state.topics = topics;
   const rows = 5;
   const total = 25;
-  state.score = state.players.map(() => 0); state.turn = 0; state.answered = 0; state.correct = 0; state.total = total; state.board = []; state.active = null; 
-  $('questionBox').classList.remove('open'); $('board').innerHTML = ''; $('feedback').textContent = ''; 
+  state.score = state.players.map(() => 0); state.turn = 0; state.answered = 0; state.correct = 0; state.total = total; state.board = []; state.active = null;
+  $('questionBox').classList.remove('open'); $('board').innerHTML = ''; $('feedback').textContent = '';
   renderPlayers(); renderScoreboard();
-  
+
   try {
     $('startBtn').disabled = true; $('startBtn').textContent = 'Loading...'; $('statusPill').textContent = 'Loading Wikipedia';
     const selectedTopics = topics.slice(0, 5);
