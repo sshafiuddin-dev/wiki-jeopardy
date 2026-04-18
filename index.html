@@ -10,9 +10,6 @@
     [data-theme="dark"]{--bg:#151412;--surface:#1b1a18;--surface2:#21201d;--text:#e7e2d9;--muted:#ada79e;--line:#33312d;--primary:#49a6b1;--primary2:#2b8e99;--accent:#203438;--good:#6dc06f;--bad:#db73b1;--inv:#151412;--shadow:0 10px 24px rgba(0,0,0,.35)}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--font);background:radial-gradient(circle at top right,rgba(0,109,119,.12),transparent 30%),var(--bg);color:var(--text);min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1280px;margin:0 auto;padding:16px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 0 18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:var(--inv);display:grid;place-items:center;box-shadow:var(--shadow);font-weight:800}h1,h2{margin:0;font-family:Georgia,serif;letter-spacing:-.03em}h1{font-size:clamp(1.6rem,2vw,2.5rem)}h2{font-size:1.15rem}.pill{display:inline-flex;align-items:center;padding:.35rem .7rem;border-radius:999px;background:var(--accent);color:var(--primary);font-size:.78rem;font-weight:700}.grid{display:grid;grid-template-columns:360px 1fr;gap:18px}.card{background:color-mix(in srgb,var(--surface) 94%,transparent);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);border-radius:var(--radius);box-shadow:var(--shadow)}.pad{padding:18px}.muted{color:var(--muted)}.row{display:flex;gap:10px;flex-wrap:wrap}.field{display:grid;gap:6px;margin-bottom:12px}input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:var(--surface2);color:var(--text)}textarea{min-height:92px;resize:vertical}.btn{min-height:44px;padding:0 14px;border:0;border-radius:12px;font-weight:700}.primary{background:var(--primary);color:var(--inv)}.secondary{background:var(--surface2);color:var(--text);border:1px solid color-mix(in srgb,var(--text) 14%,transparent)}.ghost{background:transparent;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.stat b{display:block;font-size:1.1rem;margin-top:3px}.players{display:grid;gap:8px;margin-top:12px}.player{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.player.active{outline:2px solid var(--primary);background:color-mix(in srgb,var(--primary) 10%,var(--surface2))}.boardWrap{display:grid;gap:12px}.board{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.cat{min-height:86px;padding:10px;border-radius:14px;background:var(--primary);color:var(--inv);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.85rem;font-weight:800;text-transform:uppercase}.tile{min-height:86px;border-radius:14px;border:0;background:linear-gradient(180deg,color-mix(in srgb,var(--primary) 96%,black 4%),color-mix(in srgb,var(--primary) 82%,black 18%));color:#fff7d8;font-size:1.35rem;font-weight:800;box-shadow:var(--shadow)}.tile:disabled{opacity:.25;cursor:not-allowed}.question{display:none}.question.open{display:block}.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.timer{display:flex;align-items:center;gap:8px}.timer-ring{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top:3px solid var(--primary);animation:spin 1s linear infinite;display:none}.timer-ring.running{display:block}.expired .timer-ring{border-top-color:var(--bad)}.clue{margin:14px 0 16px;font-size:clamp(1.08rem,1vw + 1rem,1.45rem);line-height:1.5}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.answer{min-height:64px;padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);text-align:left;font-weight:600}.answer.correct{background:color-mix(in srgb,var(--good) 18%,var(--surface2));border-color:color-mix(in srgb,var(--good) 50%,transparent)}.answer.wrong{background:color-mix(in srgb,var(--bad) 14%,var(--surface2));border-color:color-mix(in srgb,var(--bad) 50%,transparent)}.feedback{margin-top:12px;font-weight:800}.small{font-size:.9rem}.leaderboard{display:grid;gap:8px}.lead{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.modalBox{width:min(680px,100%);max-height:92vh;overflow:auto;background:var(--surface);color:var(--text);border-radius:20px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);box-shadow:var(--shadow)}.modalHead{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}.modalBody{padding:18px}.teamGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.results-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:20px}.results-modal.show{display:flex}.results-box{width:min(600px,95%);background:var(--surface);border-radius:24px;border:1px solid var(--line);overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.3)}.results-head{padding:20px 24px;background:var(--primary);color:var(--inv);text-align:center}.results-body{padding:24px}.results-grid{display:grid;gap:12px}.result-row{display:flex;justify-content:space-between;padding:14px 16px;background:var(--surface2);border-radius:16px;border:1px solid color-mix(in srgb,var(--text) 10%,transparent);font-weight:700}.play-again{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.timer-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.switch{position:relative;display:inline-block;width:48px;height:26px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;inset:0;background:var(--surface2);transition:.3s;border-radius:26px}.slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:var(--text);transition:.3s;border-radius:50%}.switch input:checked+.slider{background:var(--primary)}.switch input:checked+.slider:before{transform:translateX(22px)}.mute-btn{padding:6px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);width:36px;height:36px;display:grid;place-items:center}.hint{font-size:.82rem;color:var(--muted)}@media(max-width:980px){.grid{grid-template-columns:1fr}}@media(max-width:700px){.board,.answers,.stats,.teamGrid{grid-template-columns:1fr}.app{padding:12px}.cat,.tile{min-height:72px}}@keyframes spin{to{transform:rotate(360deg)}}
   </style>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#006d77">
-  <script>if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));</script>
 </head>
 <body>
 <div class="app">
@@ -91,128 +88,367 @@
     </div>
   </div>
 </div>
+
 <script>
-const WIKI='https://en.wikipedia.org/w/api.php?origin=*';
-const VALUES=[100,200,300,400,500];
-const $=id=>document.getElementById(id);
-const state={players:['Player 1','Player 2'],turn:0,score:[],board:[],answered:0,correct:0,total:25,topics:['Cricket','Space','History','Science','Movies'],active:null,theme:'light'};
-let passCount=0,timerInterval=null,timeLeft=0,isTiming=false,audioEnabled=true;
-const BASE_TIME=90000,PASS_TIME=30000;
+const WIKI = 'https://en.wikipedia.org/w/api.php?origin=*';
+const VALUES = [100, 200, 300, 400, 500];
+const $ = id => document.getElementById(id);
+const state = { players: ['Player 1', 'Player 2'], turn: 0, score: [], board: [], answered: 0, correct: 0, total: 25, topics: ['Cricket', 'Space', 'History', 'Science', 'Movies'], active: null, theme: 'light' };
+let passCount = 0, timerInterval = null, timeLeft = 0, isTiming = false, audioEnabled = true;
+const BASE_TIME = 90000, PASS_TIME = 30000;
 
-function setTheme(t){state.theme=t;document.documentElement.setAttribute('data-theme',t);$('themeBtn').textContent=t==='dark'?'Light':'Dark';}
-function toggleMute(){audioEnabled=!audioEnabled;$('muteBtn').textContent=audioEnabled?'🔊':'🔇';}
-function playTone(freq,dur,type='sine'){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(0.3,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);o.start();o.stop(ctx.currentTime+dur);}catch(e){}}
-function sounds(){return{correct:()=>{if(!audioEnabled)return;playTone(523,0.1);setTimeout(()=>playTone(659,0.1),100);setTimeout(()=>playTone(784,0.2),200);},wrong:()=>{if(!audioEnabled)return;playTone(200,0.3,'sawtooth');},pass:()=>{if(!audioEnabled)return;playTone(400,0.15);setTimeout(()=>playTone(300,0.15),150);},roundEnd:()=>{if(!audioEnabled)return;[523,659,784,1047].forEach((f,i)=>setTimeout(()=>playTone(f,0.2),i*120));}};}
-const SFX=sounds();
+function setTheme(t) { state.theme = t; document.documentElement.setAttribute('data-theme', t); $('themeBtn').textContent = t === 'dark' ? 'Light' : 'Dark'; }
+function toggleMute() { audioEnabled = !audioEnabled; $('muteBtn').textContent = audioEnabled ? '🔊' : '🔇'; }
+function playTone(freq, dur, type = 'sine') { 
+  try { 
+    const ctx = new (window.AudioContext || window.webkitAudioContext)(); 
+    const o = ctx.createOscillator(); 
+    const g = ctx.createGain(); 
+    o.connect(g); 
+    g.connect(ctx.destination); 
+    o.type = type; 
+    o.frequency.value = freq; 
+    g.gain.setValueAtTime(0.3, ctx.currentTime); 
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur); 
+    o.start(); 
+    o.stop(ctx.currentTime + dur); 
+  } catch (e) {} 
+}
+function sounds() { 
+  return { 
+    correct: () => { if (!audioEnabled) return; playTone(523, 0.1); setTimeout(() => playTone(659, 0.1), 100); setTimeout(() => playTone(784, 0.2), 200); }, 
+    wrong: () => { if (!audioEnabled) return; playTone(200, 0.3, 'sawtooth'); }, 
+    pass: () => { if (!audioEnabled) return; playTone(400, 0.15); setTimeout(() => playTone(300, 0.15), 150); }, 
+    roundEnd: () => { if (!audioEnabled) return; [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => playTone(f, 0.2), i * 120)); } 
+  }; 
+}
+const SFX = sounds();
 
-function parseTopics(raw){
-  const parts=(raw||'').split(',').map(x=>x.trim()).filter(Boolean);
-  const uniq=[];
-  for(const p of parts){if(!uniq.includes(p))uniq.push(p);}
-  if(uniq.length===0)return ['Cricket','Space','History','Science','Movies'];
-  while(uniq.length<5){uniq.push(`General ${uniq.length+1}`);}
-  return uniq.slice(0,10);
+function parseTopics(raw) {
+  const parts = (raw || '').split(',').map(x => x.trim()).filter(Boolean);
+  const uniq = [];
+  for (const p of parts) { if (!uniq.includes(p)) uniq.push(p); }
+  if (uniq.length === 0) return ['Cricket', 'Space', 'History', 'Science', 'Movies'];
+  while (uniq.length < 5) { uniq.push(`General ${uniq.length + 1}`); }
+  return uniq.slice(0, 10);
 }
 
-function renderPlayers(){$('playersList').innerHTML='';state.players.forEach((p,i)=>{const d=document.createElement('div');d.className='player'+(i===state.turn?' active':'');d.innerHTML=`<strong>${p}</strong><span>$${state.score[i]||0}</span>`;$('playersList').appendChild(d);});}
-function renderLeaderboard(){$('leaderboard').innerHTML='';[...state.players.map((n,i)=>({n,s:state.score[i]||0,i}))].sort((a,b)=>b.s-a.s).forEach((p,r)=>{const row=document.createElement('div');row.className='lead';row.innerHTML=`<span>${r+1}. ${p.n}${p.i===state.turn?' ● turn':''}</span><b>$${p.s}</b>`;$('leaderboard').appendChild(row);});}
-function renderScoreboard(){$('turn').textContent=state.players[state.turn]||'—';const li=state.score.length?state.score.indexOf(Math.max(...state.score)):-1;$('leader').textContent=li>-1?`${state.players[li]} ($${state.score[li]})`:'—';$('answered').textContent=`${state.answered}/${state.total}`;$('topicLabel').textContent=state.topics.join(', ');$('statusPill').textContent=state.answered>=state.total?'Complete':'In play';$('stateMsg').textContent=state.total-state.answered>0?`${state.total-state.answered} clues left`:'All clues answered';renderLeaderboard();}
-function nextTurn(){state.turn=(state.turn+1)%state.players.length;renderPlayers();renderScoreboard();}
+function renderPlayers() { 
+  $('playersList').innerHTML = ''; 
+  state.players.forEach((p, i) => { 
+    const d = document.createElement('div'); 
+    d.className = 'player' + (i === state.turn ? ' active' : ''); 
+    d.innerHTML = `<strong>${p}</strong><span>$${state.score[i] || 0}</span>`; 
+    $('playersList').appendChild(d); 
+  }); 
+}
 
-function stopTimer(){clearInterval(timerInterval);isTiming=false;$('timerRing').classList.remove('running');}
-function startTimer(ms){stopTimer();timeLeft=ms;isTiming=true;$('timerRing').classList.add('running');$('timerDisplay').classList.remove('expired');updateTimerDisplay();timerInterval=setInterval(()=>{timeLeft-=1000;if(timeLeft<=0){stopTimer();$('timerDisplay').classList.add('expired');handlePass();}else{updateTimerDisplay();}},1000);}
-function updateTimerDisplay(){const m=Math.floor(timeLeft/60000),s=Math.floor((timeLeft%60000)/1000);$('timeLeft').textContent=`${m}:${s.toString().padStart(2,'0')}`;}
+function renderLeaderboard() { 
+  $('leaderboard').innerHTML = ''; 
+  [...state.players.map((n, i) => ({ n, s: state.score[i] || 0, i }))].sort((a, b) => b.s - a.s).forEach((p, r) => { 
+    const row = document.createElement('div'); 
+    row.className = 'lead'; 
+    row.innerHTML = `<span>${r + 1}. ${p.n}${p.i === state.turn ? ' ● turn' : ''}</span><b>$${p.s}</b>`; 
+    $('leaderboard').appendChild(row); 
+  }); 
+}
 
-function handlePass(){if(!state.active)return;stopTimer();passCount++;const orig=state.active.clue._origValue||state.active.clue.value;state.active.clue._origValue=orig;const nv=Math.max(5,Math.floor(orig/Math.pow(2,passCount)));state.active.clue.value=nv;$('money').textContent=`$${nv}`;if(passCount>=state.players.length){state.active.clue.used=true;state.active.tile.disabled=true;state.answered++;$('feedback').textContent='All teams passed. Clue expired.';nextTurn();renderScoreboard();setTimeout(()=>$('questionBox').classList.remove('open'),2000);return;}state.turn=(state.turn+1)%state.players.length;renderPlayers();renderScoreboard();$('activePlayer').textContent=`${state.players[state.turn]}'s turn`;$('feedback').textContent=`Passed! ${state.players[state.turn]} can answer for $${nv} (pass ${passCount})`;startTimer(PASS_TIME);}
+function renderScoreboard() { 
+  $('turn').textContent = state.players[state.turn] || '—'; 
+  const li = state.score.length ? state.score.indexOf(Math.max(...state.score)) : -1; 
+  $('leader').textContent = li > -1 ? `${state.players[li]} ($${state.score[li]})` : '—'; 
+  $('answered').textContent = `${state.answered}/${state.total}`; 
+  $('topicLabel').textContent = state.topics.join(', '); 
+  $('statusPill').textContent = state.answered >= state.total ? 'Complete' : 'In play'; 
+  $('stateMsg').textContent = state.total - state.answered > 0 ? `${state.total - state.answered} clues left` : 'All clues answered'; 
+  renderLeaderboard(); 
+}
 
-function openQ(cat,clue,tile){if(clue.used)return;state.active={cat,clue,tile};passCount=0;stopTimer();$('timerDisplay').classList.remove('expired');$('questionBox').classList.add('open');$('catName').textContent=cat;$('money').textContent=`$${clue.value}`;$('activePlayer').textContent=`${state.players[state.turn]}'s turn`;$('clue').textContent=clue.clue;$('timerBtns').style.display='flex';$('feedback').textContent='';$('answers').innerHTML='';clue.options.forEach(opt=>{const b=document.createElement('button');b.className='answer';b.textContent=opt;b.onclick=()=>submitAnswer(b,opt);$('answers').appendChild(b);});const pb=document.createElement('button');pb.className='answer';pb.style.gridColumn='1 / -1';pb.innerHTML='❌ Pass to next team';pb.onclick=handlePass;$('answers').appendChild(pb);}
+function nextTurn() { 
+  state.turn = (state.turn + 1) % state.players.length; 
+  renderPlayers(); 
+  renderScoreboard(); 
+}
 
-function submitAnswer(btn,opt){if(!state.active)return;const {clue,tile}=state.active;stopTimer();const correct=opt===clue.answer;[...$('answers').children].forEach(x=>{x.disabled=true;if(x.textContent===clue.answer)x.classList.add('correct');if(x===btn&&!correct)x.classList.add('wrong');});clue.used=true;tile.disabled=true;state.answered++;if(correct){state.correct++;state.score[state.turn]=(state.score[state.turn]||0)+clue.value;SFX.correct();$('feedback').textContent=`✅ Correct! ${state.players[state.turn]} earns $${clue.value}.`;}else{state.score[state.turn]=(state.score[state.turn]||0)-Math.floor(clue.value/2);SFX.wrong();$('feedback').textContent=`❌ Wrong. Answer: ${clue.answer}. -$${Math.floor(clue.value/2)}.`;}renderPlayers();renderScoreboard();if(state.answered>=state.total){SFX.roundEnd();showResults();}nextTurn();}
+function stopTimer() { 
+  clearInterval(timerInterval); 
+  isTiming = false; 
+  $('timerRing').classList.remove('running'); 
+}
 
-function showResults(){const ranked=state.players.map((name,i)=>({name,score:state.score[i]||0})).sort((a,b)=>b.score-a.score);$('finalResults').innerHTML='';ranked.forEach((p,i)=>{const row=document.createElement('div');row.className='result-row';row.innerHTML=`<span>${['🥇','🥈','🥉'][i]||`${i+1}.`} ${p.name}</span><span>$${p.score}</span>`;$('finalResults').appendChild(row);});$('resultsModal').classList.add('show');}
+function startTimer(ms) { 
+  stopTimer(); 
+  timeLeft = ms; 
+  isTiming = true; 
+  $('timerRing').classList.add('running'); 
+  $('timerDisplay').classList.remove('expired'); 
+  updateTimerDisplay(); 
+  timerInterval = setInterval(() => { 
+    timeLeft -= 1000; 
+    if (timeLeft <= 0) { stopTimer(); $('timerDisplay').classList.add('expired'); handlePass(); } 
+    else { updateTimerDisplay(); } 
+  }, 1000); 
+}
 
-function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function uniqueByTitle(items){const seen=new Set();return items.filter(x=>{const k=(x.title||'').toLowerCase();if(!k||seen.has(k))return false;seen.add(k);return true;});}
-function clean(text,ans){let t=(text||'No description available.').replace(/\([^)]*\)/g,' ').replace(/\s+/g,' ').trim();t=t.replace(new RegExp(ans.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'ig'),'this subject');return t.length>220?t.slice(0,217)+'...':t;}
-async function wikiSearch(term,limit=30){const d=await fetch(`${WIKI}&action=opensearch&search=${encodeURIComponent(term)}&limit=${limit}&namespace=0&format=json`).then(r=>r.json());return(d[1]||[]).map((title,i)=>({title,extract:d[2][i]}));}
-async function wikiExtracts(titles){const pages=[];for(let i=0;i<titles.length;i+=20){const chunk=titles.slice(i,i+20);const data=await fetch(`${WIKI}&action=query&prop=extracts&exintro=1&explaintext=1&format=json&redirects=1&titles=${encodeURIComponent(chunk.join('|'))}`).then(r=>r.json());for(const k of Object.keys(data?.query?.pages||{})){const p=data.query.pages[k];if(p.title&&p.extract&&p.extract.length>40)pages.push({title:p.title,extract:p.extract});}}return pages;}
-async function gatherPagesForTopic(topic, needed){
-  const queries=[topic, `${topic} history`, `${topic} overview`, `${topic} basics`, `${topic} facts`];
-  let titles=[];
-  for(const q of queries){
-    try{const found=await wikiSearch(q, 24);titles=titles.concat(found.map(x=>x.title));if(titles.length>=needed*3)break;}catch(e){}
+function updateTimerDisplay() { 
+  const m = Math.floor(timeLeft / 60000), s = Math.floor((timeLeft % 60000) / 1000); 
+  $('timeLeft').textContent = `${m}:${s.toString().padStart(2, '0')}`; 
+}
+
+function handlePass() { 
+  if (!state.active) return; 
+  stopTimer(); 
+  passCount++; 
+  const orig = state.active.clue._origValue || state.active.clue.value; 
+  state.active.clue._origValue = orig; 
+  const nv = Math.max(5, Math.floor(orig / Math.pow(2, passCount))); 
+  state.active.clue.value = nv; 
+  $('money').textContent = `$${nv}`; 
+  if (passCount >= state.players.length) { 
+    state.active.clue.used = true; 
+    state.active.tile.disabled = true; 
+    state.answered++; 
+    $('feedback').textContent = 'All teams passed. Clue expired.'; 
+    nextTurn(); 
+    renderScoreboard(); 
+    setTimeout(() => $('questionBox').classList.remove('open'), 2000); 
+    return; 
+  } 
+  state.turn = (state.turn + 1) % state.players.length; 
+  renderPlayers(); 
+  renderScoreboard(); 
+  $('activePlayer').textContent = `${state.players[state.turn]}'s turn`; 
+  $('feedback').textContent = `Passed! ${state.players[state.turn]} can answer for $${nv} (pass ${passCount})`; 
+  startTimer(PASS_TIME); 
+}
+
+function openQ(cat, clue, tile) { 
+  if (clue.used) return; 
+  state.active = { cat, clue, tile }; 
+  passCount = 0; 
+  stopTimer(); 
+  $('timerDisplay').classList.remove('expired'); 
+  $('questionBox').classList.add('open'); 
+  $('catName').textContent = cat; 
+  $('money').textContent = `$${clue.value}`; 
+  $('activePlayer').textContent = `${state.players[state.turn]}'s turn`; 
+  $('clue').textContent = clue.clue; 
+  $('timerBtns').style.display = 'flex'; 
+  $('feedback').textContent = ''; 
+  $('answers').innerHTML = ''; 
+  clue.options.forEach(opt => { 
+    const b = document.createElement('button'); 
+    b.className = 'answer'; 
+    b.textContent = opt; 
+    b.onclick = () => submitAnswer(b, opt); 
+    $('answers').appendChild(b); 
+  }); 
+  const pb = document.createElement('button'); 
+  pb.className = 'answer'; 
+  pb.style.gridColumn = '1 / -1'; 
+  pb.innerHTML = '❌ Pass to next team'; 
+  pb.onclick = handlePass; 
+  $('answers').appendChild(pb); 
+}
+
+function submitAnswer(btn, opt) { 
+  if (!state.active) return; 
+  const { clue, tile } = state.active; 
+  stopTimer(); 
+  const correct = opt === clue.answer; 
+  [...$('answers').children].forEach(x => { 
+    x.disabled = true; 
+    if (x.textContent === clue.answer) x.classList.add('correct'); 
+    if (x === btn && !correct) x.classList.add('wrong'); 
+  }); 
+  clue.used = true; 
+  tile.disabled = true; 
+  state.answered++; 
+  if (correct) { 
+    state.correct++; 
+    state.score[state.turn] = (state.score[state.turn] || 0) + clue.value; 
+    SFX.correct(); 
+    $('feedback').textContent = `✅ Correct! ${state.players[state.turn]} earns $${clue.value}.`; 
+  } else { 
+    state.score[state.turn] = (state.score[state.turn] || 0) - Math.floor(clue.value / 2); 
+    SFX.wrong(); 
+    $('feedback').textContent = `❌ Wrong. Answer: ${clue.answer}. -$${Math.floor(clue.value / 2)}.`; 
+  } 
+  renderPlayers(); 
+  renderScoreboard(); 
+  if (state.answered >= state.total) { SFX.roundEnd(); showResults(); } 
+  nextTurn(); 
+}
+
+function showResults() { 
+  const ranked = state.players.map((name, i) => ({ name, score: state.score[i] || 0 })).sort((a, b) => b.score - a.score); 
+  $('finalResults').innerHTML = ''; 
+  ranked.forEach((p, i) => { 
+    const row = document.createElement('div'); 
+    row.className = 'result-row'; 
+    row.innerHTML = `<span>${['🥇', '🥈', '🥉'][i] || `${i + 1}.`} ${p.name}</span><span>$${p.score}</span>`; 
+    $('finalResults').appendChild(row); 
+  }); 
+  $('resultsModal').classList.add('show'); 
+}
+
+function shuffle(a) { 
+  a = [...a]; 
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } 
+  return a; 
+}
+
+function uniqueByTitle(items) { 
+  const seen = new Set(); 
+  return items.filter(x => { const k = (x.title || '').toLowerCase(); if (!k || seen.has(k)) return false; seen.add(k); return true; }); 
+}
+
+/* Updated formatting helpers */
+function formatJeopardyAnswer(title) {
+  let cleanTitle = title.replace(/\s*\(.*?\)\s*/g, '').trim();
+  return `What is ${cleanTitle}?`;
+}
+
+function clean(text, ans) {
+  let t = (text || 'No description available.').replace(/\([^)]*\)/g, '').replace(/\s+/g, ' ').trim();
+  
+  t = t.replace(new RegExp(`^${ans}\\s+(is|was)\\s+(a|an|the)\\s+`, 'i'), 'This $1 $2 ');
+  
+  const words = ans.split(/\s+/).filter(w => w.length > 3);
+  words.forEach(w => {
+    t = t.replace(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'ig'), '________');
+  });
+  
+  t = t.replace(new RegExp(ans.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'ig'), '________');
+  return t.length > 220 ? t.slice(0, 217) + '...' : t;
+}
+
+async function wikiSearch(term, limit = 30) { 
+  const d = await fetch(`${WIKI}&action=opensearch&search=${encodeURIComponent(term)}&limit=${limit}&namespace=0&format=json`).then(r => r.json()); 
+  return (d[1] || []).map((title, i) => ({ title, extract: d[2][i] })); 
+}
+
+async function wikiExtracts(titles) { 
+  const pages = []; 
+  for (let i = 0; i < titles.length; i += 20) { 
+    const chunk = titles.slice(i, i + 20); 
+    const data = await fetch(`${WIKI}&action=query&prop=extracts&exintro=1&explaintext=1&format=json&redirects=1&titles=${encodeURIComponent(chunk.join('|'))}`).then(r => r.json()); 
+    for (const k of Object.keys(data?.query?.pages || {})) { 
+      const p = data.query.pages[k]; 
+      if (p.title && p.extract && p.extract.length > 40) pages.push({ title: p.title, extract: p.extract }); 
+    } 
+  } 
+  return pages; 
+}
+
+async function gatherPagesForTopic(topic, needed) {
+  const queries = [topic, `${topic} history`, `${topic} overview`, `${topic} basics`, `${topic} facts`];
+  let titles = [];
+  for (const q of queries) {
+    try { const found = await wikiSearch(q, 24); titles = titles.concat(found.map(x => x.title)); if (titles.length >= needed * 3) break; } catch (e) {}
   }
-  titles=[...new Set(titles)].slice(0, Math.max(needed*4, 20));
-  if(!titles.length)return [];
-  const pages=await wikiExtracts(titles);
+  titles = [...new Set(titles)].slice(0, Math.max(needed * 4, 20));
+  if (!titles.length) return [];
+  const pages = await wikiExtracts(titles);
   return uniqueByTitle(pages).slice(0, needed);
 }
-function buildBoard(topicNames, topicPages, rows){
-  const categories=topicNames.slice(0,5).map((topic, i)=>{
-    const pages=shuffle(topicPages[topic]||[]).slice(0, rows);
-    const fallback=(topicPages[topic]||[]).map(p=>p.title);
-    const clues=pages.map((p,r)=>({id:`${i}-${r}`,value:VALUES[r]||VALUES[0],_origValue:VALUES[r]||VALUES[0],answer:p.title,clue:clean(p.extract,p.title),options:[],used:false}));
-    while(clues.length<rows){
-      const r=clues.length;
-      const title=fallback[r%Math.max(1,fallback.length)]||`${topic} answer ${r+1}`;
-      clues.push({id:`${i}-${r}`,value:VALUES[r]||VALUES[0],_origValue:VALUES[r]||VALUES[0],answer:title,clue:`This clue is about ${topic}. Identify this subject related to ${topic}.`,options:[],used:false});
+
+function buildBoard(topicNames, topicPages, rows) {
+  const categories = topicNames.slice(0, 5).map((topic, i) => {
+    const pages = shuffle(topicPages[topic] || []).slice(0, rows);
+    const fallback = (topicPages[topic] || []).map(p => p.title);
+    const clues = pages.map((p, r) => ({ id: `${i}-${r}`, value: VALUES[r] || VALUES[0], _origValue: VALUES[r] || VALUES[0], answer: p.title, clue: clean(p.extract, p.title), options: [], used: false }));
+    while (clues.length < rows) {
+      const r = clues.length;
+      const title = fallback[r % Math.max(1, fallback.length)] || `${topic} answer ${r + 1}`;
+      clues.push({ id: `${i}-${r}`, value: VALUES[r] || VALUES[0], _origValue: VALUES[r] || VALUES[0], answer: title, clue: `This clue is about ${topic}. Identify this subject related to ${topic}.`, options: [], used: false });
     }
-    return {name:topic, clues};
+    return { name: topic, clues };
   });
-  const allAnswers=uniqueByTitle(Object.values(topicPages).flat()).map(p=>p.title);
-  categories.forEach(cat=>cat.clues.forEach(q=>{
-    const distractors=shuffle(allAnswers.filter(a=>a!==q.answer)).slice(0,3);
-    q.options=shuffle([q.answer,...distractors]);
-  }));
+
+  // NEW: Category-specific distractors logic
+  categories.forEach(cat => {
+    const categoryAnswers = uniqueByTitle(topicPages[cat.name] || []).map(p => p.title);
+    cat.clues.forEach(q => {
+      const pool = categoryAnswers.filter(a => a !== q.answer);
+      const distractors = shuffle(pool).slice(0, 3);
+      const rawOptions = shuffle([q.answer, ...distractors]);
+      
+      // Format to "What is..."
+      q.options = rawOptions.map(opt => formatJeopardyAnswer(opt));
+      q.answer = formatJeopardyAnswer(q.answer);
+    });
+  });
+
   return categories;
 }
-function renderBoard(){const rows=state.board[0]?state.board[0].clues.length:5;$('board').innerHTML='';state.board.forEach(c=>{const h=document.createElement('div');h.className='cat';h.textContent=c.name;$('board').appendChild(h);});for(let r=0;r<rows;r++)state.board.forEach(cat=>{const clue=cat.clues[r];if(!clue)return;const b=document.createElement('button');b.className='tile';b.textContent=`$${clue.value}`;b.disabled=clue.used;b.onclick=()=>openQ(cat.name,clue,b);$('board').appendChild(b);});}
 
-async function start(){
-  const topics=parseTopics($('topic').value);
-  const n=Math.max(2,Math.min(8,Number($('players').value||2)));
-  const teamMode=$('teamMode').checked;
-  if(teamMode){const tc=Math.ceil(n/2);state.players=[...Array(tc)].map((_,i)=>$('name'+i)?.value.trim()||`Team ${i+1}`);} else {state.players=[...Array(n)].map((_,i)=>$('name'+i)?.value.trim()||`Player ${i+1}`);}
-  state.topics=topics;
-  const rows=5;
-  const total=25;
-  state.score=state.players.map(()=>0);state.turn=0;state.answered=0;state.correct=0;state.total=total;state.board=[];state.active=null;$('questionBox').classList.remove('open');$('board').innerHTML='';$('feedback').textContent='';renderPlayers();renderScoreboard();
-  try{
-    $('startBtn').disabled=true;$('startBtn').textContent='Loading...';$('statusPill').textContent='Loading Wikipedia';
-    const selectedTopics=topics.slice(0,5);
-    const topicPages={};
-    for(const topic of selectedTopics){
-      topicPages[topic]=await gatherPagesForTopic(topic, rows);
+function renderBoard() { 
+  const rows = state.board[0] ? state.board[0].clues.length : 5; 
+  $('board').innerHTML = ''; 
+  state.board.forEach(c => { const h = document.createElement('div'); h.className = 'cat'; h.textContent = c.name; $('board').appendChild(h); }); 
+  for (let r = 0; r < rows; r++) state.board.forEach(cat => { 
+    const clue = cat.clues[r]; 
+    if (!clue) return; 
+    const b = document.createElement('button'); 
+    b.className = 'tile'; 
+    b.textContent = `$${clue.value}`; 
+    b.disabled = clue.used; 
+    b.onclick = () => openQ(cat.name, clue, b); 
+    $('board').appendChild(b); 
+  }); 
+}
+
+async function start() {
+  const topics = parseTopics($('topic').value);
+  const n = Math.max(2, Math.min(8, Number($('players').value || 2)));
+  const teamMode = $('teamMode').checked;
+  if (teamMode) { const tc = Math.ceil(n / 2); state.players = [...Array(tc)].map((_, i) => $('name' + i)?.value.trim() || `Team ${i + 1}`); } 
+  else { state.players = [...Array(n)].map((_, i) => $('name' + i)?.value.trim() || `Player ${i + 1}`); }
+  
+  state.topics = topics;
+  const rows = 5;
+  const total = 25;
+  state.score = state.players.map(() => 0); state.turn = 0; state.answered = 0; state.correct = 0; state.total = total; state.board = []; state.active = null; 
+  $('questionBox').classList.remove('open'); $('board').innerHTML = ''; $('feedback').textContent = ''; 
+  renderPlayers(); renderScoreboard();
+  
+  try {
+    $('startBtn').disabled = true; $('startBtn').textContent = 'Loading...'; $('statusPill').textContent = 'Loading Wikipedia';
+    const selectedTopics = topics.slice(0, 5);
+    const topicPages = {};
+    for (const topic of selectedTopics) {
+      topicPages[topic] = await gatherPagesForTopic(topic, rows);
     }
-    const topicsWithPages=selectedTopics.filter(t=>(topicPages[t]||[]).length>0);
-    if(topicsWithPages.length<5) throw new Error('Need at least 5 topics with Wikipedia matches. Try broader topics like Space, History, Science, Movies, Geography.');
-    state.board=buildBoard(topicsWithPages, topicPages, rows);
+    const topicsWithPages = selectedTopics.filter(t => (topicPages[t] || []).length > 0);
+    if (topicsWithPages.length < 5) throw new Error('Need at least 5 topics with Wikipedia matches. Try broader topics like Space, History, Science, Movies, Geography.');
+    state.board = buildBoard(topicsWithPages, topicPages, rows);
     renderBoard();
-    $('statusPill').textContent='Ready';
-    $('stateMsg').textContent=`Loaded ${topicsWithPages.length} topics and ${total} clues.`;
+    $('statusPill').textContent = 'Ready';
+    $('stateMsg').textContent = `Loaded ${topicsWithPages.length} topics and ${total} clues.`;
     renderScoreboard();
-  }catch(e){
-    $('stateMsg').innerHTML=`<span style="color:var(--bad)">${e.message}</span>`;
-    $('statusPill').textContent='Error';
-  }finally{
-    $('startBtn').disabled=false;$('startBtn').textContent='Create board';
+  } catch (e) {
+    $('stateMsg').innerHTML = `<span style="color:var(--bad)">${e.message}</span>`;
+    $('statusPill').textContent = 'Error';
+  } finally {
+    $('startBtn').disabled = false; $('startBtn').textContent = 'Create board';
   }
 }
 
-function buildNameInputs(){const n=Math.max(2,Math.min(8,Number($('players').value||2)));$('nameGrid').innerHTML='';for(let i=0;i<n;i++){const d=document.createElement('div');d.className='field';d.innerHTML=`<label>Player ${i+1}</label><input id='name${i}' value='Player ${i+1}'>`;$('nameGrid').appendChild(d);}}
-function reset(){state.score=state.players.map(()=>0);state.turn=0;state.answered=0;state.correct=0;state.board=[];state.active=null;stopTimer();$('questionBox').classList.remove('open');$('board').innerHTML='';$('feedback').textContent='';renderPlayers();renderScoreboard();$('statusPill').textContent='Waiting';$('stateMsg').textContent='Create a board to begin.';}
+function buildNameInputs() { const n = Math.max(2, Math.min(8, Number($('players').value || 2))); $('nameGrid').innerHTML = ''; for (let i = 0; i < n; i++) { const d = document.createElement('div'); d.className = 'field'; d.innerHTML = `<label>Player ${i + 1}</label><input id='name${i}' value='Player ${i + 1}'>`; $('nameGrid').appendChild(d); } }
+function reset() { state.score = state.players.map(() => 0); state.turn = 0; state.answered = 0; state.correct = 0; state.board = []; state.active = null; stopTimer(); $('questionBox').classList.remove('open'); $('board').innerHTML = ''; $('feedback').textContent = ''; renderPlayers(); renderScoreboard(); $('statusPill').textContent = 'Waiting'; $('stateMsg').textContent = 'Create a board to begin.'; }
 
-$('players').oninput=buildNameInputs;buildNameInputs();
-$('closeModal').onclick=()=>$('setupModal').classList.remove('open');
-$('themeBtn').onclick=()=>setTheme(state.theme==='dark'?'light':'dark');
-$('muteBtn').onclick=toggleMute;
-$('demoBtn').onclick=()=>{$('topic').value='Cricket, Space, History, Science, Movies';start();};
-$('resetBtn').onclick=reset;
-$('startBtn').onclick=start;
-$('newRoundBtn').onclick=()=>{$('resultsModal').classList.remove('show');start();};
-$('newGameBtn').onclick=()=>{$('resultsModal').classList.remove('show');reset();$('topic').value='Cricket, Space, History, Science, Movies';$('players').value=2;buildNameInputs();};
-$('startTimerBtn').onclick=()=>startTimer(BASE_TIME);
-$('pauseTimerBtn').onclick=stopTimer;
+$('players').oninput = buildNameInputs; buildNameInputs();
+$('closeModal').onclick = () => $('setupModal').classList.remove('open');
+$('themeBtn').onclick = () => setTheme(state.theme === 'dark' ? 'light' : 'dark');
+$('muteBtn').onclick = toggleMute;
+$('demoBtn').onclick = () => { $('topic').value = 'Cricket, Space, History, Science, Movies'; start(); };
+$('resetBtn').onclick = reset;
+$('startBtn').onclick = start;
+$('newRoundBtn').onclick = () => { $('resultsModal').classList.remove('show'); start(); };
+$('newGameBtn').onclick = () => { $('resultsModal').classList.remove('show'); reset(); $('topic').value = 'Cricket, Space, History, Science, Movies'; $('players').value = 2; buildNameInputs(); };
+$('startTimerBtn').onclick = () => startTimer(BASE_TIME);
+$('pauseTimerBtn').onclick = stopTimer;
 setTheme('light');
 reset();
 </script>
