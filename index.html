@@ -117,6 +117,12 @@ function renderPlayers(){$('playersList').innerHTML='';state.players.forEach((p,
 function renderLeaderboard(){$('leaderboard').innerHTML='';[...state.players.map((n,i)=>({n,s:state.score[i]||0,i}))].sort((a,b)=>b.s-a.s).forEach((p,r)=>{const row=document.createElement('div');row.className='lead';row.innerHTML=`<span>${r+1}. ${p.n}${p.i===state.turn?' ● turn':''}</span><b>${points(p.s)}</b>`;$('leaderboard').appendChild(row);});}
 function renderScoreboard(){$('turn').textContent=currentLabel();const li=state.score.length?state.score.indexOf(Math.max(...state.score)):-1;$('leader').textContent=li>-1?`${state.players[li]} (${points(state.score[li])})`:'—';$('answered').textContent=`${state.answered}/${state.total}`;$('topicLabel').textContent=state.topics.join(', ');$('statusPill').textContent=state.answered>=state.total?'Complete':'In play';$('stateMsg').textContent=state.total-state.answered>0?`${state.total-state.answered} clues left`:'All clues answered';renderLeaderboard();}
 function nextTurn(){state.turn=(state.turn+1)%state.players.length;renderPlayers();renderScoreboard();}
+function setTurn(index){state.turn=((index%state.players.length)+state.players.length)%state.players.length;renderPlayers();renderScoreboard();}
+function nextAfter(index){return (index + 1) % state.players.length;}
+function resolveTurnAfterClue(){
+  if(!state.active) return;
+  setTurn(nextAfter(state.active.originTurn));
+}
 
 function stopTimer(){clearInterval(timerInterval);$('timerRing').classList.remove('running');}
 function startTimer(ms){stopTimer();timeLeft=ms;$('timerRing').classList.add('running');$('timerDisplay').classList.remove('expired');updateTimerDisplay();timerInterval=setInterval(()=>{timeLeft-=1000;if(timeLeft<=0){stopTimer();$('timerDisplay').classList.add('expired');handlePass();}else updateTimerDisplay();},1000);}
@@ -227,7 +233,7 @@ function markOptions(selected,correct){
 
 function openQ(cat,clue,tile){
   if(clue.used)return;
-  state.active={cat,clue,tile,attemptedBy:[]};
+  state.active={cat,clue,tile,attemptedBy:[],originTurn:state.turn};
   stopTimer();
   $('timerDisplay').classList.remove('expired');
   $('questionBox').classList.add('open');
@@ -250,8 +256,8 @@ function submitAnswer(selected){
     state.score[state.turn]=(state.score[state.turn]||0)+clue.value;
     markOptions(selected,clue.answer);SFX.correct();
     $('feedback').textContent=`✅ Correct! ${currentLabel()} earns ${points(clue.value)}.`;
-    renderPlayers();renderScoreboard();
-    if(state.answered>=state.total){SFX.roundEnd();showResults();} else nextTurn();
+    resolveTurnAfterClue();
+    if(state.answered>=state.total){SFX.roundEnd();showResults();}
     setTimeout(()=>$('questionBox').classList.remove('open'),1800);
     return;
   }
@@ -260,8 +266,8 @@ function submitAnswer(selected){
   if(attemptedBy.length>=state.players.length){
     clue.used=true;tile.disabled=true;state.answered++;
     $('feedback').textContent=`No one got it. Correct answer: ${clue.answer}.`;
-    renderPlayers();renderScoreboard();
-    if(state.answered>=state.total){SFX.roundEnd();showResults();} else nextTurn();
+    resolveTurnAfterClue();
+    if(state.answered>=state.total){SFX.roundEnd();showResults();}
     setTimeout(()=>$('questionBox').classList.remove('open'),1800);
     return;
   }
@@ -282,8 +288,8 @@ function handlePass(){
   if(attemptedBy.length>=state.players.length){
     clue.used=true;tile.disabled=true;state.answered++;
     $('feedback').textContent=`All passed. Correct answer: ${clue.answer}.`;
-    renderPlayers();renderScoreboard();
-    if(state.answered>=state.total){SFX.roundEnd();showResults();} else nextTurn();
+    resolveTurnAfterClue();
+    if(state.answered>=state.total){SFX.roundEnd();showResults();}
     setTimeout(()=>$('questionBox').classList.remove('open'),1800);
     return;
   }
