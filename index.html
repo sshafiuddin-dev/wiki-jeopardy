@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wiki Jeopardy Multiplayer</title>
-  <meta name="description" content="A Jeopardy-style multiplayer quiz game powered by Wikipedia and optional LLM formatting." />
+  <meta name="description" content="A Jeopardy-style multiplayer quiz game powered by Wikipedia and LLM-generated clues." />
   <style>
-    :root,[data-theme="light"]{--bg:#f7f6f2;--surface:#faf9f6;--surface2:#f2f0eb;--text:#26231d;--muted:#6b675f;--line:#d9d4cc;--primary:#006d77;--primary2:#01555c;--accent:#e7f1ef;--good:#2f7d32;--bad:#a23b72;--warn:#b7791f;--inv:#fffef9;--radius:16px;--shadow:0 10px 24px rgba(0,0,0,.08);--font:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-    [data-theme="dark"]{--bg:#151412;--surface:#1b1a18;--surface2:#21201d;--text:#e7e2d9;--muted:#ada79e;--line:#33312d;--primary:#49a6b1;--primary2:#2b8e99;--accent:#203438;--good:#6dc06f;--bad:#db73b1;--warn:#f1c36d;--inv:#151412;--shadow:0 10px 24px rgba(0,0,0,.35)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--font);background:radial-gradient(circle at top right,rgba(0,109,119,.12),transparent 30%),var(--bg);color:var(--text);min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1280px;margin:0 auto;padding:16px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 0 18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:var(--inv);display:grid;place-items:center;box-shadow:var(--shadow);font-weight:800}h1,h2,h3{margin:0;font-family:Georgia,serif;letter-spacing:-.03em}h1{font-size:clamp(1.6rem,2vw,2.5rem)}h2{font-size:1.15rem}h3{font-size:1rem}.pill{display:inline-flex;align-items:center;padding:.35rem .7rem;border-radius:999px;background:var(--accent);color:var(--primary);font-size:.78rem;font-weight:700}.grid{display:grid;grid-template-columns:360px 1fr;gap:18px}.card{background:color-mix(in srgb,var(--surface) 94%,transparent);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);border-radius:var(--radius);box-shadow:var(--shadow)}.pad{padding:18px}.muted{color:var(--muted)}.row{display:flex;gap:10px;flex-wrap:wrap}.field{display:grid;gap:6px;margin-bottom:12px}input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:var(--surface2);color:var(--text)}textarea{min-height:92px;resize:vertical}.btn{min-height:44px;padding:0 14px;border:0;border-radius:12px;font-weight:700}.primary{background:var(--primary);color:var(--inv)}.secondary{background:var(--surface2);color:var(--text);border:1px solid color-mix(in srgb,var(--text) 14%,transparent)}.ghost{background:transparent;color:var(--muted)}.warn{color:var(--warn)}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.stat b{display:block;font-size:1.1rem;margin-top:3px}.players{display:grid;gap:8px;margin-top:12px}.player{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.player.active{outline:2px solid var(--primary);background:color-mix(in srgb,var(--primary) 10%,var(--surface2))}.boardWrap{display:grid;gap:12px}.board{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.cat{min-height:86px;padding:10px;border-radius:14px;background:var(--primary);color:var(--inv);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.85rem;font-weight:800;text-transform:uppercase}.tile{min-height:86px;border-radius:14px;border:0;background:linear-gradient(180deg,color-mix(in srgb,var(--primary) 96%,black 4%),color-mix(in srgb,var(--primary) 82%,black 18%));color:#fff7d8;font-size:1.35rem;font-weight:800;box-shadow:var(--shadow)}.tile:disabled{opacity:.25;cursor:not-allowed}.question{display:none}.question.open{display:block}.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.timer{display:flex;align-items:center;gap:8px}.timer-ring{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top:3px solid var(--primary);animation:spin 1s linear infinite;display:none}.timer-ring.running{display:block}.expired .timer-ring{border-top-color:var(--bad)}.clue{margin:14px 0 16px;font-size:clamp(1.08rem,1vw + 1rem,1.45rem);line-height:1.5}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.answer{min-height:64px;padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);text-align:left;font-weight:600}.answer.correct{background:color-mix(in srgb,var(--good) 18%,var(--surface2));border-color:color-mix(in srgb,var(--good) 50%,transparent)}.answer.wrong{background:color-mix(in srgb,var(--bad) 14%,var(--surface2));border-color:color-mix(in srgb,var(--bad) 50%,transparent)}.feedback{margin-top:12px;font-weight:800}.small{font-size:.9rem}.tiny{font-size:.8rem}.leaderboard{display:grid;gap:8px}.lead{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.modalBox{width:min(680px,100%);max-height:92vh;overflow:auto;background:var(--surface);color:var(--text);border-radius:20px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);box-shadow:var(--shadow)}.modalHead{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}.modalBody{padding:18px}.teamGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.results-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:20px}.results-modal.show{display:flex}.results-box{width:min(600px,95%);background:var(--surface);border-radius:24px;border:1px solid var(--line);overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.3)}.results-head{padding:20px 24px;background:var(--primary);color:var(--inv);text-align:center}.results-body{padding:24px}.results-grid{display:grid;gap:12px}.result-row{display:flex;justify-content:space-between;padding:14px 16px;background:var(--surface2);border-radius:16px;border:1px solid color-mix(in srgb,var(--text) 10%,transparent);font-weight:700}.play-again{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.timer-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.switch{position:relative;display:inline-block;width:48px;height:26px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;inset:0;background:var(--surface2);transition:.3s;border-radius:26px}.slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:var(--text);transition:.3s;border-radius:50%}.switch input:checked+.slider{background:var(--primary)}.switch input:checked+.slider:before{transform:translateX(22px)}.mute-btn{padding:6px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);width:36px;height:36px;display:grid;place-items:center}.hint{font-size:.82rem;color:var(--muted)}.subcard{margin-top:16px;padding:14px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.statusline{margin-top:8px;font-size:.82rem;color:var(--muted)}code.inline{padding:2px 6px;border-radius:8px;background:var(--surface2);border:1px solid var(--line)}@media(max-width:980px){.grid{grid-template-columns:1fr}}@media(max-width:700px){.board,.answers,.stats,.teamGrid{grid-template-columns:1fr}.app{padding:12px}.cat,.tile{min-height:72px}}@keyframes spin{to{transform:rotate(360deg)}}
+    :root,[data-theme="light"]{--bg:#f7f6f2;--surface:#faf9f6;--surface2:#f2f0eb;--text:#26231d;--muted:#6b675f;--line:#d9d4cc;--primary:#006d77;--primary2:#01555c;--accent:#e7f1ef;--good:#2f7d32;--bad:#a23b72;--inv:#fffef9;--radius:16px;--shadow:0 10px 24px rgba(0,0,0,.08);--font:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    [data-theme="dark"]{--bg:#151412;--surface:#1b1a18;--surface2:#21201d;--text:#e7e2d9;--muted:#ada79e;--line:#33312d;--primary:#49a6b1;--primary2:#2b8e99;--accent:#203438;--good:#6dc06f;--bad:#db73b1;--inv:#151412;--shadow:0 10px 24px rgba(0,0,0,.35)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--font);background:radial-gradient(circle at top right,rgba(0,109,119,.12),transparent 30%),var(--bg);color:var(--text);min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1280px;margin:0 auto;padding:16px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 0 18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:var(--inv);display:grid;place-items:center;box-shadow:var(--shadow);font-weight:800}h1,h2{margin:0;font-family:Georgia,serif;letter-spacing:-.03em}h1{font-size:clamp(1.6rem,2vw,2.5rem)}h2{font-size:1.15rem}.pill{display:inline-flex;align-items:center;padding:.35rem .7rem;border-radius:999px;background:var(--accent);color:var(--primary);font-size:.78rem;font-weight:700}.grid{display:grid;grid-template-columns:360px 1fr;gap:18px}.card{background:color-mix(in srgb,var(--surface) 94%,transparent);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);border-radius:var(--radius);box-shadow:var(--shadow)}.pad{padding:18px}.muted{color:var(--muted)}.row{display:flex;gap:10px;flex-wrap:wrap}.field{display:grid;gap:6px;margin-bottom:12px}input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:var(--surface2);color:var(--text)}textarea{min-height:92px;resize:vertical}.btn{min-height:44px;padding:0 14px;border:0;border-radius:12px;font-weight:700}.primary{background:var(--primary);color:var(--inv)}.secondary{background:var(--surface2);color:var(--text);border:1px solid color-mix(in srgb,var(--text) 14%,transparent)}.ghost{background:transparent;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.stat b{display:block;font-size:1.1rem;margin-top:3px}.players{display:grid;gap:8px;margin-top:12px}.player{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.player.active{outline:2px solid var(--primary);background:color-mix(in srgb,var(--primary) 10%,var(--surface2))}.boardWrap{display:grid;gap:12px}.board{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.cat{min-height:86px;padding:10px;border-radius:14px;background:var(--primary);color:var(--inv);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.85rem;font-weight:800;text-transform:uppercase}.tile{min-height:86px;border-radius:14px;border:0;background:linear-gradient(180deg,color-mix(in srgb,var(--primary) 96%,black 4%),color-mix(in srgb,var(--primary) 82%,black 18%));color:#fff7d8;font-size:1.35rem;font-weight:800;box-shadow:var(--shadow)}.tile:disabled{opacity:.25;cursor:not-allowed}.question{display:none}.question.open{display:block}.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.timer{display:flex;align-items:center;gap:8px}.timer-ring{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top:3px solid var(--primary);animation:spin 1s linear infinite;display:none}.timer-ring.running{display:block}.expired .timer-ring{border-top-color:var(--bad)}.clue{margin:14px 0 16px;font-size:clamp(1.08rem,1vw + 1rem,1.45rem);line-height:1.5}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.answer{min-height:64px;padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);text-align:left;font-weight:600}.answer.correct{background:color-mix(in srgb,var(--good) 18%,var(--surface2));border-color:color-mix(in srgb,var(--good) 50%,transparent)}.answer.wrong{background:color-mix(in srgb,var(--bad) 14%,var(--surface2));border-color:color-mix(in srgb,var(--bad) 50%,transparent)}.feedback{margin-top:12px;font-weight:800}.small{font-size:.9rem}.leaderboard{display:grid;gap:8px}.lead{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.modalBox{width:min(680px,100%);max-height:92vh;overflow:auto;background:var(--surface);color:var(--text);border-radius:20px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);box-shadow:var(--shadow)}.modalHead{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}.modalBody{padding:18px}.teamGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.results-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:20px}.results-modal.show{display:flex}.results-box{width:min(600px,95%);background:var(--surface);border-radius:24px;border:1px solid var(--line);overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.3)}.results-head{padding:20px 24px;background:var(--primary);color:var(--inv);text-align:center}.results-body{padding:24px}.results-grid{display:grid;gap:12px}.result-row{display:flex;justify-content:space-between;padding:14px 16px;background:var(--surface2);border-radius:16px;border:1px solid color-mix(in srgb,var(--text) 10%,transparent);font-weight:700}.play-again{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.timer-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.switch{position:relative;display:inline-block;width:48px;height:26px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;inset:0;background:var(--surface2);transition:.3s;border-radius:26px}.slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:var(--text);transition:.3s;border-radius:50%}.switch input:checked+.slider{background:var(--primary)}.switch input:checked+.slider:before{transform:translateX(22px)}.mute-btn{padding:6px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);width:36px;height:36px;display:grid;place-items:center}.hint{font-size:.82rem;color:var(--muted)}@media(max-width:980px){.grid{grid-template-columns:1fr}}@media(max-width:700px){.board,.answers,.stats,.teamGrid{grid-template-columns:1fr}.app{padding:12px}.cat,.tile{min-height:72px}}@keyframes spin{to{transform:rotate(360deg)}}
   </style>
 </head>
 <body>
@@ -33,20 +33,6 @@
         <button class="btn secondary" id="demoBtn">Demo</button>
         <button class="btn ghost" id="resetBtn">Reset</button>
       </div>
-
-      <div class="subcard">
-        <h3>LLM clue mode</h3>
-        <p class="muted tiny" style="margin:.5rem 0 .75rem">Optional: use Groq via your Cloudflare Worker to turn Wikipedia extracts into cleaner Jeopardy-style clues and better distractors.</p>
-        <div class="field" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><label>Enable LLM formatting</label><label class="switch"><input type="checkbox" id="llmEnabled"><span class="slider"></span></label></div>
-        <div class="field"><label>Worker URL</label><input id="llmEndpoint" type="url" placeholder="https://groq-proxy.example.workers.dev" /></div>
-        <div class="field"><label>Model</label><input id="llmModel" type="text" value="llama-3.3-70b-versatile" /></div>
-        <div class="row">
-          <button class="btn secondary small" id="saveLlmBtn">Save LLM settings</button>
-          <button class="btn ghost small" id="testLlmBtn">Test LLM</button>
-        </div>
-        <div class="statusline" id="llmStatus">LLM disabled. Using Wikipedia-only clue generation.</div>
-      </div>
-
       <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
       <div class="stats">
         <div class="stat"><span class="muted small">Leader</span><b id="leader">—</b></div>
@@ -106,10 +92,11 @@
 <script>
 const WIKI = 'https://en.wikipedia.org/w/api.php?origin=*';
 const VALUES = [100, 200, 300, 400, 500];
-const DEFAULT_ENDPOINT = 'https://groq-proxy.sshafiuddin-dev.workers.dev';
-const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
+const WORKER_ENDPOINT = 'https://groq-proxy.sshafiuddin-dev.workers.dev';
+const LLM_MODEL = 'llama-3.3-70b-versatile';
+const USE_LLM = true;
 const $ = id => document.getElementById(id);
-const state = { players: ['Player 1', 'Player 2'], turn: 0, score: [], board: [], answered: 0, correct: 0, total: 25, topics: ['Cricket', 'Space', 'History', 'Science', 'Movies'], active: null, theme: 'light', llmEnabled: false, llmEndpoint: DEFAULT_ENDPOINT, llmModel: DEFAULT_MODEL };
+const state = { players: ['Player 1', 'Player 2'], turn: 0, score: [], board: [], answered: 0, correct: 0, total: 25, topics: ['Cricket', 'Space', 'History', 'Science', 'Movies'], active: null, theme: 'light' };
 let passCount = 0, timerInterval = null, timeLeft = 0, isTiming = false, audioEnabled = true;
 const BASE_TIME = 90000, PASS_TIME = 30000;
 
@@ -139,34 +126,6 @@ function sounds() {
   };
 }
 const SFX = sounds();
-
-function loadLlmSettings() {
-  state.llmEnabled = localStorage.getItem('wj_llm_enabled') === 'true';
-  state.llmEndpoint = localStorage.getItem('wj_llm_endpoint') || DEFAULT_ENDPOINT;
-  state.llmModel = localStorage.getItem('wj_llm_model') || DEFAULT_MODEL;
-  $('llmEnabled').checked = state.llmEnabled;
-  $('llmEndpoint').value = state.llmEndpoint;
-  $('llmModel').value = state.llmModel;
-  updateLlmStatus();
-}
-
-function saveLlmSettings() {
-  state.llmEnabled = $('llmEnabled').checked;
-  state.llmEndpoint = $('llmEndpoint').value.trim() || DEFAULT_ENDPOINT;
-  state.llmModel = $('llmModel').value.trim() || DEFAULT_MODEL;
-  localStorage.setItem('wj_llm_enabled', String(state.llmEnabled));
-  localStorage.setItem('wj_llm_endpoint', state.llmEndpoint);
-  localStorage.setItem('wj_llm_model', state.llmModel);
-  updateLlmStatus('LLM settings saved.');
-}
-
-function updateLlmStatus(msg = '') {
-  if (!state.llmEnabled) {
-    $('llmStatus').textContent = msg || 'LLM disabled. Using Wikipedia-only clue generation.';
-    return;
-  }
-  $('llmStatus').textContent = msg || `LLM enabled via ${state.llmEndpoint} using model ${state.llmModel}.`;
-}
 
 function parseTopics(raw) {
   const parts = (raw || '').split(',').map(x => x.trim()).filter(Boolean);
@@ -412,11 +371,10 @@ function pickDistractors(answer, pool, count = 3) {
   return [...new Set([...strong, ...fallback])].slice(0, count);
 }
 
-function sanitizeLlmResult(raw, page, topic, titlePool) {
+function sanitizeLlmResult(raw, page, titlePool) {
   const answerTitle = page.title;
   const safeClue = toJeopardyClue(page.extract, answerTitle);
   const fallbackDistractors = pickDistractors(answerTitle, titlePool, 3);
-
   const clueText = typeof raw?.clue === 'string' && raw.clue.trim() ? raw.clue.trim() : safeClue;
   let distractors = Array.isArray(raw?.distractors) ? raw.distractors.map(x => stripParens(String(x || '')).trim()).filter(Boolean) : [];
   distractors = distractors.filter(x => normalizeTitle(x) !== normalizeTitle(answerTitle));
@@ -427,27 +385,22 @@ function sanitizeLlmResult(raw, page, topic, titlePool) {
     if (!distractors.some(d => normalizeTitle(d) === normalizeTitle(next))) distractors.push(next);
   }
   distractors = distractors.slice(0, 3);
-  const options = shuffle([answerTitle, ...distractors]).map(formatJeopardyAnswer);
-
   return {
     rawAnswer: answerTitle,
     answer: formatJeopardyAnswer(answerTitle),
     clue: clueText.length > 240 ? clueText.slice(0, 237).trimEnd() + '...' : clueText,
-    options
+    options: shuffle([answerTitle, ...distractors]).map(formatJeopardyAnswer)
   };
 }
 
 async function generateLlmClue(page, topic, titlePool) {
-  const endpoint = state.llmEndpoint?.trim();
-  if (!state.llmEnabled || !endpoint) throw new Error('LLM disabled');
-
   const prompt = `You are writing one Jeopardy-style multiple choice clue. Return JSON only with keys clue and distractors.\n\nRules:\n- Topic: ${topic}\n- Correct answer title: ${page.title}\n- Wikipedia extract: ${page.extract}\n- Candidate same-topic titles for distractors: ${titlePool.slice(0, 12).join(', ')}\n- Write one short Jeopardy-style clue that does NOT reveal the answer title or any major word from it. Use _____ if needed.\n- Keep clue under 220 characters.\n- Provide exactly 3 plausible distractor titles from the same topic if possible.\n- Do not include the correct answer in distractors.\n- Output strictly valid JSON like {"clue":"...","distractors":["...","...","..."]}`;
 
-  const res = await fetch(endpoint, {
+  const res = await fetch(WORKER_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model: state.llmModel || DEFAULT_MODEL,
+      model: LLM_MODEL,
       temperature: 0.4,
       response_format: { type: 'json_object' },
       messages: [
@@ -457,38 +410,12 @@ async function generateLlmClue(page, topic, titlePool) {
     })
   });
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`LLM request failed: ${res.status} ${text}`);
-  }
-
+  if (!res.ok) throw new Error(`LLM request failed: ${res.status}`);
   const data = await res.json();
   const content = data?.choices?.[0]?.message?.content || '{}';
   let parsed;
-  try {
-    parsed = JSON.parse(content);
-  } catch (e) {
-    throw new Error('LLM returned invalid JSON');
-  }
-  return sanitizeLlmResult(parsed, page, topic, titlePool);
-}
-
-async function testLlm() {
-  saveLlmSettings();
-  if (!state.llmEnabled) {
-    updateLlmStatus('Enable LLM formatting first.');
-    return;
-  }
-  $('testLlmBtn').disabled = true;
-  updateLlmStatus('Testing LLM connection...');
-  try {
-    const result = await generateLlmClue({ title: 'Sachin Tendulkar', extract: 'Sachin Tendulkar is an Indian former international cricketer who captained the Indian national team.' }, 'Cricket', ['Virat Kohli', 'Rahul Dravid', 'Brian Lara', 'Kapil Dev']);
-    updateLlmStatus(`LLM test passed. Example clue: ${result.clue}`);
-  } catch (e) {
-    updateLlmStatus(`LLM test failed. ${e.message}`);
-  } finally {
-    $('testLlmBtn').disabled = false;
-  }
+  try { parsed = JSON.parse(content); } catch (e) { throw new Error('LLM returned invalid JSON'); }
+  return sanitizeLlmResult(parsed, page, titlePool);
 }
 
 async function wikiSearch(term, limit = 30) {
@@ -538,14 +465,12 @@ async function buildBoard(topicNames, topicPages, rows) {
       const p = pages[r];
       let generated;
       try {
-        generated = state.llmEnabled ? await generateLlmClue(p, topic, titlePool) : null;
+        generated = USE_LLM ? await generateLlmClue(p, topic, titlePool) : null;
       } catch (e) {
         generated = null;
       }
-
       const fallbackDistractors = pickDistractors(p.title, titlePool, 3);
       const rawOptions = generated?.options?.length ? generated.options.map(opt => stripParens(opt.replace(/^What is\s+/i, '').replace(/\?$/, ''))) : shuffle([p.title, ...fallbackDistractors]).map(x => stripParens(x));
-
       clues.push({
         id: `${i}-${r}`,
         value: VALUES[r] || VALUES[0],
@@ -596,7 +521,6 @@ function renderBoard() {
 }
 
 async function start() {
-  saveLlmSettings();
   const topics = parseTopics($('topic').value);
   const n = Math.max(2, Math.min(8, Number($('players').value || 2)));
   const teamMode = $('teamMode').checked;
@@ -611,18 +535,16 @@ async function start() {
   renderPlayers(); renderScoreboard();
 
   try {
-    $('startBtn').disabled = true; $('startBtn').textContent = 'Loading...'; $('statusPill').textContent = state.llmEnabled ? 'Loading Wikipedia + LLM' : 'Loading Wikipedia';
+    $('startBtn').disabled = true; $('startBtn').textContent = 'Loading...'; $('statusPill').textContent = USE_LLM ? 'Loading Wikipedia + AI clues' : 'Loading Wikipedia';
     const selectedTopics = topics.slice(0, 5);
     const topicPages = {};
-    for (const topic of selectedTopics) {
-      topicPages[topic] = await gatherPagesForTopic(topic, rows);
-    }
+    for (const topic of selectedTopics) topicPages[topic] = await gatherPagesForTopic(topic, rows);
     const topicsWithPages = selectedTopics.filter(t => (topicPages[t] || []).length > 0);
     if (topicsWithPages.length < 5) throw new Error('Need at least 5 topics with Wikipedia matches. Try broader topics like Space, History, Science, Movies, Geography.');
     state.board = await buildBoard(topicsWithPages, topicPages, rows);
     renderBoard();
     $('statusPill').textContent = 'Ready';
-    $('stateMsg').textContent = `Loaded ${topicsWithPages.length} topics and ${total} clues${state.llmEnabled ? ' with LLM clue formatting' : ''}.`;
+    $('stateMsg').textContent = `Loaded ${topicsWithPages.length} topics and ${total} clues${USE_LLM ? ' with AI-generated clue formatting' : ''}.`;
     renderScoreboard();
   } catch (e) {
     $('stateMsg').innerHTML = `<span style="color:var(--bad)">${e.message}</span>`;
@@ -642,14 +564,11 @@ $('muteBtn').onclick = toggleMute;
 $('demoBtn').onclick = () => { $('topic').value = 'Cricket, Space, History, Science, Movies'; start(); };
 $('resetBtn').onclick = reset;
 $('startBtn').onclick = start;
-$('saveLlmBtn').onclick = saveLlmSettings;
-$('testLlmBtn').onclick = testLlm;
 $('newRoundBtn').onclick = () => { $('resultsModal').classList.remove('show'); start(); };
 $('newGameBtn').onclick = () => { $('resultsModal').classList.remove('show'); reset(); $('topic').value = 'Cricket, Space, History, Science, Movies'; $('players').value = 2; buildNameInputs(); };
 $('startTimerBtn').onclick = () => startTimer(BASE_TIME);
 $('pauseTimerBtn').onclick = stopTimer;
 setTheme('light');
-loadLlmSettings();
 reset();
 </script>
 </body>
