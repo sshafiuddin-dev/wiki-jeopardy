@@ -9,7 +9,7 @@
   <style>
     :root,[data-theme="light"]{--bg:#f7f6f2;--surface:#faf9f6;--surface2:#f2f0eb;--text:#26231d;--muted:#6b675f;--line:#d9d4cc;--primary:#006d77;--primary2:#01555c;--accent:#e7f1ef;--good:#2f7d32;--bad:#a23b72;--inv:#fffef9;--radius:16px;--shadow:0 10px 24px rgba(0,0,0,.08);--font:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
     [data-theme="dark"]{--bg:#151412;--surface:#1b1a18;--surface2:#21201d;--text:#e7e2d9;--muted:#ada79e;--line:#33312d;--primary:#49a6b1;--primary2:#2b8e99;--accent:#203438;--good:#6dc06f;--bad:#db73b1;--inv:#151412;--shadow:0 10px 24px rgba(0,0,0,.35)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--font);background:radial-gradient(circle at top right,rgba(0,109,119,.12),transparent 30%),var(--bg);color:var(--text);min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1280px;margin:0 auto;padding:16px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 0 18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:var(--inv);display:grid;place-items:center;box-shadow:var(--shadow);font-weight:800}h1,h2{margin:0;font-family:Georgia,serif;letter-spacing:-.03em}h1{font-size:clamp(1.6rem,2vw,2.5rem)}h2{font-size:1.15rem}.pill{display:inline-flex;align-items:center;padding:.35rem .7rem;border-radius:999px;background:var(--accent);color:var(--primary);font-size:.78rem;font-weight:700}.grid{display:grid;grid-template-columns:360px 1fr;gap:18px}.card{background:color-mix(in srgb,var(--surface) 94%,transparent);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);border-radius:var(--radius);box-shadow:var(--shadow)}.pad{padding:18px}.muted{color:var(--muted)}.row{display:flex;gap:10px;flex-wrap:wrap}.field{display:grid;gap:6px;margin-bottom:12px}input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:var(--surface2);color:var(--text)}textarea{min-height:92px;resize:vertical}.btn{min-height:44px;padding:0 14px;border:0;border-radius:12px;font-weight:700}.primary{background:var(--primary);color:var(--inv)}.secondary{background:var(--surface2);color:var(--text);border:1px solid color-mix(in srgb,var(--text) 14%,transparent)}.ghost{background:transparent;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.stat b{display:block;font-size:1.1rem;margin-top:3px}.players{display:grid;gap:8px;margin-top:12px}.player{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.player.active{outline:2px solid var(--primary);background:color-mix(in srgb,var(--primary) 10%,var(--surface2))}.boardWrap{display:grid;gap:12px}.board{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.cat{min-height:86px;padding:10px;border-radius:14px;background:var(--primary);color:var(--inv);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.85rem;font-weight:800;text-transform:uppercase}.tile{min-height:86px;border-radius:14px;border:0;background:linear-gradient(180deg,color-mix(in srgb,var(--primary) 96%,black 4%),color-mix(in srgb,var(--primary) 82%,black 18%));color:#fff7d8;font-size:1.35rem;font-weight:800;box-shadow:var(--shadow)}.tile:disabled{opacity:.25;cursor:not-allowed}.question{display:none}.question.open{display:block}.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.timer{display:flex;align-items:center;gap:8px}.timer-ring{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top:3px solid var(--primary);animation:spin 1s linear infinite;display:none}.timer-ring.running{display:block}.expired .timer-ring{border-top-color:var(--bad)}.clue{margin:14px 0 16px;font-size:clamp(1.08rem,1vw + 1rem,1.45rem);line-height:1.6}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.answer{min-height:64px;padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);text-align:left;font-weight:700}.answer.correct{background:color-mix(in srgb,var(--good) 18%,var(--surface2));border-color:color-mix(in srgb,var(--good) 50%,transparent)}.answer.wrong{background:color-mix(in srgb,var(--bad) 14%,var(--surface2));border-color:color-mix(in srgb,var(--bad) 50%,transparent)}.feedback{margin-top:12px;font-weight:800}.small{font-size:.9rem}.leaderboard{display:grid;gap:8px}.lead{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.results-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:20px}.results-modal.show{display:flex}.results-box{width:min(600px,95%);background:var(--surface);border-radius:24px;border:1px solid var(--line);overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.3)}.results-head{padding:20px 24px;background:var(--primary);color:var(--inv);text-align:center}.results-body{padding:24px}.results-grid{display:grid;gap:12px}.result-row{display:flex;justify-content:space-between;padding:14px 16px;background:var(--surface2);border-radius:16px;border:1px solid color-mix(in srgb,var(--text) 10%,transparent);font-weight:700}.play-again{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.timer-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.switch{position:relative;display:inline-block;width:48px;height:26px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;inset:0;background:var(--surface2);transition:.3s;border-radius:26px}.slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:var(--text);transition:.3s;border-radius:50%}.switch input:checked+.slider{background:var(--primary)}.switch input:checked+.slider:before{transform:translateX(22px)}.mute-btn{padding:6px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);width:36px;height:36px;display:grid;place-items:center}.hint{font-size:.82rem;color:var(--muted)}@media(max-width:980px){.grid{grid-template-columns:1fr}}@media(max-width:700px){.board,.answers,.stats{grid-template-columns:1fr}.app{padding:12px}.cat,.tile{min-height:72px}}@keyframes spin{to{transform:rotate(360deg)}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--font);background:radial-gradient(circle at top right,rgba(0,109,119,.12),transparent 30%),var(--bg);color:var(--text);min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1280px;margin:0 auto;padding:16px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 0 18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:var(--inv);display:grid;place-items:center;box-shadow:var(--shadow);font-weight:800}h1,h2{margin:0;font-family:Georgia,serif;letter-spacing:-.03em}h1{font-size:clamp(1.6rem,2vw,2.5rem)}h2{font-size:1.15rem}.pill{display:inline-flex;align-items:center;padding:.35rem .7rem;border-radius:999px;background:var(--accent);color:var(--primary);font-size:.78rem;font-weight:700}.grid{display:grid;grid-template-columns:360px 1fr;gap:18px}.card{background:color-mix(in srgb,var(--surface) 94%,transparent);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);border-radius:var(--radius);box-shadow:var(--shadow)}.pad{padding:18px}.muted{color:var(--muted)}.row{display:flex;gap:10px;flex-wrap:wrap}.field{display:grid;gap:6px;margin-bottom:12px}input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:var(--surface2);color:var(--text)}textarea{min-height:92px;resize:vertical}.btn{min-height:44px;padding:0 14px;border:0;border-radius:12px;font-weight:700}.primary{background:var(--primary);color:var(--inv)}.secondary{background:var(--surface2);color:var(--text);border:1px solid color-mix(in srgb,var(--text) 14%,transparent)}.ghost{background:transparent;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.stat b{display:block;font-size:1.1rem;margin-top:3px}.players{display:grid;gap:8px;margin-top:12px}.player{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.player.active{outline:2px solid var(--primary);background:color-mix(in srgb,var(--primary) 10%,var(--surface2))}.boardWrap{display:grid;gap:12px}.board{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.cat{min-height:86px;padding:10px;border-radius:14px;background:var(--primary);color:var(--inv);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.85rem;font-weight:800;text-transform:uppercase}.tile{min-height:86px;border-radius:14px;border:0;background:linear-gradient(180deg,color-mix(in srgb,var(--primary) 96%,black 4%),color-mix(in srgb,var(--primary) 82%,black 18%));color:#fff7d8;font-size:1.35rem;font-weight:800;box-shadow:var(--shadow)}.tile:disabled{opacity:.25;cursor:not-allowed}.question{display:none}.question.open{display:block}.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.qmeta-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.refresh-btn{min-height:36px;padding:0 12px;border-radius:10px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:var(--surface2);color:var(--text);font-weight:700}.refresh-btn:disabled{opacity:.6;cursor:wait}.timer{display:flex;align-items:center;gap:8px}.timer-ring{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top:3px solid var(--primary);animation:spin 1s linear infinite;display:none}.timer-ring.running{display:block}.expired .timer-ring{border-top-color:var(--bad)}.clue{margin:14px 0 16px;font-size:clamp(1.08rem,1vw + 1rem,1.45rem);line-height:1.6}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.answer{min-height:64px;padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);text-align:left;font-weight:700;transition:transform .15s ease, background .15s ease, border-color .15s ease}.answer:hover:not(:disabled){transform:translateY(-1px)}.answer.correct{background:color-mix(in srgb,var(--good) 22%,var(--surface2));border-color:color-mix(in srgb,var(--good) 70%,transparent);color:var(--text)}.answer.wrong{background:color-mix(in srgb,var(--bad) 28%,var(--surface2));border-color:color-mix(in srgb,var(--bad) 85%,transparent);color:var(--text)}.feedback{margin-top:12px;font-weight:800}.small{font-size:.9rem}.leaderboard{display:grid;gap:8px}.lead{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.results-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:20px}.results-modal.show{display:flex}.results-box{width:min(600px,95%);background:var(--surface);border-radius:24px;border:1px solid var(--line);overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.3)}.results-head{padding:20px 24px;background:var(--primary);color:var(--inv);text-align:center}.results-body{padding:24px}.results-grid{display:grid;gap:12px}.result-row{display:flex;justify-content:space-between;padding:14px 16px;background:var(--surface2);border-radius:16px;border:1px solid color-mix(in srgb,var(--text) 10%,transparent);font-weight:700}.play-again{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.timer-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.switch{position:relative;display:inline-block;width:48px;height:26px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;inset:0;background:var(--surface2);transition:.3s;border-radius:26px}.slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:var(--text);transition:.3s;border-radius:50%}.switch input:checked+.slider{background:var(--primary)}.switch input:checked+.slider:before{transform:translateX(22px)}.mute-btn{padding:6px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);width:36px;height:36px;display:grid;place-items:center}.hint{font-size:.82rem;color:var(--muted)}@media(max-width:980px){.grid{grid-template-columns:1fr}}@media(max-width:700px){.board,.answers,.stats{grid-template-columns:1fr}.app{padding:12px}.cat,.tile{min-height:72px}}@keyframes spin{to{transform:rotate(360deg)}}
   </style>
 </head>
 <body>
@@ -54,7 +54,10 @@
           <span id="catName">Category</span>
           <span id="money">200</span>
           <span id="activePlayer">Player</span>
-          <div class="timer" id="timerDisplay"><div class="timer-ring" id="timerRing"></div><span id="timeLeft">--</span></div>
+          <div class="qmeta-actions">
+            <button class="refresh-btn" id="refreshQuestionBtn" title="Replace only this question">🔄 Change Question</button>
+            <div class="timer" id="timerDisplay"><div class="timer-ring" id="timerRing"></div><span id="timeLeft">--</span></div>
+          </div>
         </div>
         <div class="timer-btns" id="timerBtns" style="display:none">
           <button class="btn secondary small" id="startTimerBtn">▶ Start 90s</button>
@@ -88,12 +91,6 @@
 const VALUES = [100, 200, 300, 400, 500];
 const WORKER_ENDPOINT = 'https://groq-proxy.sshafiuddin-dev.workers.dev';
 const LLM_MODEL = 'llama-3.3-70b-versatile';
-
-// Wikipedia pipeline kept for reference, not used
-// const WIKI = 'https://en.wikipedia.org/w/api.php?origin=*';
-// async function wikiSearch(term, limit=30) { ... }
-// async function wikiExtracts(titles) { ... }
-// async function gatherPagesForTopic(topic, needed) { ... }
 
 const $ = id => document.getElementById(id);
 const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
@@ -129,10 +126,11 @@ function stopTimer(){clearInterval(timerInterval);$('timerRing').classList.remov
 function startTimer(ms){stopTimer();timeLeft=ms;$('timerRing').classList.add('running');$('timerDisplay').classList.remove('expired');updateTimerDisplay();timerInterval=setInterval(()=>{timeLeft-=1000;if(timeLeft<=0){stopTimer();$('timerDisplay').classList.add('expired');handlePass();}else updateTimerDisplay();},1000);}
 function updateTimerDisplay(){const m=Math.floor(timeLeft/60000),s=Math.floor((timeLeft%60000)/1000);$('timeLeft').textContent=`${m}:${s.toString().padStart(2,'0')}`;}
 
-async function generateCategoryQuestions(topic, difficulty) {
+async function generateCategoryQuestions(topic, difficulty, count=5, excludeQuestions=[]) {
   const diffHint = difficulty === 'easy' ? 'simple, well-known facts suitable for beginners' : difficulty === 'hard' ? 'challenging, specific facts for enthusiasts' : 'a mix of easy and harder facts';
-  const prompt = `Generate exactly 5 multiple-choice trivia questions about the topic: "${topic}".
-Difficulty: ${diffHint}.
+  const excludeBlock = excludeQuestions.length ? `\nAvoid reusing or paraphrasing these existing questions:\n- ${excludeQuestions.join('\n- ')}` : '';
+  const prompt = `Generate exactly ${count} multiple-choice trivia questions about the topic: "${topic}".
+Difficulty: ${diffHint}.${excludeBlock}
 
 Rules:
 - Each question must be a natural, engaging pub-trivia style question.
@@ -142,8 +140,7 @@ Rules:
 - Return ONLY valid JSON in this exact format, no extra text:
 {
   "questions": [
-    {"q": "Question text?", "options": ["Correct answer", "Wrong 1", "Wrong 2", "Wrong 3"], "answer": "Correct answer"},
-    ... (5 total)
+    {"q": "Question text?", "options": ["Correct answer", "Wrong 1", "Wrong 2", "Wrong 3"], "answer": "Correct answer"}
   ]
 }`;
 
@@ -152,7 +149,7 @@ Rules:
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: LLM_MODEL,
-      temperature: 0.6,
+      temperature: 0.7,
       response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: 'You are a trivia question generator. Always return valid JSON only, no markdown, no explanation.' },
@@ -168,7 +165,6 @@ Rules:
   }
 
   const data = await res.json();
-  console.log(`[LLM] Raw response for "${topic}":`, data);
   const content = data?.choices?.[0]?.message?.content || '{}';
   let parsed;
   try { parsed = JSON.parse(content); } catch(e) {
@@ -181,23 +177,42 @@ Rules:
   return qs;
 }
 
+function normalizeGeneratedQuestion(item, fallbackTopic, fallbackValue){
+  const answer = (item?.answer || '').trim();
+  const opts = Array.isArray(item?.options) ? item.options.map(x => String(x).trim()).filter(Boolean) : [];
+  const seeded = answer && !opts.includes(answer) ? [answer, ...opts] : opts;
+  const fullOpts = [...new Set(seeded)].filter(Boolean);
+  while(fullOpts.length < 4) fullOpts.push(`Option ${fullOpts.length + 1}`);
+  return {
+    id: `${fallbackTopic}-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
+    value: fallbackValue,
+    _origValue: fallbackValue,
+    answer: answer || fullOpts[0],
+    clue: (item?.q || `Question about ${fallbackTopic}?`).trim(),
+    options: shuffle(fullOpts.slice(0,4)),
+    used: false
+  };
+}
+
+async function regenerateSingleQuestion(categoryName, currentClue, difficulty){
+  const category = state.board.find(c => c.name === categoryName);
+  const existing = category ? category.clues.map(c => c.clue).filter(Boolean) : [];
+  const qs = await generateCategoryQuestions(categoryName, difficulty, 1, existing);
+  return normalizeGeneratedQuestion(qs[0], categoryName, currentClue._origValue || currentClue.value || 100);
+}
+
 async function buildBoard(topicNames, difficulty) {
   const valuePlan = difficulty==='easy' ? [100,100,100,100,100] : difficulty==='hard' ? [500,500,500,500,500] : VALUES;
   const categories = [];
   for (const topic of topicNames.slice(0,5)) {
     let qs;
-    try { qs = await generateCategoryQuestions(topic, difficulty); }
+    try { qs = await generateCategoryQuestions(topic, difficulty, 5); }
     catch(e) { console.warn(`[Board] LLM failed for "${topic}", using placeholder:`, e.message); qs = []; }
     while (qs.length < 5) {
       const n = qs.length + 1;
       qs.push({ q: `Question ${n} about ${topic}?`, options: [`Answer ${n}A`, `Answer ${n}B`, `Answer ${n}C`, `Answer ${n}D`], answer: `Answer ${n}A` });
     }
-    const clues = qs.slice(0,5).map((item, r) => {
-      const answer = (item.answer || '').trim();
-      const opts = Array.isArray(item.options) ? item.options.map(x => String(x).trim()).filter(Boolean) : [];
-      const fullOpts = opts.includes(answer) ? opts : [answer, ...opts].slice(0,4);
-      return { id: `${topic}-${r}`, value: valuePlan[r] || valuePlan[0], _origValue: valuePlan[r] || valuePlan[0], answer, clue: (item.q || '').trim(), options: shuffle(fullOpts).slice(0,4), used: false };
-    });
+    const clues = qs.slice(0,5).map((item, r) => normalizeGeneratedQuestion(item, topic, valuePlan[r] || valuePlan[0]));
     categories.push({ name: topic, clues });
   }
   return categories;
@@ -210,7 +225,7 @@ function renderBoard(){
   for(let r=0;r<rows;r++) state.board.forEach(cat=>{
     const clue=cat.clues[r];if(!clue)return;
     const b=document.createElement('button');b.className='tile';b.textContent=points(clue.value);b.disabled=clue.used;
-    b.onclick=()=>openQ(cat.name,clue,b);$('board').appendChild(b);
+    b.onclick=()=>openQ(cat.name,clue,b,r);$('board').appendChild(b);
   });
 }
 
@@ -232,19 +247,57 @@ function markOptions(selected,correct){
   });
 }
 
-function openQ(cat,clue,tile){
-  if(clue.used)return;
-  state.active={cat,clue,tile,attemptedBy:[],originTurn:state.turn};
-  stopTimer();
-  $('timerDisplay').classList.remove('expired');
-  $('questionBox').classList.add('open');
+function syncActiveQuestionUI(){
+  if(!state.active) return;
+  const { cat, clue } = state.active;
   $('catName').textContent=cat;
   $('money').textContent=points(clue.value);
   $('activePlayer').textContent=`${currentLabel()}'s turn`;
   $('clue').textContent=clue.clue;
-  $('timerBtns').style.display='flex';
   $('feedback').textContent='';
   renderOptions(clue);
+  const canRefresh = !state.active.attemptedBy.length;
+  $('refreshQuestionBtn').style.display='inline-flex';
+  $('refreshQuestionBtn').disabled=!canRefresh;
+  $('refreshQuestionBtn').textContent='🔄 Change Question';
+  $('refreshQuestionBtn').title = canRefresh ? 'Replace only this question' : 'Unavailable after an attempt has been made';
+}
+
+function openQ(cat,clue,tile,rowIndex){
+  if(clue.used)return;
+  state.active={cat,clue,tile,rowIndex,attemptedBy:[],originTurn:state.turn};
+  stopTimer();
+  $('timerDisplay').classList.remove('expired');
+  $('questionBox').classList.add('open');
+  $('timerBtns').style.display='flex';
+  syncActiveQuestionUI();
+}
+
+async function refreshActiveQuestion(){
+  if(!state.active || state.active.attemptedBy.length) return;
+  const btn = $('refreshQuestionBtn');
+  try{
+    stopTimer();
+    btn.disabled = true;
+    btn.textContent = '🔄 Refreshing...';
+    $('feedback').textContent = 'Generating a replacement question...';
+    const difficulty = $('difficulty').value;
+    const replacement = await regenerateSingleQuestion(state.active.cat, state.active.clue, difficulty);
+    replacement.value = state.active.clue.value;
+    replacement._origValue = state.active.clue._origValue || state.active.clue.value;
+    const category = state.board.find(c => c.name === state.active.cat);
+    if(!category) throw new Error('Category not found');
+    category.clues[state.active.rowIndex] = replacement;
+    state.active.clue = replacement;
+    syncActiveQuestionUI();
+    $('feedback').textContent = '✅ Question updated. Everything else stays the same.';
+    renderBoard();
+  }catch(e){
+    console.error('[Refresh Question]', e);
+    $('feedback').textContent = `Could not refresh question: ${e.message}`;
+    btn.disabled = false;
+    btn.textContent = '🔄 Change Question';
+  }
 }
 
 function submitAnswer(selected){
@@ -252,6 +305,7 @@ function submitAnswer(selected){
   const{clue,tile,attemptedBy}=state.active;
   stopTimer();
   attemptedBy.push(state.turn);
+  $('refreshQuestionBtn').disabled = true;
   if(selected===clue.answer){
     clue.used=true;tile.disabled=true;state.answered++;state.correct++;
     state.score[state.turn]=(state.score[state.turn]||0)+clue.value;
@@ -285,6 +339,7 @@ function handlePass(){
   const{clue,tile,attemptedBy}=state.active;
   stopTimer();SFX.pass();
   attemptedBy.push(state.turn);
+  $('refreshQuestionBtn').disabled = true;
   clue.value=Math.max(5,Math.floor(clue.value/2));
   if(attemptedBy.length>=state.players.length){
     clue.used=true;tile.disabled=true;state.answered++;
@@ -333,7 +388,7 @@ async function start(){
 }
 
 function showResults(){const ranked=state.players.map((name,i)=>({name,score:state.score[i]||0})).sort((a,b)=>b.score-a.score);$('finalResults').innerHTML='';ranked.forEach((p,i)=>{const row=document.createElement('div');row.className='result-row';row.innerHTML=`<span>${['🥇','🥈','🥉'][i]||`${i+1}.`} ${p.name}</span><span>${points(p.score)}</span>`;$('finalResults').appendChild(row);});$('resultsModal').classList.add('show');}
-function reset(){state.score=state.players.map(()=>0);state.turn=0;state.answered=0;state.correct=0;state.board=[];state.active=null;stopTimer();$('questionBox').classList.remove('open');$('board').innerHTML='';$('feedback').textContent='';renderPlayers();renderScoreboard();$('statusPill').textContent='Waiting';$('stateMsg').textContent='Create a board to begin.';updateCountLabel();}
+function reset(){state.score=state.players.map(()=>0);state.turn=0;state.answered=0;state.correct=0;state.board=[];state.active=null;stopTimer();$('questionBox').classList.remove('open');$('board').innerHTML='';$('feedback').textContent='';$('refreshQuestionBtn').style.display='none';renderPlayers();renderScoreboard();$('statusPill').textContent='Waiting';$('stateMsg').textContent='Create a board to begin.';updateCountLabel();}
 
 $('themeBtn').onclick=()=>setTheme(state.theme==='dark'?'light':'dark');
 $('muteBtn').onclick=toggleMute;
@@ -345,6 +400,7 @@ $('newRoundBtn').onclick=()=>{$('resultsModal').classList.remove('show');start()
 $('newGameBtn').onclick=()=>{$('resultsModal').classList.remove('show');reset();$('topic').value='Cricket, Bollywood, History, Geography, Movies';$('players').value=2;};
 $('startTimerBtn').onclick=()=>startTimer(BASE_TIME);
 $('pauseTimerBtn').onclick=stopTimer;
+$('refreshQuestionBtn').onclick=refreshActiveQuestion;
 setTheme('light');
 reset();
 </script>
