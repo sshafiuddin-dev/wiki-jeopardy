@@ -4,17 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wiki Jeopardy Multiplayer</title>
-  <meta name="description" content="A Jeopardy-style multiplayer quiz game with trivia-style reveal answers powered by Wikipedia and AI-generated clues." />
+  <meta name="description" content="A Jeopardy-style multiplayer quiz game powered by Wikipedia and AI-generated trivia clues." />
   <style>
     :root,[data-theme="light"]{--bg:#f7f6f2;--surface:#faf9f6;--surface2:#f2f0eb;--text:#26231d;--muted:#6b675f;--line:#d9d4cc;--primary:#006d77;--primary2:#01555c;--accent:#e7f1ef;--good:#2f7d32;--bad:#a23b72;--inv:#fffef9;--radius:16px;--shadow:0 10px 24px rgba(0,0,0,.08);--font:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
     [data-theme="dark"]{--bg:#151412;--surface:#1b1a18;--surface2:#21201d;--text:#e7e2d9;--muted:#ada79e;--line:#33312d;--primary:#49a6b1;--primary2:#2b8e99;--accent:#203438;--good:#6dc06f;--bad:#db73b1;--inv:#151412;--shadow:0 10px 24px rgba(0,0,0,.35)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--font);background:radial-gradient(circle at top right,rgba(0,109,119,.12),transparent 30%),var(--bg);color:var(--text);min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1280px;margin:0 auto;padding:16px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 0 18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:var(--inv);display:grid;place-items:center;box-shadow:var(--shadow);font-weight:800}h1,h2{margin:0;font-family:Georgia,serif;letter-spacing:-.03em}h1{font-size:clamp(1.6rem,2vw,2.5rem)}h2{font-size:1.15rem}.pill{display:inline-flex;align-items:center;padding:.35rem .7rem;border-radius:999px;background:var(--accent);color:var(--primary);font-size:.78rem;font-weight:700}.grid{display:grid;grid-template-columns:360px 1fr;gap:18px}.card{background:color-mix(in srgb,var(--surface) 94%,transparent);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);border-radius:var(--radius);box-shadow:var(--shadow)}.pad{padding:18px}.muted{color:var(--muted)}.row{display:flex;gap:10px;flex-wrap:wrap}.field{display:grid;gap:6px;margin-bottom:12px}input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:var(--surface2);color:var(--text)}textarea{min-height:92px;resize:vertical}.btn{min-height:44px;padding:0 14px;border:0;border-radius:12px;font-weight:700}.primary{background:var(--primary);color:var(--inv)}.secondary{background:var(--surface2);color:var(--text);border:1px solid color-mix(in srgb,var(--text) 14%,transparent)}.ghost{background:transparent;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.stat b{display:block;font-size:1.1rem;margin-top:3px}.players{display:grid;gap:8px;margin-top:12px}.player{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.player.active{outline:2px solid var(--primary);background:color-mix(in srgb,var(--primary) 10%,var(--surface2))}.boardWrap{display:grid;gap:12px}.board{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.cat{min-height:86px;padding:10px;border-radius:14px;background:var(--primary);color:var(--inv);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.85rem;font-weight:800;text-transform:uppercase}.tile{min-height:86px;border-radius:14px;border:0;background:linear-gradient(180deg,color-mix(in srgb,var(--primary) 96%,black 4%),color-mix(in srgb,var(--primary) 82%,black 18%));color:#fff7d8;font-size:1.35rem;font-weight:800;box-shadow:var(--shadow)}.tile:disabled{opacity:.25;cursor:not-allowed}.question{display:none}.question.open{display:block}.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.timer{display:flex;align-items:center;gap:8px}.timer-ring{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top:3px solid var(--primary);animation:spin 1s linear infinite;display:none}.timer-ring.running{display:block}.expired .timer-ring{border-top-color:var(--bad)}.clue{margin:14px 0 16px;font-size:clamp(1.08rem,1vw + 1rem,1.45rem);line-height:1.6}.reveal{margin:14px 0;padding:14px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 12%,transparent)}.reveal summary{cursor:pointer;font-weight:800}.reveal .ans{margin-top:12px;font-size:1.05rem}.host-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.feedback{margin-top:12px;font-weight:800}.small{font-size:.9rem}.leaderboard{display:grid;gap:8px}.lead{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.modalBox{width:min(680px,100%);max-height:92vh;overflow:auto;background:var(--surface);color:var(--text);border-radius:20px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);box-shadow:var(--shadow)}.modalHead{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}.modalBody{padding:18px}.teamGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.results-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:20px}.results-modal.show{display:flex}.results-box{width:min(600px,95%);background:var(--surface);border-radius:24px;border:1px solid var(--line);overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.3)}.results-head{padding:20px 24px;background:var(--primary);color:var(--inv);text-align:center}.results-body{padding:24px}.results-grid{display:grid;gap:12px}.result-row{display:flex;justify-content:space-between;padding:14px 16px;background:var(--surface2);border-radius:16px;border:1px solid color-mix(in srgb,var(--text) 10%,transparent);font-weight:700}.play-again{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.timer-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.switch{position:relative;display:inline-block;width:48px;height:26px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;inset:0;background:var(--surface2);transition:.3s;border-radius:26px}.slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:var(--text);transition:.3s;border-radius:50%}.switch input:checked+.slider{background:var(--primary)}.switch input:checked+.slider:before{transform:translateX(22px)}.mute-btn{padding:6px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);width:36px;height:36px;display:grid;place-items:center}.hint{font-size:.82rem;color:var(--muted)}@media(max-width:980px){.grid{grid-template-columns:1fr}}@media(max-width:700px){.board,.stats,.teamGrid,.host-actions{grid-template-columns:1fr}.app{padding:12px}.cat,.tile{min-height:72px}}@keyframes spin{to{transform:rotate(360deg)}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--font);background:radial-gradient(circle at top right,rgba(0,109,119,.12),transparent 30%),var(--bg);color:var(--text);min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1280px;margin:0 auto;padding:16px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 0 18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:var(--inv);display:grid;place-items:center;box-shadow:var(--shadow);font-weight:800}h1,h2{margin:0;font-family:Georgia,serif;letter-spacing:-.03em}h1{font-size:clamp(1.6rem,2vw,2.5rem)}h2{font-size:1.15rem}.pill{display:inline-flex;align-items:center;padding:.35rem .7rem;border-radius:999px;background:var(--accent);color:var(--primary);font-size:.78rem;font-weight:700}.grid{display:grid;grid-template-columns:360px 1fr;gap:18px}.card{background:color-mix(in srgb,var(--surface) 94%,transparent);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);border-radius:var(--radius);box-shadow:var(--shadow)}.pad{padding:18px}.muted{color:var(--muted)}.row{display:flex;gap:10px;flex-wrap:wrap}.field{display:grid;gap:6px;margin-bottom:12px}input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:var(--surface2);color:var(--text)}textarea{min-height:92px;resize:vertical}.btn{min-height:44px;padding:0 14px;border:0;border-radius:12px;font-weight:700}.primary{background:var(--primary);color:var(--inv)}.secondary{background:var(--surface2);color:var(--text);border:1px solid color-mix(in srgb,var(--text) 14%,transparent)}.ghost{background:transparent;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.stat b{display:block;font-size:1.1rem;margin-top:3px}.players{display:grid;gap:8px;margin-top:12px}.player{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.player.active{outline:2px solid var(--primary);background:color-mix(in srgb,var(--primary) 10%,var(--surface2))}.boardWrap{display:grid;gap:12px}.board{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.cat{min-height:86px;padding:10px;border-radius:14px;background:var(--primary);color:var(--inv);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.85rem;font-weight:800;text-transform:uppercase}.tile{min-height:86px;border-radius:14px;border:0;background:linear-gradient(180deg,color-mix(in srgb,var(--primary) 96%,black 4%),color-mix(in srgb,var(--primary) 82%,black 18%));color:#fff7d8;font-size:1.35rem;font-weight:800;box-shadow:var(--shadow)}.tile:disabled{opacity:.25;cursor:not-allowed}.question{display:none}.question.open{display:block}.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.timer{display:flex;align-items:center;gap:8px}.timer-ring{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top:3px solid var(--primary);animation:spin 1s linear infinite;display:none}.timer-ring.running{display:block}.expired .timer-ring{border-top-color:var(--bad)}.clue{margin:14px 0 16px;font-size:clamp(1.08rem,1vw + 1rem,1.45rem);line-height:1.6}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.answer{min-height:64px;padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);text-align:left;font-weight:700}.answer.correct{background:color-mix(in srgb,var(--good) 18%,var(--surface2));border-color:color-mix(in srgb,var(--good) 50%,transparent)}.answer.wrong{background:color-mix(in srgb,var(--bad) 14%,var(--surface2));border-color:color-mix(in srgb,var(--bad) 50%,transparent)}.feedback{margin-top:12px;font-weight:800}.small{font-size:.9rem}.leaderboard{display:grid;gap:8px}.lead{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.modalBox{width:min(680px,100%);max-height:92vh;overflow:auto;background:var(--surface);color:var(--text);border-radius:20px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);box-shadow:var(--shadow)}.modalHead{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}.modalBody{padding:18px}.teamGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.results-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:20px}.results-modal.show{display:flex}.results-box{width:min(600px,95%);background:var(--surface);border-radius:24px;border:1px solid var(--line);overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.3)}.results-head{padding:20px 24px;background:var(--primary);color:var(--inv);text-align:center}.results-body{padding:24px}.results-grid{display:grid;gap:12px}.result-row{display:flex;justify-content:space-between;padding:14px 16px;background:var(--surface2);border-radius:16px;border:1px solid color-mix(in srgb,var(--text) 10%,transparent);font-weight:700}.play-again{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.timer-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.switch{position:relative;display:inline-block;width:48px;height:26px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;inset:0;background:var(--surface2);transition:.3s;border-radius:26px}.slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:var(--text);transition:.3s;border-radius:50%}.switch input:checked+.slider{background:var(--primary)}.switch input:checked+.slider:before{transform:translateX(22px)}.mute-btn{padding:6px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);width:36px;height:36px;display:grid;place-items:center}.hint{font-size:.82rem;color:var(--muted)}@media(max-width:980px){.grid{grid-template-columns:1fr}}@media(max-width:700px){.board,.answers,.stats,.teamGrid{grid-template-columns:1fr}.app{padding:12px}.cat,.tile{min-height:72px}}@keyframes spin{to{transform:rotate(360deg)}}
   </style>
 </head>
 <body>
 <div class="app">
   <div class="top">
-    <div class="brand"><div class="logo">J!</div><div><h1>Wiki Jeopardy</h1><div class="pill">Multiplayer • Trivia reveal • Teams</div></div></div>
+    <div class="brand"><div class="logo">J!</div><div><h1>Wiki Jeopardy</h1><div class="pill">Multiplayer • Trivia • Teams</div></div></div>
     <div style="display:flex;gap:8px">
       <button class="mute-btn" id="muteBtn" title="Toggle sound">🔊</button>
       <button class="btn secondary" id="themeBtn">Dark</button>
@@ -26,7 +26,7 @@
       <p class="muted">Enter one topic or multiple topics separated by commas. The board will use at least 5 categories.</p>
       <div class="field"><label>Topics</label><textarea id="topic">Cricket, Bollywood, History, Geography, Movies</textarea><div class="hint">Example: Cricket, Bollywood, Geography, Technology, Movies</div></div>
       <div class="field"><label>Number of players</label><input id="players" type="number" min="2" max="8" value="2" /></div>
-      <div class="field"><label>Difficulty</label><select id="difficulty"><option value="easy">Easy ($100 only)</option><option value="mixed" selected>Mixed ($100–$500)</option><option value="hard">Hard ($500 only)</option></select></div>
+      <div class="field"><label>Difficulty</label><select id="difficulty"><option value="easy">Easy</option><option value="mixed" selected>Mixed</option><option value="hard">Hard</option></select></div>
       <div class="field" style="display:flex;align-items:center;justify-content:space-between"><label>Team mode</label><label class="switch"><input type="checkbox" id="teamMode"><span class="slider"></span></label></div>
       <div class="row" style="margin-top:4px">
         <button class="btn primary" id="startBtn">Create board</button>
@@ -51,7 +51,7 @@
       <section class="question card pad" id="questionBox">
         <div class="qmeta">
           <span id="catName">Category</span>
-          <span id="money">$200</span>
+          <span id="money">200</span>
           <span id="activePlayer">Player</span>
           <div class="timer" id="timerDisplay"><div class="timer-ring" id="timerRing"></div><span id="timeLeft">--</span></div>
         </div>
@@ -60,15 +60,7 @@
           <button class="btn ghost small" id="pauseTimerBtn">⏸ Pause</button>
         </div>
         <div class="clue" id="clue"></div>
-        <details class="reveal" id="answerReveal">
-          <summary>Show answer</summary>
-          <div class="ans" id="answerText"></div>
-        </details>
-        <div class="host-actions" id="hostActions">
-          <button class="btn primary" id="markCorrectBtn">✅ Correct</button>
-          <button class="btn secondary" id="markWrongBtn">❌ Wrong</button>
-          <button class="btn ghost" id="passBtn">Pass</button>
-        </div>
+        <div class="answers" id="answers"></div>
         <div class="feedback" id="feedback"></div>
       </section>
       <section class="card pad">
@@ -76,12 +68,6 @@
         <div class="leaderboard" id="leaderboard"></div>
       </section>
     </section>
-  </div>
-</div>
-<div class="modal open" id="setupModal">
-  <div class="modalBox">
-    <div class="modalHead"><b>Player / Team setup</b><button class="btn secondary" id="closeModal">Continue</button></div>
-    <div class="modalBody"><p class="muted">Enter names below. Enable team mode to pair players into teams.</p><div class="teamGrid" id="nameGrid"></div></div>
   </div>
 </div>
 <div class="results-modal" id="resultsModal">
@@ -105,9 +91,11 @@ const LLM_MODEL = 'llama-3.3-70b-versatile';
 const USE_LLM = true;
 const $ = id => document.getElementById(id);
 const state = { players: ['Player 1', 'Player 2'], turn: 0, score: [], board: [], answered: 0, correct: 0, total: 25, topics: ['Cricket', 'Bollywood', 'History', 'Geography', 'Movies'], active: null, theme: 'light' };
-let passCount = 0, timerInterval = null, timeLeft = 0, isTiming = false, audioEnabled = true;
+let passCount = 0, timerInterval = null, timeLeft = 0, audioEnabled = true;
 const BASE_TIME = 90000, PASS_TIME = 30000;
 
+function points(v) { return String(v); }
+function currentLabel() { return state.players[state.turn] || '—'; }
 function setTheme(t) { state.theme = t; document.documentElement.setAttribute('data-theme', t); $('themeBtn').textContent = t === 'dark' ? 'Light' : 'Dark'; }
 function toggleMute() { audioEnabled = !audioEnabled; $('muteBtn').textContent = audioEnabled ? '🔊' : '🔇'; }
 function playTone(freq, dur, type = 'sine') { try { const ctx = new (window.AudioContext || window.webkitAudioContext)(); const o = ctx.createOscillator(); const g = ctx.createGain(); o.connect(g); g.connect(ctx.destination); o.type = type; o.frequency.value = freq; g.gain.setValueAtTime(0.3, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur); o.start(); o.stop(ctx.currentTime + dur); } catch (e) {} }
@@ -115,95 +103,47 @@ function sounds() { return { correct: () => { if (!audioEnabled) return; playTon
 const SFX = sounds();
 
 function parseTopics(raw) { const parts = (raw || '').split(',').map(x => x.trim()).filter(Boolean); const uniq = []; for (const p of parts) if (!uniq.includes(p)) uniq.push(p); if (uniq.length === 0) return ['Cricket', 'Bollywood', 'History', 'Geography', 'Movies']; while (uniq.length < 5) uniq.push(`General ${uniq.length + 1}`); return uniq.slice(0, 10); }
-function renderPlayers() { $('playersList').innerHTML = ''; state.players.forEach((p, i) => { const d = document.createElement('div'); d.className = 'player' + (i === state.turn ? ' active' : ''); d.innerHTML = `<strong>${p}</strong><span>$${state.score[i] || 0}</span>`; $('playersList').appendChild(d); }); }
-function renderLeaderboard() { $('leaderboard').innerHTML = ''; [...state.players.map((n, i) => ({ n, s: state.score[i] || 0, i }))].sort((a, b) => b.s - a.s).forEach((p, r) => { const row = document.createElement('div'); row.className = 'lead'; row.innerHTML = `<span>${r + 1}. ${p.n}${p.i === state.turn ? ' ● turn' : ''}</span><b>$${p.s}</b>`; $('leaderboard').appendChild(row); }); }
-function renderScoreboard() { $('turn').textContent = state.players[state.turn] || '—'; const li = state.score.length ? state.score.indexOf(Math.max(...state.score)) : -1; $('leader').textContent = li > -1 ? `${state.players[li]} ($${state.score[li]})` : '—'; $('answered').textContent = `${state.answered}/${state.total}`; $('topicLabel').textContent = state.topics.join(', '); $('statusPill').textContent = state.answered >= state.total ? 'Complete' : 'In play'; $('stateMsg').textContent = state.total - state.answered > 0 ? `${state.total - state.answered} clues left` : 'All clues answered'; renderLeaderboard(); }
+function playerLabel(i, teamMode = false) { return teamMode ? `Team ${i + 1}` : `Player ${i + 1}`; }
+function renderPlayers() { $('playersList').innerHTML = ''; state.players.forEach((p, i) => { const d = document.createElement('div'); d.className = 'player' + (i === state.turn ? ' active' : ''); d.innerHTML = `<strong>${p}</strong><span>${points(state.score[i] || 0)}</span>`; $('playersList').appendChild(d); }); }
+function renderLeaderboard() { $('leaderboard').innerHTML = ''; [...state.players.map((n, i) => ({ n, s: state.score[i] || 0, i }))].sort((a, b) => b.s - a.s).forEach((p, r) => { const row = document.createElement('div'); row.className = 'lead'; row.innerHTML = `<span>${r + 1}. ${p.n}${p.i === state.turn ? ' ● turn' : ''}</span><b>${points(p.s)}</b>`; $('leaderboard').appendChild(row); }); }
+function renderScoreboard() { $('turn').textContent = currentLabel(); const li = state.score.length ? state.score.indexOf(Math.max(...state.score)) : -1; $('leader').textContent = li > -1 ? `${state.players[li]} (${points(state.score[li])})` : '—'; $('answered').textContent = `${state.answered}/${state.total}`; $('topicLabel').textContent = state.topics.join(', '); $('statusPill').textContent = state.answered >= state.total ? 'Complete' : 'In play'; $('stateMsg').textContent = state.total - state.answered > 0 ? `${state.total - state.answered} clues left` : 'All clues answered'; renderLeaderboard(); }
 function nextTurn() { state.turn = (state.turn + 1) % state.players.length; renderPlayers(); renderScoreboard(); }
-function stopTimer() { clearInterval(timerInterval); isTiming = false; $('timerRing').classList.remove('running'); }
-function startTimer(ms) { stopTimer(); timeLeft = ms; isTiming = true; $('timerRing').classList.add('running'); $('timerDisplay').classList.remove('expired'); updateTimerDisplay(); timerInterval = setInterval(() => { timeLeft -= 1000; if (timeLeft <= 0) { stopTimer(); $('timerDisplay').classList.add('expired'); handlePass(); } else updateTimerDisplay(); }, 1000); }
+function stopTimer() { clearInterval(timerInterval); $('timerRing').classList.remove('running'); }
+function startTimer(ms) { stopTimer(); timeLeft = ms; $('timerRing').classList.add('running'); $('timerDisplay').classList.remove('expired'); updateTimerDisplay(); timerInterval = setInterval(() => { timeLeft -= 1000; if (timeLeft <= 0) { stopTimer(); $('timerDisplay').classList.add('expired'); handlePass(); } else updateTimerDisplay(); }, 1000); }
 function updateTimerDisplay() { const m = Math.floor(timeLeft / 60000), s = Math.floor((timeLeft % 60000) / 1000); $('timeLeft').textContent = `${m}:${s.toString().padStart(2, '0')}`; }
-
-function closeQuestionAfterDelay() { setTimeout(() => $('questionBox').classList.remove('open'), 1800); }
-
-function finalizeClue(outcome) {
-  if (!state.active) return;
-  const { clue, tile } = state.active;
-  stopTimer();
-  clue.used = true;
-  tile.disabled = true;
-  state.answered++;
-  if (outcome === 'correct') {
-    state.correct++;
-    state.score[state.turn] = (state.score[state.turn] || 0) + clue.value;
-    SFX.correct();
-    $('feedback').textContent = `✅ Correct! ${state.players[state.turn]} earns $${clue.value}.`;
-  } else if (outcome === 'wrong') {
-    state.score[state.turn] = (state.score[state.turn] || 0) - Math.floor(clue.value / 2);
-    SFX.wrong();
-    $('feedback').textContent = `❌ Wrong. Answer: ${clue.answer}. -$${Math.floor(clue.value / 2)}.`;
-  } else {
-    SFX.pass();
-    $('feedback').textContent = `⏭ Passed. Answer: ${clue.answer}.`;
-  }
-  renderPlayers();
-  renderScoreboard();
-  if (state.answered >= state.total) { SFX.roundEnd(); showResults(); }
-  else nextTurn();
-  closeQuestionAfterDelay();
-}
-
-function handlePass() {
-  if (!state.active) return;
-  passCount++;
-  finalizeClue('pass');
-}
-
-function openQ(cat, clue, tile) {
-  if (clue.used) return;
-  state.active = { cat, clue, tile };
-  passCount = 0;
-  stopTimer();
-  $('timerDisplay').classList.remove('expired');
-  $('questionBox').classList.add('open');
-  $('catName').textContent = cat;
-  $('money').textContent = `$${clue.value}`;
-  $('activePlayer').textContent = `${state.players[state.turn]}'s turn`;
-  $('clue').textContent = clue.clue;
-  $('answerText').textContent = clue.answer;
-  $('answerReveal').open = false;
-  $('timerBtns').style.display = 'flex';
-  $('feedback').textContent = '';
-}
-
+function shuffle(a) { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 function stripParens(title) { return (title || '').replace(/\s*\(.*?\)\s*/g, ' ').replace(/\s+/g, ' ').trim(); }
-function escapeRegExp(str) { return (str || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 function normalizeTitle(title) { return stripParens(title).toLowerCase(); }
 function tokenSet(title) { return new Set(normalizeTitle(title).split(/[^a-z0-9]+/).filter(w => w.length > 2)); }
 function titleSimilarity(a, b) { const sa = tokenSet(a), sb = tokenSet(b); let overlap = 0; for (const t of sa) if (sb.has(t)) overlap++; const prefix = normalizeTitle(a).slice(0, 8) === normalizeTitle(b).slice(0, 8) ? 1 : 0; return overlap * 3 + prefix; }
 function pickDistractors(answer, pool, count = 3) { const ranked = pool.filter(item => normalizeTitle(item) !== normalizeTitle(answer)).map(item => ({ title: item, score: titleSimilarity(answer, item) })).sort((a, b) => b.score - a.score || a.title.localeCompare(b.title)); const strong = ranked.filter(x => x.score > 0).map(x => x.title); const fallback = ranked.map(x => x.title); return [...new Set([...strong, ...fallback])].slice(0, count); }
-function buildAnswerPatterns(answer) { const base = stripParens(answer); const patterns = new Set(); if (base) patterns.add(base); (base.match(/[A-Za-z0-9]+/g) || []).forEach(word => { if (word.length >= 4) patterns.add(word); }); return [...patterns].sort((a, b) => b.length - a.length); }
 function fallbackTriviaQuestion(text, ans, topic) {
-  let t = (text || '').replace(/\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
-  const patterns = buildAnswerPatterns(ans);
-  patterns.forEach(p => { t = t.replace(new RegExp(`\\b${escapeRegExp(p)}\\b`, 'ig'), '_____'); });
-  t = t.replace(/^\s*_____\s+(is|was|are|were)\s+/i, '');
-  t = t.replace(/^\s*(A|An|The)\s+/i, '');
-  if (!t) t = `This subject belongs to the category ${topic}.`;
-  if (!/[?]$/.test(t)) t = `Which of the following matches this clue: ${t}`;
-  if (!/[?]$/.test(t)) t += '?';
-  t = t.replace(/^which of the following matches this clue:\s*/i, 'Which subject matches this clue: ');
-  return t.length > 220 ? t.slice(0, 217).replace(/[\s,;:]+$/, '') + '...' : t;
+  const clean = (text || '').replace(/\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
+  if (/film|movie/i.test(topic)) return `Which ${topic.toLowerCase().includes('bollywood') ? 'Bollywood ' : ''}film matches this clue: ${clean.slice(0, 140).replace(/[\s,;:]+$/, '')}?`;
+  if (/music/i.test(topic)) return `Which song, singer, or music subject matches this clue: ${clean.slice(0, 140).replace(/[\s,;:]+$/, '')}?`;
+  if (/geography/i.test(topic)) return `Which place matches this clue: ${clean.slice(0, 140).replace(/[\s,;:]+$/, '')}?`;
+  if (/history/i.test(topic)) return `Which historical subject matches this clue: ${clean.slice(0, 140).replace(/[\s,;:]+$/, '')}?`;
+  if (/cricket/i.test(topic)) return `Which cricket subject matches this clue: ${clean.slice(0, 140).replace(/[\s,;:]+$/, '')}?`;
+  return `Which ${topic} subject matches this clue: ${clean.slice(0, 140).replace(/[\s,;:]+$/, '')}?`;
 }
 function sanitizeQuestion(s) { const q = (s || '').trim(); if (!q) return ''; return /[?]$/.test(q) ? q : `${q}?`; }
-function sanitizeLlmResult(raw, page, topic) {
+function sanitizeLlmResult(raw, page, topic, titlePool) {
   const answerTitle = stripParens(page.title);
-  const clueText = typeof raw?.question === 'string' && raw.question.trim() ? sanitizeQuestion(raw.question.trim()) : fallbackTriviaQuestion(page.extract, answerTitle, topic);
-  return { answer: answerTitle, clue: clueText };
+  let options = Array.isArray(raw?.options) ? raw.options.map(x => stripParens(String(x || ''))).filter(Boolean) : [];
+  options = options.filter(x => normalizeTitle(x) !== normalizeTitle(answerTitle));
+  options = [...new Set(options)];
+  while (options.length < 3) {
+    const extra = pickDistractors(answerTitle, titlePool, 3 + options.length).find(x => !options.some(y => normalizeTitle(y) === normalizeTitle(x)));
+    if (!extra) break;
+    options.push(extra);
+  }
+  options = shuffle([answerTitle, ...options.slice(0, 3)]);
+  return { answer: answerTitle, clue: typeof raw?.question === 'string' && raw.question.trim() ? sanitizeQuestion(raw.question.trim()) : fallbackTriviaQuestion(page.extract, answerTitle, topic), options };
 }
 
 async function generateLlmQuestion(page, topic, titlePool) {
-  const prompt = `You are writing one short trivia question and answer. Return JSON only with keys question and answer.\n\nRules:\n- Topic: ${topic}\n- Correct answer title: ${page.title}\n- Wikipedia extract: ${page.extract}\n- The question should feel like pub trivia or family trivia, similar to: Which Bollywood film is based on the story of athlete Milkha Singh?\n- Do NOT mention the answer in the question.\n- Keep the question under 180 characters.\n- The answer should be only the correct title.\n- Output strictly valid JSON like {"question":"...","answer":"..."}`;
-  const res = await fetch(WORKER_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: LLM_MODEL, temperature: 0.4, response_format: { type: 'json_object' }, messages: [{ role: 'system', content: 'You create concise trivia questions. Return JSON only.' }, { role: 'user', content: prompt }] }) });
+  const prompt = `You are writing one short multiple choice trivia question. Return JSON only with keys question and options.\n\nRules:\n- Topic: ${topic}\n- Correct answer title: ${page.title}\n- Wikipedia extract: ${page.extract}\n- Candidate same-topic titles for wrong options: ${titlePool.slice(0, 15).join(', ')}\n- The question should feel like pub trivia or family trivia.\n- Do NOT mention the answer in the question.\n- Keep the question under 180 characters.\n- Provide exactly 4 options total including the correct answer.\n- Wrong options must be plausible and same-topic.\n- Output strictly valid JSON like {"question":"...","options":["correct","wrong1","wrong2","wrong3"]}`;
+  const res = await fetch(WORKER_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: LLM_MODEL, temperature: 0.35, response_format: { type: 'json_object' }, messages: [{ role: 'system', content: 'You create concise multiple-choice trivia questions with four plausible options. Return JSON only.' }, { role: 'user', content: prompt }] }) });
   if (!res.ok) throw new Error(`LLM request failed: ${res.status}`);
   const data = await res.json();
   const content = data?.choices?.[0]?.message?.content || '{}';
@@ -215,52 +155,176 @@ async function wikiSearch(term, limit = 30) { const d = await fetch(`${WIKI}&act
 async function wikiExtracts(titles) { const pages = []; for (let i = 0; i < titles.length; i += 20) { const chunk = titles.slice(i, i + 20); const data = await fetch(`${WIKI}&action=query&prop=extracts&exintro=1&explaintext=1&format=json&redirects=1&titles=${encodeURIComponent(chunk.join('|'))}`).then(r => r.json()); for (const k of Object.keys(data?.query?.pages || {})) { const p = data.query.pages[k]; if (p.title && p.extract && p.extract.length > 40) pages.push({ title: p.title, extract: p.extract }); } } return pages; }
 async function gatherPagesForTopic(topic, needed) { const queries = [topic, `${topic} history`, `${topic} overview`, `${topic} basics`, `${topic} facts`]; let titles = []; for (const q of queries) { try { const found = await wikiSearch(q, 24); titles = titles.concat(found.map(x => x.title)); if (titles.length >= needed * 5) break; } catch (e) {} } titles = [...new Set(titles)].slice(0, Math.max(needed * 6, 30)); if (!titles.length) return []; const pages = await wikiExtracts(titles); return pages.filter((x, i, arr) => arr.findIndex(y => y.title.toLowerCase() === x.title.toLowerCase()) === i).slice(0, Math.max(needed, 12)); }
 
-async function buildBoard(topicNames, topicPages, rows) {
+async function buildBoard(topicNames, topicPages, rows, difficulty) {
   const categories = [];
+  const valuePlan = difficulty === 'easy' ? [100,100,100,100,100] : difficulty === 'hard' ? [500,500,500,500,500] : VALUES;
   for (let i = 0; i < topicNames.slice(0, 5).length; i++) {
     const topic = topicNames[i];
     const allPages = topicPages[topic] || [];
-    const pages = [...allPages].sort(() => Math.random() - 0.5).slice(0, rows);
+    const pages = shuffle(allPages).slice(0, rows);
     const titlePool = allPages.map(p => p.title);
     const clues = [];
     for (let r = 0; r < pages.length; r++) {
       const p = pages[r];
       let generated;
       try { generated = USE_LLM ? await generateLlmQuestion(p, topic, titlePool) : null; } catch (e) { generated = null; }
-      clues.push({ id: `${i}-${r}`, value: VALUES[r] || VALUES[0], _origValue: VALUES[r] || VALUES[0], answer: generated?.answer || stripParens(p.title), clue: generated?.clue || fallbackTriviaQuestion(p.extract, p.title, topic), used: false });
+      const answer = generated?.answer || stripParens(p.title);
+      const options = generated?.options?.length === 4 ? generated.options : shuffle([answer, ...pickDistractors(answer, titlePool, 3)]).slice(0,4);
+      clues.push({ id: `${i}-${r}`, value: valuePlan[r] || valuePlan[0], _origValue: valuePlan[r] || valuePlan[0], answer, clue: generated?.clue || fallbackTriviaQuestion(p.extract, p.title, topic), options, used: false });
     }
     while (clues.length < rows) {
       const r = clues.length;
       const title = allPages[r % Math.max(1, allPages.length)]?.title || `${topic} answer ${r + 1}`;
-      clues.push({ id: `${i}-${r}`, value: VALUES[r] || VALUES[0], _origValue: VALUES[r] || VALUES[0], answer: stripParens(title), clue: `Which subject from ${topic} best fits this clue?`, used: false });
+      const answer = stripParens(title);
+      clues.push({ id: `${i}-${r}`, value: valuePlan[r] || valuePlan[0], _origValue: valuePlan[r] || valuePlan[0], answer, clue: `Which ${topic} subject fits this clue?`, options: shuffle([answer, ...pickDistractors(answer, titlePool, 3)]).slice(0,4), used: false });
     }
     categories.push({ name: topic, clues });
   }
   return categories;
 }
 
-function renderBoard() { const rows = state.board[0] ? state.board[0].clues.length : 5; $('board').innerHTML = ''; state.board.forEach(c => { const h = document.createElement('div'); h.className = 'cat'; h.textContent = c.name; $('board').appendChild(h); }); for (let r = 0; r < rows; r++) state.board.forEach(cat => { const clue = cat.clues[r]; if (!clue) return; const b = document.createElement('button'); b.className = 'tile'; b.textContent = `$${clue.value}`; b.disabled = clue.used; b.onclick = () => openQ(cat.name, clue, b); $('board').appendChild(b); }); }
+function renderBoard() {
+  const rows = state.board[0] ? state.board[0].clues.length : 5;
+  $('board').innerHTML = '';
+  state.board.forEach(c => { const h = document.createElement('div'); h.className = 'cat'; h.textContent = c.name; $('board').appendChild(h); });
+  for (let r = 0; r < rows; r++) state.board.forEach(cat => {
+    const clue = cat.clues[r];
+    if (!clue) return;
+    const b = document.createElement('button');
+    b.className = 'tile';
+    b.textContent = points(clue.value);
+    b.disabled = clue.used;
+    b.onclick = () => openQ(cat.name, clue, b);
+    $('board').appendChild(b);
+  });
+}
+
+function renderOptions(clue) {
+  $('answers').innerHTML = '';
+  clue.options.forEach(opt => {
+    const b = document.createElement('button');
+    b.className = 'answer';
+    b.textContent = opt;
+    b.onclick = () => submitAnswer(opt);
+    $('answers').appendChild(b);
+  });
+}
+
+function markOptions(selected, correct) {
+  [...$('answers').children].forEach(btn => {
+    btn.disabled = true;
+    if (btn.textContent === correct) btn.classList.add('correct');
+    if (btn.textContent === selected && selected !== correct) btn.classList.add('wrong');
+  });
+}
+
+function openQ(cat, clue, tile) {
+  if (clue.used) return;
+  state.active = { cat, clue, tile, attemptedBy: [] };
+  passCount = 0;
+  stopTimer();
+  $('timerDisplay').classList.remove('expired');
+  $('questionBox').classList.add('open');
+  $('catName').textContent = cat;
+  $('money').textContent = points(clue.value);
+  $('activePlayer').textContent = `${currentLabel()}'s turn`;
+  $('clue').textContent = clue.clue;
+  $('timerBtns').style.display = 'flex';
+  $('feedback').textContent = '';
+  renderOptions(clue);
+}
+
+function submitAnswer(selected) {
+  if (!state.active) return;
+  const { clue, tile, attemptedBy } = state.active;
+  stopTimer();
+  attemptedBy.push(state.turn);
+  if (selected === clue.answer) {
+    clue.used = true;
+    tile.disabled = true;
+    state.answered++;
+    state.correct++;
+    state.score[state.turn] = (state.score[state.turn] || 0) + clue.value;
+    markOptions(selected, clue.answer);
+    SFX.correct();
+    $('feedback').textContent = `✅ Correct! ${currentLabel()} earns ${points(clue.value)}.`;
+    renderPlayers();
+    renderScoreboard();
+    if (state.answered >= state.total) SFX.roundEnd(), showResults();
+    else nextTurn();
+    setTimeout(() => $('questionBox').classList.remove('open'), 1800);
+    return;
+  }
+  markOptions(selected, clue.answer);
+  SFX.wrong();
+  const previousValue = clue.value;
+  clue.value = Math.max(5, Math.floor(clue.value / 2));
+  $('feedback').textContent = `❌ Wrong. ${clue.answer} stays hidden. Next player/team can try for ${points(clue.value)}.`;
+  if (attemptedBy.length >= state.players.length) {
+    clue.used = true;
+    tile.disabled = true;
+    state.answered++;
+    $('feedback').textContent = `No one got it. Correct answer: ${clue.answer}.`;
+    renderPlayers();
+    renderScoreboard();
+    if (state.answered >= state.total) SFX.roundEnd(), showResults();
+    else nextTurn();
+    setTimeout(() => $('questionBox').classList.remove('open'), 1800);
+    return;
+  }
+  nextTurn();
+  $('money').textContent = points(clue.value);
+  $('activePlayer').textContent = `${currentLabel()}'s turn`;
+  renderOptions(clue);
+  startTimer(PASS_TIME);
+}
+
+function handlePass() {
+  if (!state.active) return;
+  const { clue, tile, attemptedBy } = state.active;
+  stopTimer();
+  attemptedBy.push(state.turn);
+  clue.value = Math.max(5, Math.floor(clue.value / 2));
+  SFX.pass();
+  if (attemptedBy.length >= state.players.length) {
+    clue.used = true;
+    tile.disabled = true;
+    state.answered++;
+    $('feedback').textContent = `All players/teams passed. Correct answer: ${clue.answer}.`;
+    renderPlayers();
+    renderScoreboard();
+    if (state.answered >= state.total) SFX.roundEnd(), showResults();
+    else nextTurn();
+    setTimeout(() => $('questionBox').classList.remove('open'), 1800);
+    return;
+  }
+  nextTurn();
+  $('money').textContent = points(clue.value);
+  $('activePlayer').textContent = `${currentLabel()}'s turn`;
+  $('feedback').textContent = `Passed. Next player/team can answer for ${points(clue.value)}.`;
+  renderOptions(clue);
+  startTimer(PASS_TIME);
+}
 
 async function start() {
   const topics = parseTopics($('topic').value);
   const n = Math.max(2, Math.min(8, Number($('players').value || 2)));
   const teamMode = $('teamMode').checked;
-  if (teamMode) { const tc = Math.ceil(n / 2); state.players = [...Array(tc)].map((_, i) => $('name' + i)?.value.trim() || `Team ${i + 1}`); }
-  else { state.players = [...Array(n)].map((_, i) => $('name' + i)?.value.trim() || `Player ${i + 1}`); }
+  state.players = [...Array(teamMode ? Math.ceil(n / 2) : n)].map((_, i) => playerLabel(i, teamMode));
+  const difficulty = $('difficulty').value;
   state.topics = topics;
-  const rows = 5, total = 25;
-  state.score = state.players.map(() => 0); state.turn = 0; state.answered = 0; state.correct = 0; state.total = total; state.board = []; state.active = null;
+  state.score = state.players.map(() => 0); state.turn = 0; state.answered = 0; state.correct = 0; state.total = 25; state.board = []; state.active = null;
   $('questionBox').classList.remove('open'); $('board').innerHTML = ''; $('feedback').textContent = ''; renderPlayers(); renderScoreboard();
   try {
     $('startBtn').disabled = true; $('startBtn').textContent = 'Loading...'; $('statusPill').textContent = USE_LLM ? 'Loading Wikipedia + AI trivia' : 'Loading Wikipedia';
     const selectedTopics = topics.slice(0, 5), topicPages = {};
-    for (const topic of selectedTopics) topicPages[topic] = await gatherPagesForTopic(topic, rows);
+    for (const topic of selectedTopics) topicPages[topic] = await gatherPagesForTopic(topic, 5);
     const topicsWithPages = selectedTopics.filter(t => (topicPages[t] || []).length > 0);
     if (topicsWithPages.length < 5) throw new Error('Need at least 5 topics with Wikipedia matches. Try broader topics like Cricket, Bollywood, History, Geography, Movies.');
-    state.board = await buildBoard(topicsWithPages, topicPages, rows);
+    state.board = await buildBoard(topicsWithPages, topicPages, 5, difficulty);
     renderBoard();
     $('statusPill').textContent = 'Ready';
-    $('stateMsg').textContent = `Loaded ${topicsWithPages.length} topics and ${total} trivia clues.`;
+    $('stateMsg').textContent = `Loaded ${topicsWithPages.length} topics and 25 trivia clues.`;
     renderScoreboard();
   } catch (e) {
     $('stateMsg').innerHTML = `<span style="color:var(--bad)">${e.message}</span>`;
@@ -268,22 +332,16 @@ async function start() {
   } finally { $('startBtn').disabled = false; $('startBtn').textContent = 'Create board'; }
 }
 
-function showResults() { const ranked = state.players.map((name, i) => ({ name, score: state.score[i] || 0 })).sort((a, b) => b.score - a.score); $('finalResults').innerHTML = ''; ranked.forEach((p, i) => { const row = document.createElement('div'); row.className = 'result-row'; row.innerHTML = `<span>${['🥇', '🥈', '🥉'][i] || `${i + 1}.`} ${p.name}</span><span>$${p.score}</span>`; $('finalResults').appendChild(row); }); $('resultsModal').classList.add('show'); }
-function buildNameInputs() { const n = Math.max(2, Math.min(8, Number($('players').value || 2))); $('nameGrid').innerHTML = ''; for (let i = 0; i < n; i++) { const d = document.createElement('div'); d.className = 'field'; d.innerHTML = `<label>Player ${i + 1}</label><input id='name${i}' value='Player ${i + 1}'>`; $('nameGrid').appendChild(d); } }
+function showResults() { const ranked = state.players.map((name, i) => ({ name, score: state.score[i] || 0 })).sort((a, b) => b.score - a.score); $('finalResults').innerHTML = ''; ranked.forEach((p, i) => { const row = document.createElement('div'); row.className = 'result-row'; row.innerHTML = `<span>${['🥇', '🥈', '🥉'][i] || `${i + 1}.`} ${p.name}</span><span>${points(p.score)}</span>`; $('finalResults').appendChild(row); }); $('resultsModal').classList.add('show'); }
 function reset() { state.score = state.players.map(() => 0); state.turn = 0; state.answered = 0; state.correct = 0; state.board = []; state.active = null; stopTimer(); $('questionBox').classList.remove('open'); $('board').innerHTML = ''; $('feedback').textContent = ''; renderPlayers(); renderScoreboard(); $('statusPill').textContent = 'Waiting'; $('stateMsg').textContent = 'Create a board to begin.'; }
 
-$('players').oninput = buildNameInputs; buildNameInputs();
-$('closeModal').onclick = () => $('setupModal').classList.remove('open');
 $('themeBtn').onclick = () => setTheme(state.theme === 'dark' ? 'light' : 'dark');
 $('muteBtn').onclick = toggleMute;
 $('demoBtn').onclick = () => { $('topic').value = 'Cricket, Bollywood, History, Geography, Movies'; start(); };
 $('resetBtn').onclick = reset;
 $('startBtn').onclick = start;
-$('markCorrectBtn').onclick = () => finalizeClue('correct');
-$('markWrongBtn').onclick = () => finalizeClue('wrong');
-$('passBtn').onclick = handlePass;
 $('newRoundBtn').onclick = () => { $('resultsModal').classList.remove('show'); start(); };
-$('newGameBtn').onclick = () => { $('resultsModal').classList.remove('show'); reset(); $('topic').value = 'Cricket, Bollywood, History, Geography, Movies'; $('players').value = 2; buildNameInputs(); };
+$('newGameBtn').onclick = () => { $('resultsModal').classList.remove('show'); reset(); $('topic').value = 'Cricket, Bollywood, History, Geography, Movies'; $('players').value = 2; };
 $('startTimerBtn').onclick = () => startTimer(BASE_TIME);
 $('pauseTimerBtn').onclick = stopTimer;
 setTheme('light');
