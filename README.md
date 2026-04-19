@@ -2,6 +2,20 @@
 
 **Jeopardy Unleashed** is a free, PWA-installable Jeopardy-style multiplayer quiz app built with static HTML, CSS, and JavaScript. It generates topic-based trivia from Wikipedia-style content via AI and supports 2-8 players in turn-based competition.
 
+## 🎯 How to Play
+
+> 📖 **[Full Player Guide → HOW_TO_PLAY.md](./HOW_TO_PLAY.md)**
+
+Quick summary:
+
+1. **Enter topics** (comma-separated, max 5), **number of players** (2–8), and **difficulty**
+2. Click **"Create Board"** — AI generates a 5×5 grid of 25 trivia clues
+3. The active player picks a clue → reads it → selects an answer within **90 seconds**
+4. **Scoring**: Correct = full points | Wrong = 0 | Pass = −half points
+5. Turn rotates until all 25 clues are answered — **highest score wins!**
+
+> 💡 Use **Demo** mode to try the game instantly without an AI call. Install as a **PWA** for offline play.
+
 ## Key Features
 
 - **Multiplayer (2-8 players)**: Player/team name entry with automatic turn rotation
@@ -51,6 +65,7 @@ No external fonts/CDNs, system fonts only. Zero inline scripts/styles.
 
 ```
 ├── index.html          # Main app + CSP meta tag
+├── HOW_TO_PLAY.md      # Full player instructions & rules
 ├── assets/
 │   ├── css/style.css   # Responsive Jeopardy styling
 │   └── js/
@@ -58,7 +73,7 @@ No external fonts/CDNs, system fonts only. Zero inline scripts/styles.
 │       ├── state.js    # Game state management
 │       ├── render.js   # DOM rendering
 │       ├── game.js     # Core game logic
-│       ├── llm.js      # AI question generation[cite:8]
+│       ├── llm.js      # AI question generation
 │       ├── timer.js    # 90s/30s countdown
 │       ├── audio.js    # Sound effects
 │       └── register-sw.js
