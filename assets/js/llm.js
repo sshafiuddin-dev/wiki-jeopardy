@@ -21,8 +21,9 @@ export function esc(str) {
     .replace(/'/g, '&#39;');
 }
 
+// Fix: correct regex — hyphen must be first or last in character class
 export function sanitizeTopic(t) {
-  return t.replace(/[^a-zA-Z0-9 \\-'&]/g, '').trim().slice(0, 50);
+  return t.replace(/[^a-zA-Z0-9 '&-]/g, '').trim().slice(0, 50);
 }
 
 export function parseTopics(raw) {
@@ -42,16 +43,16 @@ export async function generateCategoryQuestions(topic, difficulty, count = 5, ex
     'a mix of easy and harder facts';
   const safeExclusions = excludeQuestions.map(q => String(q).slice(0, 100));
   const excludeBlock = safeExclusions.length
-    ? `\\nAvoid reusing or paraphrasing these existing questions:\\n- ${safeExclusions.join('\\n- ')}` : '';
+    ? `\nAvoid reusing or paraphrasing these existing questions:\n- ${safeExclusions.join('\n- ')}` : '';
   const prompt =
-    `Generate exactly ${count} multiple-choice trivia questions about the topic: "${topic}".\\n` +
-    `Difficulty: ${diffHint}.${excludeBlock}\\n\\nRules:\\n` +
-    `- Each question must be a natural, engaging pub-trivia style question.\\n` +
-    `- Do NOT include the answer inside the question text.\\n` +
-    `- Each question has exactly 4 options. One is correct, three are plausible wrong answers from the same topic.\\n` +
-    `- Wrong options must be real, recognizable names/titles/facts from the topic — not made up.\\n` +
-    `- Return ONLY valid JSON in this exact format, no extra text:\\n` +
-    `{\\n  "questions": [\\n    {"q": "Question text?", "options": ["Correct answer", "Wrong 1", "Wrong 2", "Wrong 3"], "answer": "Correct answer"}\\n  ]\\n}`;
+    `Generate exactly ${count} multiple-choice trivia questions about the topic: "${topic}".\n` +
+    `Difficulty: ${diffHint}.${excludeBlock}\n\nRules:\n` +
+    `- Each question must be a natural, engaging pub-trivia style question.\n` +
+    `- Do NOT include the answer inside the question text.\n` +
+    `- Each question has exactly 4 options. One is correct, three are plausible wrong answers from the same topic.\n` +
+    `- Wrong options must be real, recognizable names/titles/facts from the topic \u2014 not made up.\n` +
+    `- Return ONLY valid JSON in this exact format, no extra text:\n` +
+    `{\n  "questions": [\n    {"q": "Question text?", "options": ["Correct answer", "Wrong 1", "Wrong 2", "Wrong 3"], "answer": "Correct answer"}\n  ]\n}`;
 
   const res = await fetch(WORKER_ENDPOINT, {
     method: 'POST',
@@ -100,7 +101,7 @@ export async function regenerateSingleQuestion(board, categoryName, currentClue,
   return normalizeGeneratedQuestion(qs[0], categoryName, currentClue._origValue || currentClue.value || 100);
 }
 
-// ── Build full 5×5 board ──
+// ── Build full 5x5 board ──
 export async function buildBoard(topicNames, difficulty) {
   const valuePlan =
     difficulty === 'easy' ? [100,100,100,100,100] :

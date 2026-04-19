@@ -6,8 +6,20 @@
   <title>Jeopardy Unleashed</title>
   <meta name="description" content="AI-powered trivia battles — your topics, your rules, your glory." />
 
-  <!-- ── Hardened CSP: no unsafe-inline, no unsafe-eval ── -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://groq-proxy.sshafiuddin-dev.workers.dev; img-src 'self' data:; font-src 'self'; frame-ancestors 'none';" />
+  <!--
+    CSP delivered via <meta> tag.
+    Note: frame-ancestors is intentionally omitted here — it must be set
+    via HTTP response header to take effect (meta tag is ignored by browsers).
+    font-src includes fonts.gstatic.com removed — app uses system fonts only.
+  -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src  'self';
+    style-src   'self';
+    connect-src 'self' https://groq-proxy.sshafiuddin-dev.workers.dev;
+    img-src     'self' data:;
+    font-src    'self';
+  " />
 
   <meta name="referrer" content="no-referrer" />
   <meta name="robots" content="noindex, nofollow" />

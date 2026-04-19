@@ -34,19 +34,28 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  // Never cache AI / Worker API calls
-  if (e.request.url.startsWith(WORKER_ORIGIN)) {
+  const url = e.request.url;
+
+  // Only handle http/https requests — skip chrome-extension://, data:, etc.
+  if (!url.startsWith('http://') && !url.startsWith('https://')) return;
+
+  // Never cache Groq Worker API calls
+  if (url.startsWith(WORKER_ORIGIN)) {
     e.respondWith(fetch(e.request));
     return;
   }
+
   // Cache-first for all static assets
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request).then(response => {
-      if (response && response.status === 200 && response.type === 'basic') {
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
-      }
-      return response;
-    }))
+    caches.match(e.request).then(cached => {
+      if (cached) return cached;
+      return fetch(e.request).then(response => {
+        if (response && response.status === 200 && response.type === 'basic') {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
+        }
+        return response;
+      });
+    })
   );
 });
