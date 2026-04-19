@@ -143,7 +143,9 @@ const state = {
   history: []
 };
 let timerInterval=null, timeLeft=0, audioEnabled=true;
+let startCooldown=false, refreshCooldown=false;
 const BASE_TIME=90000, PASS_TIME=30000;
+const COOLDOWN_MS=3000;
 
 function playTone(freq,dur,type='sine'){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(0.3,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);o.start();o.stop(ctx.currentTime+dur);}catch(e){}}
 const SFX={correct:()=>{if(!audioEnabled)return;playTone(523,.1);setTimeout(()=>playTone(659,.1),100);setTimeout(()=>playTone(784,.2),200);},wrong:()=>{if(!audioEnabled)return;playTone(200,.3,'sawtooth');},pass:()=>{if(!audioEnabled)return;playTone(400,.15);setTimeout(()=>playTone(300,.15),150);},roundEnd:()=>{if(!audioEnabled)return;[523,659,784,1047].forEach((f,i)=>setTimeout(()=>playTone(f,.2),i*120));}};
@@ -363,7 +365,7 @@ function openQ(cat,clue,tile,rowIndex){
 }
 
 async function refreshActiveQuestion(){
-  if(!state.active||state.active.attemptedBy.length)return;
+  if(!state.active||state.active.attemptedBy.length||refreshCooldown)return;
   const btn=$('refreshQuestionBtn');
   try{
     stopTimer();
@@ -380,9 +382,18 @@ async function refreshActiveQuestion(){
     syncActiveQuestionUI();
     $('feedback').textContent='✅ Question updated. Everything else stays the same.';
     renderBoard();
+    refreshCooldown=true;
+    btn.disabled=true;btn.textContent='⏳ Cooldown...';
+    setTimeout(()=>{
+      refreshCooldown=false;
+      if(state.active&&!state.active.attemptedBy.length){
+        btn.disabled=false;btn.textContent='🔄 Change Question';
+      }
+    },COOLDOWN_MS);
   }catch(e){
     console.error('[Refresh Question]',e);
     $('feedback').textContent=`Could not refresh question: ${e.message}`;
+    refreshCooldown=false;
     btn.disabled=false;btn.textContent='🔄 Change Question';
   }
 }
@@ -494,7 +505,12 @@ function parseTopics(raw){const parts=(raw||'').split(',').map(x=>x.trim()).filt
 
 async function start(){
   const topics=parseTopics($('topic').value);
-  const n=Math.max(2,Math.min(8,Number($('players').value||2)));
+  const rawN=Number($('players').value||2);
+  if(rawN<2||rawN>8||!Number.isInteger(rawN)){
+    $('stateMsg').textContent='⚠️ Player count must be a whole number between 2 and 8.';
+    return;
+  }
+  const n=rawN;
   const teamMode=$('teamMode').checked;
   state.players=[...Array(n)].map((_,i)=>playerLabel(i,teamMode));
   const difficulty=$('difficulty').value;
@@ -521,7 +537,12 @@ async function start(){
     $('stateMsg').innerHTML=`<span style="color:var(--bad)">${e.message}</span>`;
     $('statusPill').textContent='Error';
   }finally{
-    $('startBtn').disabled=false;$('startBtn').textContent='Create board';
+    startCooldown=true;
+    $('startBtn').disabled=true;$('startBtn').textContent='Please wait...';
+    setTimeout(()=>{
+      startCooldown=false;
+      $('startBtn').disabled=false;$('startBtn').textContent='Create board';
+    },COOLDOWN_MS);
   }
 }
 
@@ -554,9 +575,9 @@ function reset(){
 $('themeBtn').onclick=()=>setTheme(state.theme==='dark'?'light':'dark');
 $('muteBtn').onclick=toggleMute;
 $('teamMode').onchange=updateCountLabel;
-$('demoBtn').onclick=()=>{$('topic').value='Cricket, Bollywood, History, Geography, Movies';start();};
+$('demoBtn').onclick=()=>{if(!startCooldown){$('topic').value='Cricket, Bollywood, History, Geography, Movies';start();}};
 $('resetBtn').onclick=reset;
-$('startBtn').onclick=start;
+$('startBtn').onclick=()=>{if(!startCooldown)start();};
 $('newRoundBtn').onclick=()=>{$('resultsModal').classList.remove('show');start();};
 $('newGameBtn').onclick=()=>{$('resultsModal').classList.remove('show');reset();$('topic').value='Cricket, Bollywood, History, Geography, Movies';$('players').value=2;};
 $('startTimerBtn').onclick=()=>startTimer(BASE_TIME);
