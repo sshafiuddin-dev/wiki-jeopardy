@@ -110,7 +110,8 @@
 </div>
 
 <script>
-function esc(str){
+(function(){
+  function esc(str){
   return String(str??'')
     .replace(/&/g,'&amp;')
     .replace(/</g,'&lt;')
@@ -259,7 +260,8 @@ function updateTimerDisplay(){const m=Math.floor(timeLeft/60000),s=Math.floor((t
 
 async function generateCategoryQuestions(topic,difficulty,count=5,excludeQuestions=[]){
   const diffHint=difficulty==='easy'?'simple, well-known facts suitable for beginners':difficulty==='hard'?'challenging, specific facts for enthusiasts':'a mix of easy and harder facts';
-  const excludeBlock=excludeQuestions.length?`\nAvoid reusing or paraphrasing these existing questions:\n- ${excludeQuestions.join('\n- ')}`:'';
+  const safeExclusions=excludeQuestions.map(q=>String(q).slice(0,100));
+  const excludeBlock=safeExclusions.length?`\nAvoid reusing or paraphrasing these existing questions:\n- ${safeExclusions.join('\n- ')}`:'';
   const prompt=`Generate exactly ${count} multiple-choice trivia questions about the topic: "${topic}".\nDifficulty: ${diffHint}.${excludeBlock}\n\nRules:\n- Each question must be a natural, engaging pub-trivia style question.\n- Do NOT include the answer inside the question text.\n- Each question has exactly 4 options. One is correct, three are plausible wrong answers from the same topic.\n- Wrong options must be real, recognizable names/titles/facts from the topic — not made up.\n- Return ONLY valid JSON in this exact format, no extra text:\n{\n  "questions": [\n    {"q": "Question text?", "options": ["Correct answer", "Wrong 1", "Wrong 2", "Wrong 3"], "answer": "Correct answer"}\n  ]\n}`;
   const res=await fetch(WORKER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:LLM_MODEL,temperature:0.7,response_format:{type:'json_object'},messages:[{role:'system',content:'You are a trivia question generator. Always return valid JSON only, no markdown, no explanation.'},{role:'user',content:prompt}]})});
   if(!res.ok){const errText=await res.text();console.error(`[LLM] Worker error ${res.status}:`,errText);throw new Error(`Worker returned ${res.status}`);}
@@ -501,8 +503,17 @@ function handlePass(){
   startTimer(PASS_TIME);
 }
 
-function parseTopics(raw){const parts=(raw||'').split(',').map(x=>x.trim()).filter(Boolean);const uniq=[];for(const p of parts)if(!uniq.includes(p))uniq.push(p);if(uniq.length===0)return['Cricket','Bollywood','History','Geography','Movies'];while(uniq.length<5)uniq.push(`General ${uniq.length+1}`);return uniq.slice(0,10);}
-
+function sanitizeTopic(t){
+  return t.replace(/[^a-zA-Z0-9 \-'&]/g,'').trim().slice(0,50);
+}
+function parseTopics(raw){
+  const parts=(raw||'').split(',').map(x=>sanitizeTopic(x)).filter(Boolean);
+  const uniq=[];
+  for(const p of parts)if(!uniq.includes(p))uniq.push(p);
+  if(uniq.length===0)return['Cricket','Bollywood','History','Geography','Movies'];
+  while(uniq.length<5)uniq.push(`General ${uniq.length+1}`);
+  return uniq.slice(0,10);
+}
 async function start(){
   const topics=parseTopics($('topic').value);
   const rawN=Number($('players').value||2);
@@ -585,6 +596,7 @@ $('pauseTimerBtn').onclick=stopTimer;
 $('refreshQuestionBtn').onclick=refreshActiveQuestion;
 setTheme('light');
 reset();
+})();
 </script>
 </body>
 </html>
