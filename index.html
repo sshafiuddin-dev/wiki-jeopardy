@@ -192,7 +192,8 @@ function renderHistory(){
     <thead><tr>
       <th>#</th>
       <th>Category</th>
-      <th>Pts</th>
+      <th>Orig Pts</th>
+      <th>Pts Earned</th>
       <th>Question</th>
       <th>Correct Answer</th>
       <th>Answered By</th>
@@ -209,10 +210,18 @@ function renderHistory(){
       :h.result==='wrong'
         ?`<span class="hist-wrong">❌ Wrong</span>`
         :`<span style="color:var(--muted)">— No one</span>`;
-    html+=`<tr>
+    const earnedPts = h.result==='correct'
+      ? `<span style="font-weight:800;color:var(--good)">+${h.points}</span>`
+      : `<span style="color:var(--muted)">—</span>`;
+    const origPtsCell = h.origPoints !== h.points && h.result==='correct'
+      ? `<span style="text-decoration:line-through;color:var(--muted);margin-right:4px">${h.origPoints}</span>`
+      : `${h.origPoints}`;
+
+  html+=`<tr>
       <td style="color:var(--muted)">${num}</td>
       <td><strong>${h.category}</strong></td>
-      <td style="font-weight:800;color:var(--primary)">${h.origPoints}</td>
+      <td style="font-weight:800;color:var(--primary)">${origPtsCell}</td>
+      <td>${earnedPts}</td>
       <td style="max-width:220px">${h.question}</td>
       <td style="color:var(--good)">${h.correctAnswer}</td>
       <td><strong>${h.answeredBy||'—'}</strong></td>
