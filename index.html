@@ -9,7 +9,13 @@
   <style>
     :root,[data-theme="light"]{--bg:#f7f6f2;--surface:#faf9f6;--surface2:#f2f0eb;--text:#26231d;--muted:#6b675f;--line:#d9d4cc;--primary:#006d77;--primary2:#01555c;--accent:#e7f1ef;--good:#2f7d32;--bad:#a23b72;--inv:#fffef9;--radius:16px;--shadow:0 10px 24px rgba(0,0,0,.08);--font:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
     [data-theme="dark"]{--bg:#151412;--surface:#1b1a18;--surface2:#21201d;--text:#e7e2d9;--muted:#ada79e;--line:#33312d;--primary:#49a6b1;--primary2:#2b8e99;--accent:#203438;--good:#6dc06f;--bad:#db73b1;--inv:#151412;--shadow:0 10px 24px rgba(0,0,0,.35)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--font);background:radial-gradient(circle at top right,rgba(0,109,119,.12),transparent 30%),var(--bg);color:var(--text);min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1280px;margin:0 auto;padding:16px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 0 18px}.brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:var(--inv);display:grid;place-items:center;box-shadow:var(--shadow);font-weight:800;flex:0 0 auto}h1,h2{margin:0;font-family:Georgia,serif;letter-spacing:-.03em}h1{font-size:clamp(1.6rem,2vw,2.5rem)}h2{font-size:1.15rem}.pill{display:inline-flex;align-items:center;padding:.35rem .7rem;border-radius:999px;background:var(--accent);color:var(--primary);font-size:.78rem;font-weight:700}.grid{display:grid;grid-template-columns:360px minmax(0,1fr);gap:18px;align-items:start}.card{background:color-mix(in srgb,var(--surface) 94%,transparent);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);border-radius:var(--radius);box-shadow:var(--shadow)}.pad{padding:18px}.muted{color:var(--muted)}.row{display:flex;gap:10px;flex-wrap:wrap}.field{display:grid;gap:6px;margin-bottom:12px}input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:var(--surface2);color:var(--text)}textarea{min-height:92px;resize:vertical}.btn{min-height:44px;padding:0 14px;border:0;border-radius:12px;font-weight:700}.primary{background:var(--primary);color:var(--inv)}.secondary{background:var(--surface2);color:var(--text);border:1px solid color-mix(in srgb,var(--text) 14%,transparent)}.ghost{background:transparent;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.stat b{display:block;font-size:1.1rem;margin-top:3px}.players{display:grid;gap:8px;margin-top:12px}.player{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.player.active{outline:2px solid var(--primary);background:color-mix(in srgb,var(--primary) 10%,var(--surface2))}.boardWrap{display:grid;gap:12px;min-width:0}.boardScroller{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:6px}.boardScroller::-webkit-scrollbar{height:8px}.boardScroller::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--primary) 35%,var(--surface2));border-radius:999px}.boardHint{display:none;color:var(--muted);font-size:.82rem;margin-top:-2px}.board{display:grid;grid-template-columns:repeat(5,minmax(128px,1fr));gap:10px;min-width:700px}.cat{min-height:92px;padding:12px;border-radius:16px;background:linear-gradient(180deg,color-mix(in srgb,var(--primary) 92%,black 8%),color-mix(in srgb,var(--primary2) 88%,black 12%));color:var(--inv);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.9rem;font-weight:800;text-transform:uppercase;line-height:1.25;letter-spacing:.02em;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.08)}.tile{min-height:88px;border-radius:16px;border:0;background:linear-gradient(180deg,color-mix(in srgb,var(--primary) 96%,black 4%),color-mix(in srgb,var(--primary) 82%,black 18%));color:#fff7d8;font-size:1.45rem;font-weight:800;box-shadow:var(--shadow)}.tile:disabled{opacity:.25;cursor:not-allowed}.question{display:none}.question.open{display:block}.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.qmeta > *{min-width:0}.qmeta-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.refresh-btn{min-height:36px;padding:0 12px;border-radius:10px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:var(--surface2);color:var(--text);font-weight:700}.refresh-btn:disabled{opacity:.6;cursor:wait}.timer{display:flex;align-items:center;gap:8px}.timer-ring{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top:3px solid var(--primary);animation:spin 1s linear infinite;display:none}.timer-ring.running{display:block}.expired .timer-ring{border-top-color:var(--bad)}.clue{margin:14px 0 16px;font-size:clamp(1.08rem,1vw + 1rem,1.45rem);line-height:1.6}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.answer{min-height:64px;padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);text-align:left;font-weight:700;transition:transform .15s ease, background .15s ease, border-color .15s ease}.answer:hover:not(:disabled){transform:translateY(-1px)}.answer.correct{background:color-mix(in srgb,var(--good) 22%,var(--surface2));border-color:color-mix(in srgb,var(--good) 70%,transparent);color:var(--text)}.answer.wrong{background:color-mix(in srgb,var(--bad) 28%,var(--surface2));border-color:color-mix(in srgb,var(--bad) 85%,transparent);color:var(--text)}.feedback{margin-top:12px;font-weight:800}.small{font-size:.9rem}.leaderboard{display:grid;gap:8px}.lead{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.results-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:20px}.results-modal.show{display:flex}.results-box{width:min(600px,95%);background:var(--surface);border-radius:24px;border:1px solid var(--line);overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.3)}.results-head{padding:20px 24px;background:var(--primary);color:var(--inv);text-align:center}.results-body{padding:24px}.results-grid{display:grid;gap:12px}.result-row{display:flex;justify-content:space-between;padding:14px 16px;background:var(--surface2);border-radius:16px;border:1px solid color-mix(in srgb,var(--text) 10%,transparent);font-weight:700}.play-again{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.timer-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.switch{position:relative;display:inline-block;width:48px;height:26px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;inset:0;background:var(--surface2);transition:.3s;border-radius:26px}.slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:var(--text);transition:.3s;border-radius:50%}.switch input:checked+.slider{background:var(--primary)}.switch input:checked+.slider:before{transform:translateX(22px)}.mute-btn{padding:6px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);width:36px;height:36px;display:grid;place-items:center}.hint{font-size:.82rem;color:var(--muted)}@media(max-width:980px){.grid{grid-template-columns:1fr}.top{align-items:flex-start}.board{min-width:680px}}@media(max-width:700px){.app{padding:12px}.top{flex-direction:column;align-items:stretch}.top>div:last-child{justify-content:flex-end}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.boardHint{display:block}.board{grid-template-columns:repeat(5,120px);min-width:640px;gap:8px}.cat{min-height:84px;padding:10px;font-size:.78rem;border-radius:14px}.tile{min-height:74px;font-size:1.2rem;border-radius:14px}.answers{grid-template-columns:1fr}.qmeta{display:grid;grid-template-columns:1fr 1fr;gap:8px}.qmeta-actions{grid-column:1 / -1;justify-content:space-between}.refresh-btn{width:100%;justify-content:center}.timer-btns{display:grid;grid-template-columns:1fr 1fr}.lead,.player,.result-row{align-items:flex-start}.result-row span:first-child,.lead span{min-width:0}}@media(max-width:460px){h1{font-size:1.45rem}.pill{font-size:.72rem}.board{grid-template-columns:repeat(5,108px);min-width:580px}.cat{font-size:.72rem;line-height:1.2}.tile{min-height:68px;font-size:1.05rem}.btn{width:100%}.row .btn{flex:1 1 100%}.timer-btns{grid-template-columns:1fr}.qmeta{grid-template-columns:1fr}.qmeta-actions{justify-content:stretch}.results-box{width:100%}}@keyframes spin{to{transform:rotate(360deg)}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--font);background:radial-gradient(circle at top right,rgba(0,109,119,.12),transparent 30%),var(--bg);color:var(--text);min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1280px;margin:0 auto;padding:16px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 0 18px}.brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:var(--inv);display:grid;place-items:center;box-shadow:var(--shadow);font-weight:800;flex:0 0 auto}h1,h2,h3{margin:0;font-family:Georgia,serif;letter-spacing:-.03em}h1{font-size:clamp(1.6rem,2vw,2.5rem)}h2{font-size:1.15rem}h3{font-size:1rem}.pill{display:inline-flex;align-items:center;padding:.35rem .7rem;border-radius:999px;background:var(--accent);color:var(--primary);font-size:.78rem;font-weight:700}.grid{display:grid;grid-template-columns:360px minmax(0,1fr);gap:18px;align-items:start}.card{background:color-mix(in srgb,var(--surface) 94%,transparent);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);border-radius:var(--radius);box-shadow:var(--shadow)}.pad{padding:18px}.muted{color:var(--muted)}.row{display:flex;gap:10px;flex-wrap:wrap}.field{display:grid;gap:6px;margin-bottom:12px}input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:var(--surface2);color:var(--text)}textarea{min-height:92px;resize:vertical}.btn{min-height:44px;padding:0 14px;border:0;border-radius:12px;font-weight:700}.primary{background:var(--primary);color:var(--inv)}.secondary{background:var(--surface2);color:var(--text);border:1px solid color-mix(in srgb,var(--text) 14%,transparent)}.ghost{background:transparent;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.stat b{display:block;font-size:1.1rem;margin-top:3px}.players{display:grid;gap:8px;margin-top:12px}.player{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent)}.player.active{outline:2px solid var(--primary);background:color-mix(in srgb,var(--primary) 10%,var(--surface2))}.boardWrap{display:grid;gap:12px;min-width:0}.boardScroller{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:6px}.boardScroller::-webkit-scrollbar{height:8px}.boardScroller::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--primary) 35%,var(--surface2));border-radius:999px}.boardHint{display:none;color:var(--muted);font-size:.82rem;margin-top:-2px}.board{display:grid;grid-template-columns:repeat(5,minmax(128px,1fr));gap:10px;min-width:700px}.cat{min-height:92px;padding:12px;border-radius:16px;background:linear-gradient(180deg,color-mix(in srgb,var(--primary) 92%,black 8%),color-mix(in srgb,var(--primary2) 88%,black 12%));color:var(--inv);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.9rem;font-weight:800;text-transform:uppercase;line-height:1.25;letter-spacing:.02em;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.08)}.tile{min-height:88px;border-radius:16px;border:0;background:linear-gradient(180deg,color-mix(in srgb,var(--primary) 96%,black 4%),color-mix(in srgb,var(--primary) 82%,black 18%));color:#fff7d8;font-size:1.45rem;font-weight:800;box-shadow:var(--shadow)}.tile:disabled{opacity:.25;cursor:not-allowed}.question{display:none}.question.open{display:block}.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.qmeta > *{min-width:0}.qmeta-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.refresh-btn{min-height:36px;padding:0 12px;border-radius:10px;border:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:var(--surface2);color:var(--text);font-weight:700}.refresh-btn:disabled{opacity:.6;cursor:wait}.timer{display:flex;align-items:center;gap:8px}.timer-ring{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top:3px solid var(--primary);animation:spin 1s linear infinite;display:none}.timer-ring.running{display:block}.expired .timer-ring{border-top-color:var(--bad)}.clue{margin:14px 0 16px;font-size:clamp(1.08rem,1vw + 1rem,1.45rem);line-height:1.6}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.answer{min-height:64px;padding:12px;border-radius:14px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 12%,transparent);text-align:left;font-weight:700;transition:transform .15s ease,background .15s ease,border-color .15s ease}.answer:hover:not(:disabled){transform:translateY(-1px)}.answer.correct{background:color-mix(in srgb,var(--good) 22%,var(--surface2));border-color:color-mix(in srgb,var(--good) 70%,transparent);color:var(--text)}.answer.wrong{background:color-mix(in srgb,var(--bad) 28%,var(--surface2));border-color:color-mix(in srgb,var(--bad) 85%,transparent);color:var(--text)}.feedback{margin-top:12px;font-weight:800}.small{font-size:.9rem}.leaderboard{display:grid;gap:0}.lead-header{display:grid;grid-template-columns:1fr 70px 55px 55px 55px;gap:4px;padding:6px 12px;font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.lead{display:grid;grid-template-columns:1fr 70px 55px 55px 55px;gap:4px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid color-mix(in srgb,var(--text) 10%,transparent);margin-bottom:6px}.lead span,.lead b{min-width:0;font-size:.85rem}.lead b{font-size:.95rem}.lead .pts{font-size:1rem;font-weight:800;color:var(--primary)}.results-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:20px}.results-modal.show{display:flex}.results-box{width:min(600px,95%);background:var(--surface);border-radius:24px;border:1px solid var(--line);overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.3)}.results-head{padding:20px 24px;background:var(--primary);color:var(--inv);text-align:center}.results-body{padding:24px}.results-grid{display:grid;gap:12px}.result-row{display:flex;justify-content:space-between;padding:14px 16px;background:var(--surface2);border-radius:16px;border:1px solid color-mix(in srgb,var(--text) 10%,transparent);font-weight:700}.play-again{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.timer-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.switch{position:relative;display:inline-block;width:48px;height:26px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;inset:0;background:var(--surface2);transition:.3s;border-radius:26px}.slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:var(--text);transition:.3s;border-radius:50%}.switch input:checked+.slider{background:var(--primary)}.switch input:checked+.slider:before{transform:translateX(22px)}.mute-btn{padding:6px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);width:36px;height:36px;display:grid;place-items:center}.hint{font-size:.82rem;color:var(--muted)}
+    /* Session History Table */
+    .history-wrap{margin-top:4px}.history-table{width:100%;border-collapse:collapse;font-size:.82rem}.history-table th{background:color-mix(in srgb,var(--primary) 15%,var(--surface2));color:var(--primary);font-weight:700;padding:8px 10px;text-align:left;border-bottom:2px solid color-mix(in srgb,var(--primary) 30%,transparent)}.history-table td{padding:7px 10px;border-bottom:1px solid color-mix(in srgb,var(--text) 8%,transparent);vertical-align:top}.history-table tr:last-child td{border-bottom:none}.history-table tr:hover td{background:color-mix(in srgb,var(--primary) 5%,transparent)}.hist-correct{color:var(--good);font-weight:700}.hist-wrong{color:var(--bad);font-weight:700}.hist-pass-badge{display:inline-block;background:color-mix(in srgb,var(--muted) 20%,transparent);color:var(--muted);border-radius:6px;padding:1px 6px;font-size:.75rem;margin-left:4px}.hist-orig-badge{display:inline-block;background:color-mix(in srgb,var(--primary) 15%,transparent);color:var(--primary);border-radius:6px;padding:1px 6px;font-size:.75rem;margin-left:4px}.no-history{color:var(--muted);font-size:.85rem;padding:12px 0}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}.top{align-items:flex-start}.board{min-width:680px}}
+    @media(max-width:700px){.app{padding:12px}.top{flex-direction:column;align-items:stretch}.top>div:last-child{justify-content:flex-end}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.boardHint{display:block}.board{grid-template-columns:repeat(5,120px);min-width:640px;gap:8px}.cat{min-height:84px;padding:10px;font-size:.78rem;border-radius:14px}.tile{min-height:74px;font-size:1.2rem;border-radius:14px}.answers{grid-template-columns:1fr}.qmeta{display:grid;grid-template-columns:1fr 1fr;gap:8px}.qmeta-actions{grid-column:1 / -1;justify-content:space-between}.refresh-btn{width:100%;justify-content:center}.timer-btns{display:grid;grid-template-columns:1fr 1fr}.lead,.player,.result-row{align-items:flex-start}.result-row span:first-child,.lead span{min-width:0}.lead-header{display:none}.lead{grid-template-columns:1fr auto}}
+    @media(max-width:460px){h1{font-size:1.45rem}.pill{font-size:.72rem}.board{grid-template-columns:repeat(5,108px);min-width:580px}.cat{font-size:.72rem;line-height:1.2}.tile{min-height:68px;font-size:1.05rem}.btn{width:100%}.row .btn{flex:1 1 100%}.timer-btns{grid-template-columns:1fr}.qmeta{grid-template-columns:1fr}.qmeta-actions{justify-content:stretch}.results-box{width:100%}}
+    @keyframes spin{to{transform:rotate(360deg)}}
   </style>
 </head>
 <body>
@@ -72,7 +78,18 @@
       </section>
       <section class="card pad">
         <h2>Leaderboard</h2>
+        <div class="lead-header">
+          <span>Player</span>
+          <span style="text-align:right">Points</span>
+          <span style="text-align:center">Q Asked</span>
+          <span style="text-align:center">Ans ✅</span>
+          <span style="text-align:center">Pass ❌</span>
+        </div>
         <div class="leaderboard" id="leaderboard"></div>
+      </section>
+      <section class="card pad history-wrap">
+        <h2>Session History</h2>
+        <div id="historyContainer"><p class="no-history">No questions answered yet.</p></div>
       </section>
     </section>
   </div>
@@ -98,7 +115,23 @@ const LLM_MODEL = 'llama-3.3-70b-versatile';
 const $ = id => document.getElementById(id);
 const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
 const points = v => String(v);
-const state = { players:['Player 1','Player 2'], turn:0, score:[], board:[], answered:0, correct:0, total:25, topics:['Cricket','Bollywood','History','Geography','Movies'], active:null, theme:'light' };
+
+const state = {
+  players: ['Player 1','Player 2'],
+  turn: 0,
+  score: [],
+  qAsked: [],   // total questions this player was the active answerer for
+  qCorrect: [], // correct answers by player
+  qPassed: [],  // times player passed or was passed to and still got it wrong
+  board: [],
+  answered: 0,
+  correct: 0,
+  total: 25,
+  topics: ['Cricket','Bollywood','History','Geography','Movies'],
+  active: null,
+  theme: 'light',
+  history: []   // session log
+};
 let timerInterval=null, timeLeft=0, audioEnabled=true;
 const BASE_TIME=90000, PASS_TIME=30000;
 
@@ -110,113 +143,135 @@ function toggleMute(){audioEnabled=!audioEnabled;$('muteBtn').textContent=audioE
 function currentLabel(){return state.players[state.turn]||'—';}
 function playerLabel(i,team=false){return team?`Team ${i+1}`:`Player ${i+1}`;}
 function updateCountLabel(){
-  const teamMode = $('teamMode').checked;
-  $('playerCountLabel').textContent = teamMode ? 'Number of teams' : 'Number of players';
-  $('playerCountHint').textContent = teamMode ? 'Use this as the total number of teams.' : 'Use this as the total number of players.';
+  const teamMode=$('teamMode').checked;
+  $('playerCountLabel').textContent=teamMode?'Number of teams':'Number of players';
+  $('playerCountHint').textContent=teamMode?'Use this as the total number of teams.':'Use this as the total number of players.';
 }
-function renderPlayers(){$('playersList').innerHTML='';state.players.forEach((p,i)=>{const d=document.createElement('div');d.className='player'+(i===state.turn?' active':'');d.innerHTML=`<strong>${p}</strong><span>${points(state.score[i]||0)}</span>`;$('playersList').appendChild(d);});}
-function renderLeaderboard(){$('leaderboard').innerHTML='';[...state.players.map((n,i)=>({n,s:state.score[i]||0,i}))].sort((a,b)=>b.s-a.s).forEach((p,r)=>{const row=document.createElement('div');row.className='lead';row.innerHTML=`<span>${r+1}. ${p.n}${p.i===state.turn?' ● turn':''}</span><b>${points(p.s)}</b>`;$('leaderboard').appendChild(row);});}
-function renderScoreboard(){$('turn').textContent=currentLabel();const li=state.score.length?state.score.indexOf(Math.max(...state.score)):-1;$('leader').textContent=li>-1?`${state.players[li]} (${points(state.score[li])})`:'—';$('answered').textContent=`${state.answered}/${state.total}`;$('topicLabel').textContent=state.topics.join(', ');$('statusPill').textContent=state.answered>=state.total?'Complete':'In play';$('stateMsg').textContent=state.total-state.answered>0?`${state.total-state.answered} clues left`:'All clues answered';renderLeaderboard();}
+
+function renderPlayers(){
+  $('playersList').innerHTML='';
+  state.players.forEach((p,i)=>{
+    const d=document.createElement('div');
+    d.className='player'+(i===state.turn?' active':'');
+    d.innerHTML=`<strong>${p}</strong><span>${points(state.score[i]||0)}</span>`;
+    $('playersList').appendChild(d);
+  });
+}
+
+function renderLeaderboard(){
+  $('leaderboard').innerHTML='';
+  [...state.players.map((n,i)=>({n,s:state.score[i]||0,q:state.qAsked[i]||0,c:state.qCorrect[i]||0,p:state.qPassed[i]||0,i}))]
+    .sort((a,b)=>b.s-a.s)
+    .forEach((pl,r)=>{
+      const row=document.createElement('div');
+      row.className='lead';
+      row.innerHTML=`
+        <span><strong>${r+1}. ${pl.n}</strong>${pl.i===state.turn?' <span style="color:var(--primary)">● turn</span>':''}</span>
+        <span class="pts" style="text-align:right">${points(pl.s)}</span>
+        <span style="text-align:center">${pl.q}</span>
+        <span style="text-align:center;color:var(--good)">${pl.c}</span>
+        <span style="text-align:center;color:var(--bad)">${pl.p}</span>`;
+      $('leaderboard').appendChild(row);
+    });
+}
+
+function renderScoreboard(){
+  $('turn').textContent=currentLabel();
+  const li=state.score.length?state.score.indexOf(Math.max(...state.score)):-1;
+  $('leader').textContent=li>-1?`${state.players[li]} (${points(state.score[li])})`:'—';
+  $('answered').textContent=`${state.answered}/${state.total}`;
+  $('topicLabel').textContent=state.topics.join(', ');
+  $('statusPill').textContent=state.answered>=state.total?'Complete':'In play';
+  $('stateMsg').textContent=state.total-state.answered>0?`${state.total-state.answered} clues left`:'All clues answered';
+  renderLeaderboard();
+}
+
+function renderHistory(){
+  const c=$('historyContainer');
+  if(!state.history.length){c.innerHTML='<p class="no-history">No questions answered yet.</p>';return;}
+  let html=`<div style="overflow-x:auto"><table class="history-table">
+    <thead><tr>
+      <th>#</th><th>Category</th><th>Question</th><th>Correct Answer</th>
+      <th>Answered By</th><th>Type</th><th>Result</th><th>Pts</th>
+    </tr></thead><tbody>`;
+  [...state.history].reverse().forEach((h,idx)=>{
+    const num=state.history.length-idx;
+    const typeBadge=h.wasPass
+      ?`<span class="hist-pass-badge">Pass</span>`
+      :`<span class="hist-orig-badge">Original</span>`;
+    const resultCell=h.result==='correct'
+      ?`<span class="hist-correct">✅ Correct</span>`
+      :h.result==='wrong'
+        ?`<span class="hist-wrong">❌ Wrong</span>`
+        :`<span style="color:var(--muted)">— No one</span>`;
+    const ptsCell=h.result==='correct'?`+${h.points}`:(h.result==='nobody'?'—':'-');
+    html+=`<tr>
+      <td style="color:var(--muted)">${num}</td>
+      <td><strong>${h.category}</strong></td>
+      <td style="max-width:220px">${h.question}</td>
+      <td style="color:var(--good)">${h.correctAnswer}</td>
+      <td><strong>${h.answeredBy||'—'}</strong></td>
+      <td>${typeBadge}</td>
+      <td>${resultCell}</td>
+      <td style="font-weight:800;color:${h.result==='correct'?'var(--good)':'var(--muted)'}">${ptsCell}</td>
+    </tr>`;
+  });
+  html+=`</tbody></table></div>`;
+  c.innerHTML=html;
+}
+
+function logHistory(entry){ state.history.push(entry); renderHistory(); }
+
 function nextTurn(){state.turn=(state.turn+1)%state.players.length;renderPlayers();renderScoreboard();}
 function setTurn(index){state.turn=((index%state.players.length)+state.players.length)%state.players.length;renderPlayers();renderScoreboard();}
-function nextAfter(index){return (index + 1) % state.players.length;}
-function resolveTurnAfterClue(){
-  if(!state.active) return;
-  setTurn(nextAfter(state.active.originTurn));
-}
+function nextAfter(index){return (index+1)%state.players.length;}
+function resolveTurnAfterClue(){if(!state.active)return;setTurn(nextAfter(state.active.originTurn));}
 
 function stopTimer(){clearInterval(timerInterval);$('timerRing').classList.remove('running');}
 function startTimer(ms){stopTimer();timeLeft=ms;$('timerRing').classList.add('running');$('timerDisplay').classList.remove('expired');updateTimerDisplay();timerInterval=setInterval(()=>{timeLeft-=1000;if(timeLeft<=0){stopTimer();$('timerDisplay').classList.add('expired');handlePass();}else updateTimerDisplay();},1000);}
 function updateTimerDisplay(){const m=Math.floor(timeLeft/60000),s=Math.floor((timeLeft%60000)/1000);$('timeLeft').textContent=`${m}:${s.toString().padStart(2,'0')}`;}
 
-async function generateCategoryQuestions(topic, difficulty, count=5, excludeQuestions=[]) {
-  const diffHint = difficulty === 'easy' ? 'simple, well-known facts suitable for beginners' : difficulty === 'hard' ? 'challenging, specific facts for enthusiasts' : 'a mix of easy and harder facts';
-  const excludeBlock = excludeQuestions.length ? `\nAvoid reusing or paraphrasing these existing questions:\n- ${excludeQuestions.join('\n- ')}` : '';
-  const prompt = `Generate exactly ${count} multiple-choice trivia questions about the topic: "${topic}".
-Difficulty: ${diffHint}.${excludeBlock}
-
-Rules:
-- Each question must be a natural, engaging pub-trivia style question.
-- Do NOT include the answer inside the question text.
-- Each question has exactly 4 options. One is correct, three are plausible wrong answers from the same topic.
-- Wrong options must be real, recognizable names/titles/facts from the topic — not made up.
-- Return ONLY valid JSON in this exact format, no extra text:
-{
-  "questions": [
-    {"q": "Question text?", "options": ["Correct answer", "Wrong 1", "Wrong 2", "Wrong 3"], "answer": "Correct answer"}
-  ]
-}`;
-
-  const res = await fetch(WORKER_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: LLM_MODEL,
-      temperature: 0.7,
-      response_format: { type: 'json_object' },
-      messages: [
-        { role: 'system', content: 'You are a trivia question generator. Always return valid JSON only, no markdown, no explanation.' },
-        { role: 'user', content: prompt }
-      ]
-    })
-  });
-
-  if (!res.ok) {
-    const errText = await res.text();
-    console.error(`[LLM] Worker error ${res.status}:`, errText);
-    throw new Error(`Worker returned ${res.status}`);
-  }
-
-  const data = await res.json();
-  const content = data?.choices?.[0]?.message?.content || '{}';
+async function generateCategoryQuestions(topic,difficulty,count=5,excludeQuestions=[]){
+  const diffHint=difficulty==='easy'?'simple, well-known facts suitable for beginners':difficulty==='hard'?'challenging, specific facts for enthusiasts':'a mix of easy and harder facts';
+  const excludeBlock=excludeQuestions.length?`\nAvoid reusing or paraphrasing these existing questions:\n- ${excludeQuestions.join('\n- ')}`:'';
+  const prompt=`Generate exactly ${count} multiple-choice trivia questions about the topic: "${topic}".\nDifficulty: ${diffHint}.${excludeBlock}\n\nRules:\n- Each question must be a natural, engaging pub-trivia style question.\n- Do NOT include the answer inside the question text.\n- Each question has exactly 4 options. One is correct, three are plausible wrong answers from the same topic.\n- Wrong options must be real, recognizable names/titles/facts from the topic — not made up.\n- Return ONLY valid JSON in this exact format, no extra text:\n{\n  "questions": [\n    {"q": "Question text?", "options": ["Correct answer", "Wrong 1", "Wrong 2", "Wrong 3"], "answer": "Correct answer"}\n  ]\n}`;
+  const res=await fetch(WORKER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:LLM_MODEL,temperature:0.7,response_format:{type:'json_object'},messages:[{role:'system',content:'You are a trivia question generator. Always return valid JSON only, no markdown, no explanation.'},{role:'user',content:prompt}]})});
+  if(!res.ok){const errText=await res.text();console.error(`[LLM] Worker error ${res.status}:`,errText);throw new Error(`Worker returned ${res.status}`);}
+  const data=await res.json();
+  const content=data?.choices?.[0]?.message?.content||'{}';
   let parsed;
-  try { parsed = JSON.parse(content); } catch(e) {
-    console.error('[LLM] JSON parse error:', content);
-    throw new Error('LLM returned invalid JSON');
-  }
-
-  const qs = Array.isArray(parsed?.questions) ? parsed.questions : [];
-  if (qs.length === 0) throw new Error('LLM returned 0 questions');
+  try{parsed=JSON.parse(content);}catch(e){console.error('[LLM] JSON parse error:',content);throw new Error('LLM returned invalid JSON');}
+  const qs=Array.isArray(parsed?.questions)?parsed.questions:[];
+  if(qs.length===0)throw new Error('LLM returned 0 questions');
   return qs;
 }
 
-function normalizeGeneratedQuestion(item, fallbackTopic, fallbackValue){
-  const answer = (item?.answer || '').trim();
-  const opts = Array.isArray(item?.options) ? item.options.map(x => String(x).trim()).filter(Boolean) : [];
-  const seeded = answer && !opts.includes(answer) ? [answer, ...opts] : opts;
-  const fullOpts = [...new Set(seeded)].filter(Boolean);
-  while(fullOpts.length < 4) fullOpts.push(`Option ${fullOpts.length + 1}`);
-  return {
-    id: `${fallbackTopic}-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
-    value: fallbackValue,
-    _origValue: fallbackValue,
-    answer: answer || fullOpts[0],
-    clue: (item?.q || `Question about ${fallbackTopic}?`).trim(),
-    options: shuffle(fullOpts.slice(0,4)),
-    used: false
-  };
+function normalizeGeneratedQuestion(item,fallbackTopic,fallbackValue){
+  const answer=(item?.answer||'').trim();
+  const opts=Array.isArray(item?.options)?item.options.map(x=>String(x).trim()).filter(Boolean):[];
+  const seeded=answer&&!opts.includes(answer)?[answer,...opts]:opts;
+  const fullOpts=[...new Set(seeded)].filter(Boolean);
+  while(fullOpts.length<4)fullOpts.push(`Option ${fullOpts.length+1}`);
+  return{id:`${fallbackTopic}-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,value:fallbackValue,_origValue:fallbackValue,answer:answer||fullOpts[0],clue:(item?.q||`Question about ${fallbackTopic}?`).trim(),options:shuffle(fullOpts.slice(0,4)),used:false};
 }
 
-async function regenerateSingleQuestion(categoryName, currentClue, difficulty){
-  const category = state.board.find(c => c.name === categoryName);
-  const existing = category ? category.clues.map(c => c.clue).filter(Boolean) : [];
-  const qs = await generateCategoryQuestions(categoryName, difficulty, 1, existing);
-  return normalizeGeneratedQuestion(qs[0], categoryName, currentClue._origValue || currentClue.value || 100);
+async function regenerateSingleQuestion(categoryName,currentClue,difficulty){
+  const category=state.board.find(c=>c.name===categoryName);
+  const existing=category?category.clues.map(c=>c.clue).filter(Boolean):[];
+  const qs=await generateCategoryQuestions(categoryName,difficulty,1,existing);
+  return normalizeGeneratedQuestion(qs[0],categoryName,currentClue._origValue||currentClue.value||100);
 }
 
-async function buildBoard(topicNames, difficulty) {
-  const valuePlan = difficulty==='easy' ? [100,100,100,100,100] : difficulty==='hard' ? [500,500,500,500,500] : VALUES;
-  const categories = [];
-  for (const topic of topicNames.slice(0,5)) {
+async function buildBoard(topicNames,difficulty){
+  const valuePlan=difficulty==='easy'?[100,100,100,100,100]:difficulty==='hard'?[500,500,500,500,500]:VALUES;
+  const categories=[];
+  for(const topic of topicNames.slice(0,5)){
     let qs;
-    try { qs = await generateCategoryQuestions(topic, difficulty, 5); }
-    catch(e) { console.warn(`[Board] LLM failed for "${topic}", using placeholder:`, e.message); qs = []; }
-    while (qs.length < 5) {
-      const n = qs.length + 1;
-      qs.push({ q: `Question ${n} about ${topic}?`, options: [`Answer ${n}A`, `Answer ${n}B`, `Answer ${n}C`, `Answer ${n}D`], answer: `Answer ${n}A` });
-    }
-    const clues = qs.slice(0,5).map((item, r) => normalizeGeneratedQuestion(item, topic, valuePlan[r] || valuePlan[0]));
-    categories.push({ name: topic, clues });
+    try{qs=await generateCategoryQuestions(topic,difficulty,5);}
+    catch(e){console.warn(`[Board] LLM failed for "${topic}", using placeholder:`,e.message);qs=[];}
+    while(qs.length<5){const n=qs.length+1;qs.push({q:`Question ${n} about ${topic}?`,options:[`Answer ${n}A`,`Answer ${n}B`,`Answer ${n}C`,`Answer ${n}D`],answer:`Answer ${n}A`});}
+    const clues=qs.slice(0,5).map((item,r)=>normalizeGeneratedQuestion(item,topic,valuePlan[r]||valuePlan[0]));
+    categories.push({name:topic,clues});
   }
   return categories;
 }
@@ -250,25 +305,34 @@ function markOptions(selected,correct){
   });
 }
 
+function disableAllOptions(){
+  [...$('answers').children].forEach(btn=>btn.disabled=true);
+}
+
 function syncActiveQuestionUI(){
-  if(!state.active) return;
-  const { cat, clue } = state.active;
+  if(!state.active)return;
+  const{cat,clue}=state.active;
   $('catName').textContent=cat;
   $('money').textContent=points(clue.value);
   $('activePlayer').textContent=`${currentLabel()}'s turn`;
   $('clue').textContent=clue.clue;
   $('feedback').textContent='';
   renderOptions(clue);
-  const canRefresh = !state.active.attemptedBy.length;
+  const canRefresh=!state.active.attemptedBy.length;
   $('refreshQuestionBtn').style.display='inline-flex';
   $('refreshQuestionBtn').disabled=!canRefresh;
   $('refreshQuestionBtn').textContent='🔄 Change Question';
-  $('refreshQuestionBtn').title = canRefresh ? 'Replace only this question' : 'Unavailable after an attempt has been made';
+  $('refreshQuestionBtn').title=canRefresh?'Replace only this question':'Unavailable after an attempt has been made';
 }
 
+// Opens a new question — closes previous one first so question persists until new tile selected
 function openQ(cat,clue,tile,rowIndex){
   if(clue.used)return;
-  state.active={cat,clue,tile,rowIndex,attemptedBy:[],originTurn:state.turn};
+  // If a completed question is showing, close it now (new tile selected)
+  if(state.active&&state.active.resolved){
+    $('questionBox').classList.remove('open');
+  }
+  state.active={cat,clue,tile,rowIndex,attemptedBy:[],originTurn:state.turn,resolved:false};
   stopTimer();
   $('timerDisplay').classList.remove('expired');
   $('questionBox').classList.add('open');
@@ -277,29 +341,27 @@ function openQ(cat,clue,tile,rowIndex){
 }
 
 async function refreshActiveQuestion(){
-  if(!state.active || state.active.attemptedBy.length) return;
-  const btn = $('refreshQuestionBtn');
+  if(!state.active||state.active.attemptedBy.length)return;
+  const btn=$('refreshQuestionBtn');
   try{
     stopTimer();
-    btn.disabled = true;
-    btn.textContent = '🔄 Refreshing...';
-    $('feedback').textContent = 'Generating a replacement question...';
-    const difficulty = $('difficulty').value;
-    const replacement = await regenerateSingleQuestion(state.active.cat, state.active.clue, difficulty);
-    replacement.value = state.active.clue.value;
-    replacement._origValue = state.active.clue._origValue || state.active.clue.value;
-    const category = state.board.find(c => c.name === state.active.cat);
-    if(!category) throw new Error('Category not found');
-    category.clues[state.active.rowIndex] = replacement;
-    state.active.clue = replacement;
+    btn.disabled=true;btn.textContent='🔄 Refreshing...';
+    $('feedback').textContent='Generating a replacement question...';
+    const difficulty=$('difficulty').value;
+    const replacement=await regenerateSingleQuestion(state.active.cat,state.active.clue,difficulty);
+    replacement.value=state.active.clue.value;
+    replacement._origValue=state.active.clue._origValue||state.active.clue.value;
+    const category=state.board.find(c=>c.name===state.active.cat);
+    if(!category)throw new Error('Category not found');
+    category.clues[state.active.rowIndex]=replacement;
+    state.active.clue=replacement;
     syncActiveQuestionUI();
-    $('feedback').textContent = '✅ Question updated. Everything else stays the same.';
+    $('feedback').textContent='✅ Question updated. Everything else stays the same.';
     renderBoard();
   }catch(e){
-    console.error('[Refresh Question]', e);
-    $('feedback').textContent = `Could not refresh question: ${e.message}`;
-    btn.disabled = false;
-    btn.textContent = '🔄 Change Question';
+    console.error('[Refresh Question]',e);
+    $('feedback').textContent=`Could not refresh question: ${e.message}`;
+    btn.disabled=false;btn.textContent='🔄 Change Question';
   }
 }
 
@@ -307,26 +369,44 @@ function submitAnswer(selected){
   if(!state.active)return;
   const{clue,tile,attemptedBy}=state.active;
   stopTimer();
+  const isPass = attemptedBy.length > 0; // if someone already attempted, this player received a pass
   attemptedBy.push(state.turn);
-  $('refreshQuestionBtn').disabled = true;
+  $('refreshQuestionBtn').disabled=true;
+
+  // Track stats
+  state.qAsked[state.turn]=(state.qAsked[state.turn]||0)+1;
+
   if(selected===clue.answer){
     clue.used=true;tile.disabled=true;state.answered++;state.correct++;
     state.score[state.turn]=(state.score[state.turn]||0)+clue.value;
+    state.qCorrect[state.turn]=(state.qCorrect[state.turn]||0)+1;
     markOptions(selected,clue.answer);SFX.correct();
     $('feedback').textContent=`✅ Correct! ${currentLabel()} earns ${points(clue.value)}.`;
+    // Log history
+    logHistory({category:state.active.cat,question:clue.clue,correctAnswer:clue.answer,answeredBy:currentLabel(),wasPass:isPass,result:'correct',points:clue.value});
+    state.active.resolved=true;
     resolveTurnAfterClue();
     if(state.answered>=state.total){SFX.roundEnd();showResults();}
-    setTimeout(()=>$('questionBox').classList.remove('open'),1800);
+    // DO NOT hide question — stays visible until next tile click
+    disableAllOptions();
+    $('timerBtns').style.display='none';
     return;
   }
+
   markOptions(selected,clue.answer);SFX.wrong();
+  state.qPassed[state.turn]=(state.qPassed[state.turn]||0)+1;
   clue.value=Math.max(5,Math.floor(clue.value/2));
+
   if(attemptedBy.length>=state.players.length){
     clue.used=true;tile.disabled=true;state.answered++;
     $('feedback').textContent=`No one got it. Correct answer: ${clue.answer}.`;
+    logHistory({category:state.active.cat,question:clue.clue,correctAnswer:clue.answer,answeredBy:null,wasPass:false,result:'nobody',points:0});
+    state.active.resolved=true;
     resolveTurnAfterClue();
     if(state.answered>=state.total){SFX.roundEnd();showResults();}
-    setTimeout(()=>$('questionBox').classList.remove('open'),1800);
+    // Stay visible until next tile click
+    disableAllOptions();
+    $('timerBtns').style.display='none';
     return;
   }
   nextTurn();
@@ -341,15 +421,21 @@ function handlePass(){
   if(!state.active)return;
   const{clue,tile,attemptedBy}=state.active;
   stopTimer();SFX.pass();
+  state.qAsked[state.turn]=(state.qAsked[state.turn]||0)+1;
+  state.qPassed[state.turn]=(state.qPassed[state.turn]||0)+1;
   attemptedBy.push(state.turn);
-  $('refreshQuestionBtn').disabled = true;
+  $('refreshQuestionBtn').disabled=true;
   clue.value=Math.max(5,Math.floor(clue.value/2));
+
   if(attemptedBy.length>=state.players.length){
     clue.used=true;tile.disabled=true;state.answered++;
     $('feedback').textContent=`All passed. Correct answer: ${clue.answer}.`;
+    logHistory({category:state.active.cat,question:clue.clue,correctAnswer:clue.answer,answeredBy:null,wasPass:false,result:'nobody',points:0});
+    state.active.resolved=true;
     resolveTurnAfterClue();
     if(state.answered>=state.total){SFX.roundEnd();showResults();}
-    setTimeout(()=>$('questionBox').classList.remove('open'),1800);
+    disableAllOptions();
+    $('timerBtns').style.display='none';
     return;
   }
   nextTurn();
@@ -369,9 +455,14 @@ async function start(){
   state.players=[...Array(n)].map((_,i)=>playerLabel(i,teamMode));
   const difficulty=$('difficulty').value;
   state.topics=topics;
-  state.score=state.players.map(()=>0);state.turn=0;state.answered=0;state.correct=0;state.total=25;state.board=[];state.active=null;
+  state.score=state.players.map(()=>0);
+  state.qAsked=state.players.map(()=>0);
+  state.qCorrect=state.players.map(()=>0);
+  state.qPassed=state.players.map(()=>0);
+  state.history=[];
+  state.turn=0;state.answered=0;state.correct=0;state.total=25;state.board=[];state.active=null;
   $('questionBox').classList.remove('open');$('board').innerHTML='';$('feedback').textContent='';
-  renderPlayers();renderScoreboard();
+  renderHistory();renderPlayers();renderScoreboard();
   try{
     $('startBtn').disabled=true;$('startBtn').textContent='Generating...';$('statusPill').textContent='AI generating questions…';
     const selectedTopics=topics.slice(0,5);
@@ -390,8 +481,31 @@ async function start(){
   }
 }
 
-function showResults(){const ranked=state.players.map((name,i)=>({name,score:state.score[i]||0})).sort((a,b)=>b.score-a.score);$('finalResults').innerHTML='';ranked.forEach((p,i)=>{const row=document.createElement('div');row.className='result-row';row.innerHTML=`<span>${['🥇','🥈','🥉'][i]||`${i+1}.`} ${p.name}</span><span>${points(p.score)}</span>`;$('finalResults').appendChild(row);});$('resultsModal').classList.add('show');}
-function reset(){state.score=state.players.map(()=>0);state.turn=0;state.answered=0;state.correct=0;state.board=[];state.active=null;stopTimer();$('questionBox').classList.remove('open');$('board').innerHTML='';$('feedback').textContent='';$('refreshQuestionBtn').style.display='none';renderPlayers();renderScoreboard();$('statusPill').textContent='Waiting';$('stateMsg').textContent='Create a board to begin.';updateCountLabel();}
+function showResults(){
+  const ranked=state.players.map((name,i)=>({name,score:state.score[i]||0})).sort((a,b)=>b.score-a.score);
+  $('finalResults').innerHTML='';
+  ranked.forEach((p,i)=>{
+    const row=document.createElement('div');row.className='result-row';
+    row.innerHTML=`<span>${['🥇','🥈','🥉'][i]||`${i+1}.`} ${p.name}</span><span>${points(p.score)}</span>`;
+    $('finalResults').appendChild(row);
+  });
+  $('resultsModal').classList.add('show');
+}
+
+function reset(){
+  state.score=state.players.map(()=>0);
+  state.qAsked=state.players.map(()=>0);
+  state.qCorrect=state.players.map(()=>0);
+  state.qPassed=state.players.map(()=>0);
+  state.history=[];
+  state.turn=0;state.answered=0;state.correct=0;state.board=[];state.active=null;
+  stopTimer();
+  $('questionBox').classList.remove('open');$('board').innerHTML='';$('feedback').textContent='';
+  $('refreshQuestionBtn').style.display='none';
+  renderHistory();renderPlayers();renderScoreboard();
+  $('statusPill').textContent='Waiting';$('stateMsg').textContent='Create a board to begin.';
+  updateCountLabel();
+}
 
 $('themeBtn').onclick=()=>setTheme(state.theme==='dark'?'light':'dark');
 $('muteBtn').onclick=toggleMute;
