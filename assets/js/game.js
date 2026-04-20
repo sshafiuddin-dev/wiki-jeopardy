@@ -58,6 +58,14 @@ export async function refreshActiveQuestion() {
     syncActiveQuestionUI(state.active, currentLabel(), submitAnswer, handlePass);
     $('feedback').textContent = '✅ Question updated. Everything else stays the same.';
     renderBoard(state.board, openQ);
+
+    const activeCatIndex = state.board.findIndex(c => c.name === state.active.cat);
+    if (activeCatIndex > -1) {
+      const tileIndex = activeCatIndex + (state.active.rowIndex * state.board.length);
+      const allTiles = document.querySelectorAll('#board .tile');
+      if (allTiles[tileIndex]) state.active.tile = allTiles[tileIndex];
+    }
+
     setRefreshCooldown(true);
     btn.disabled = true; btn.textContent = '⏳ Cooldown...';
     setTimeout(() => {

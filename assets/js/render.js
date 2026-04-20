@@ -128,7 +128,10 @@ export function renderBoard(board, onTileClick) {
   const rows = board[0] ? board[0].clues.length : 5;
   $('board').innerHTML = '';
   board.forEach(c => {
-    const h = document.createElement('div'); h.className = 'cat'; h.textContent = c.name;
+    const h = document.createElement('div');
+    h.className = 'cat';
+    if (c.clues.every(clue => clue.used)) h.classList.add('used');
+    h.textContent = c.name;
     $('board').appendChild(h);
   });
   for (let r = 0; r < rows; r++) {
