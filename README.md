@@ -1,33 +1,131 @@
-# Wiki Jeopardy Multiplayer
+# Wiki Jeopardy Multiplayer - v2 (Modular CSP Hardened)
 
-A free Jeopardy-style multiplayer quiz app built with static HTML, CSS, and JavaScript. It generates topic-based clues from Wikipedia and supports turn-based competition for 2-8 players.
+**Jeopardy Unleashed** is a free, PWA-installable Jeopardy-style multiplayer quiz app built with static HTML, CSS, and JavaScript. It generates topic-based trivia from Wikipedia-style content via AI and supports 2-8 players in turn-based competition.
 
-## Features
+## 🎯 How to Play
 
-- Multiplayer play for competing players
-- Player name entry and turn rotation
-- Topic-based board generation from Wikipedia
-- Automatic scoring and leaderboard
-- Pass logic with halving points
-- 90s/30s manual timer
-- Round results modal
-- Team mode
-- PWA installable
-- Works as a static site on GitHub Pages
+> 📖 **[Full Player Guide → HOW_TO_PLAY.md](./HOW_TO_PLAY.md)**
 
-## How to play
+Quick summary:
 
-1. Enter a topic.
-2. Add player or team names.
-3. Create a board.
-4. Players take turns selecting clues and answering.
-5. Wrong answer or pass sends question to next team at half points.
-6. Highest score wins.
+1. **Enter topics** (comma-separated, max 5), **number of players** (2–8), and **difficulty**
+2. Click **"Create Board"** — AI generates a 5×5 grid of 25 trivia clues
+3. The active player picks a clue → reads it → selects an answer within **90 seconds**
+4. **Scoring**: Correct = full points | Wrong = 0 | Pass = −half points
+5. Turn rotates until all 25 clues are answered — **highest score wins!**
 
-## GitHub Pages
+> 💡 Use **Demo** mode to try the game instantly without an AI call. Install as a **PWA** for offline play.
 
-Use the included workflow in `.github/workflows/deploy.yml` and set GitHub Pages to deploy from GitHub Actions.
+## Key Features
 
-After deployment, the site will be available at:
+- **Multiplayer (2-8 players)**: Player/team name entry with automatic turn rotation
+- **AI-Powered Content**: Real-time trivia generation using Llama 3.3 70B via custom Cloudflare Worker proxy (Groq API)
+- **CSP Hardened**: Strict Content Security Policy with no unsafe-inline scripts/styles
+- **Progressive Web App**: Fully installable, offline-capable with service worker
+- **Responsive Design**: Swipeable board, mobile-optimized, dark/light theme toggle
+- **Smart Gameplay**: 90s/30s timers, pass logic (halves points), auto-scoring, round results modal
+- **Advanced Stats**: Leaderboard with questions asked/answered/pass tracking, session history
+- **Difficulty Levels**: Easy/Mixed/Hard with tailored question complexity
+- **Single-Question Refresh**: Replace problematic questions without rebuilding board
 
-`https://sshafiuddin-dev.github.io/wiki-jeopardy/`
+## Tech Stack
+
+```
+Core: Vanilla HTML5/CSS3/ES Modules
+AI: Llama 3.3 70B via Groq (Cloudflare Worker proxy)
+Modular JS: main.js → state.js, render.js, game.js, llm.js, timer.js, audio.js
+CSP: Strict policy via meta tag (frame-ancestors via HTTP header)
+PWA: manifest.json + sw.js (cache-first strategy)
+Deployment: Static GitHub Pages
+```
+
+**CSP Policy** (delivered via meta tag):
+```
+default-src 'self';
+script-src 'self';
+style-src 'self'; 
+connect-src 'self' https://groq-proxy.sshafiuddin-dev.workers.dev;
+img-src 'self' data:;
+font-src 'self';
+```
+No external fonts/CDNs, system fonts only. Zero inline scripts/styles.
+
+## Quick Start
+
+1. **Navigate** to [sshafiuddin-dev.github.io/wiki-jeopardy](https://sshafiuddin-dev.github.io/wiki-jeopardy/)
+2. **Enter topics** (comma-separated, max 5): `Cricket Sport, Bollywood Movies, History, Geography, Tech CEOs`
+3. **Set players** (2-8) and **difficulty** (Easy/Mixed/Hard)
+4. **Click "Create board"** → AI generates 5x5 grid (25 questions)
+5. **Game flow**: Select clue → Answer within 90s → Correct/wrong/pass → Next turn
+6. **Win**: Highest score after all 25 questions
+
+**Demo mode** available for instant testing.
+
+## File Structure (v2 Modular)
+
+```
+├── index.html          # Main app + CSP meta tag
+├── HOW_TO_PLAY.md      # Full player instructions & rules
+├── assets/
+│   ├── css/style.css   # Responsive Jeopardy styling
+│   └── js/
+│       ├── main.js     # App entry/orchestration
+│       ├── state.js    # Game state management
+│       ├── render.js   # DOM rendering
+│       ├── game.js     # Core game logic
+│       ├── llm.js      # AI question generation
+│       ├── timer.js    # 90s/30s countdown
+│       ├── audio.js    # Sound effects
+│       └── register-sw.js
+├── sw.js              # Service worker
+├── manifest.json      # PWA manifest
+└── .github/workflows/ # GitHub Pages deployment
+```
+
+## Deployment (GitHub Pages)
+
+1. Enable GitHub Pages on `main` or `gh-pages` branch
+2. Workflow: `.github/workflows/deploy.yml` auto-deploys on push
+3. Access: `https://<username>.github.io/wiki-jeopardy`
+
+**Live Demo**: https://sshafiuddin-dev.github.io/wiki-jeopardy/
+
+## Customization
+
+- **Topics**: Comma-separated, auto-sanitized (alphanumeric + spaces/ampersand)
+- **AI Model**: `llama-3.3-70b-versatile` (configurable in `llm.js`)
+- **Difficulty**:
+  | Level | Point Values | Question Style |
+  |-------|--------------|----------------|
+  | Easy  | 100×5        | Beginner facts |
+  | Mixed | 100-500      | Pub trivia mix |
+  | Hard  | 500×5        | Expert facts |
+
+## CSP Hardening Notes
+
+**v2 Key Changes**:
+- Modular ES modules (no inline scripts)
+- External CSS/JS only from `'self'`
+- Single external API: `groq-proxy.sshafiuddin-dev.workers.dev`
+- No unsafe-eval, no external fonts/CDNs
+- `referrer: no-referrer`, `robots: noindex`
+
+**Browser Support**: Chrome 58+, Firefox 52+, Safari 10+ (strict CSP)
+
+## Development
+
+```bash
+# Local dev server (with CSP headers)
+npx http-server -c-1 --cors
+
+# Build: None (static files only)
+# Test: Open index.html directly (CSP limits apply)
+```
+
+## Credits
+- **AI Backend**: Groq + Llama 3.3 70B via custom Worker proxy
+- **Design**: Jeopardy-inspired, mobile-first responsive grid
+
+***
+
+⭐ **Install as PWA** for offline play. **Fork & deploy** your own branded version!
