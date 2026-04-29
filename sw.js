@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jeopardy-v2';
+const CACHE_NAME = 'jeopardy-v3';                     // bumped: force fresh cache after favicon fix
 const WORKER_ORIGIN = 'https://groq-proxy.sshafiuddin-dev.workers.dev';
 
 const STATIC_ASSETS = [
@@ -13,7 +13,8 @@ const STATIC_ASSETS = [
   './assets/js/timer.js',
   './assets/js/llm.js',
   './assets/js/render.js',
-  './assets/js/game.js'
+  './assets/js/game.js',
+  './assets/js/register-sw.js'
 ];
 
 // ── Install: pre-cache all static assets ──
@@ -38,17 +39,14 @@ self.addEventListener('activate', e => {
 
 // ── Fetch: network-only for API calls, cache-first for static ──
 self.addEventListener('fetch', e => {
-  // Always go network for Groq Worker API — never cache AI responses
   if (e.request.url.startsWith(WORKER_ORIGIN)) {
     e.respondWith(fetch(e.request));
     return;
   }
-  // Cache-first for all other requests
   e.respondWith(
     caches.match(e.request)
       .then(cached => cached || fetch(e.request)
         .then(response => {
-          // Dynamically cache new valid static responses
           if (response && response.status === 200 && response.type === 'basic') {
             const clone = response.clone();
             caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
