@@ -1,6 +1,6 @@
 // ── LLM / Groq API ──
 const WORKER_ENDPOINT    = 'https://groq-proxy.sshafiuddin-dev.workers.dev';
-const LLM_MODEL          = 'llama-3.3-70b-versatile';
+//const LLM_MODEL          = 'llama-3.3-70b-versatile';
 export const ALLOWED_DIFFICULTY = ['easy', 'mixed', 'hard'];
 const VALUES             = [100, 200, 300, 400, 500];
 
@@ -58,7 +58,7 @@ export async function generateCategoryQuestions(topic, difficulty, count = 5, ex
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model: LLM_MODEL, temperature: 0.7,
+      temperature: 0.7,
       response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: 'You are a trivia question generator. Always return valid JSON only, no markdown, no explanation.' },
